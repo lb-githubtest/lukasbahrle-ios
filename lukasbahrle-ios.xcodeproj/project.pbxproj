@@ -13,6 +13,7 @@
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AB025E685DA002B1782 /* ArtistBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419ABD25E68737002B1782 /* HTTPClient.swift */; };
+		DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
 		DA4536C925E2467A0051B93E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C825E2467A0051B93E /* ViewController.swift */; };
@@ -83,6 +84,7 @@
 		DA419AA925E685DA002B1782 /* ArtistBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistBrowserTests.swift; sourceTree = "<group>"; };
 		DA419AAB25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA419ABD25E68737002B1782 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
+		DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4536C625E2467A0051B93E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				DA419ABD25E68737002B1782 /* HTTPClient.swift */,
+				DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -436,6 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */,
+				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
