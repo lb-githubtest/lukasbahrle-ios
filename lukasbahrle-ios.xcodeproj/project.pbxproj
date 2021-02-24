@@ -14,6 +14,9 @@
 		DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419ABD25E68737002B1782 /* HTTPClient.swift */; };
 		DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */; };
 		DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419AD325E688A9002B1782 /* LoadTokenFromRemoteTests.swift */; };
+		DA419ADD25E691E4002B1782 /* search.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADA25E691E4002B1782 /* search.json */; };
+		DA419ADE25E691E4002B1782 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADB25E691E4002B1782 /* token.json */; };
+		DA419ADF25E691E4002B1782 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADC25E691E4002B1782 /* albums.json */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
 		DA4536C925E2467A0051B93E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C825E2467A0051B93E /* ViewController.swift */; };
@@ -86,6 +89,9 @@
 		DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		DA419AD225E688A9002B1782 /* ArtistBrowserTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ArtistBrowserTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		DA419AD325E688A9002B1782 /* LoadTokenFromRemoteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadTokenFromRemoteTests.swift; sourceTree = "<group>"; };
+		DA419ADA25E691E4002B1782 /* search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search.json; sourceTree = "<group>"; };
+		DA419ADB25E691E4002B1782 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
+		DA419ADC25E691E4002B1782 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4536C625E2467A0051B93E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,9 +181,20 @@
 		DA419AC325E6873D002B1782 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				DA419AD925E691C4002B1782 /* Sample responses */,
 				DA419ABC25E68717002B1782 /* Shared */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		DA419AD925E691C4002B1782 /* Sample responses */ = {
+			isa = PBXGroup;
+			children = (
+				DA419ADC25E691E4002B1782 /* albums.json */,
+				DA419ADA25E691E4002B1782 /* search.json */,
+				DA419ADB25E691E4002B1782 /* token.json */,
+			);
+			path = "Sample responses";
 			sourceTree = "<group>";
 		};
 		DA4536B825E2467A0051B93E = {
@@ -400,6 +417,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA419ADF25E691E4002B1782 /* albums.json in Resources */,
+				DA419ADD25E691E4002B1782 /* search.json in Resources */,
+				DA419ADE25E691E4002B1782 /* token.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
