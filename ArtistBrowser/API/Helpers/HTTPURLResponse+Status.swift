@@ -11,4 +11,9 @@ extension HTTPURLResponse {
     var isOK: Bool {
         statusCode == 200
     }
+    
+    var isUnauthorized: Bool {
+        statusCode == 401
+    }
 }
+

@@ -28,6 +28,9 @@
 		DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */; };
 		DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */; };
 		DA4536E725E2467C0051B93E /* lukasbahrle_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */; };
+		DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */; };
+		DA4717DB25E70DFC00A02AF5 /* SearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */; };
+		DA4717E125E70E1900A02AF5 /* RemoteSearchArtistMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717E025E70E1900A02AF5 /* RemoteSearchArtistMapper.swift */; };
 		DA563E8825E6BFB300A2FE44 /* RemoteTokenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */; };
 		DA563E9025E6C01000A2FE44 /* TokenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E8F25E6C01000A2FE44 /* TokenLoader.swift */; };
 		DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */; };
@@ -122,6 +125,9 @@
 		DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lukasbahrle-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosUITests.swift; sourceTree = "<group>"; };
 		DA4536E825E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoader.swift; sourceTree = "<group>"; };
+		DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistLoader.swift; sourceTree = "<group>"; };
+		DA4717E025E70E1900A02AF5 /* RemoteSearchArtistMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistMapper.swift; sourceTree = "<group>"; };
 		DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTokenLoader.swift; sourceTree = "<group>"; };
 		DA563E8F25E6C01000A2FE44 /* TokenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLoader.swift; sourceTree = "<group>"; };
 		DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTokenMapper.swift; sourceTree = "<group>"; };
@@ -213,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				DA563E9C25E6C0BC00A2FE44 /* Helpers */,
+				DA4717CF25E70D9D00A02AF5 /* Search Artist */,
 				DA563E8D25E6BFEE00A2FE44 /* Token */,
 				DA419AD925E691C4002B1782 /* Sample responses */,
 				DA419ABC25E68717002B1782 /* Shared */,
@@ -285,6 +292,16 @@
 				DA4536E825E2467C0051B93E /* Info.plist */,
 			);
 			path = "lukasbahrle-iosUITests";
+			sourceTree = "<group>";
+		};
+		DA4717CF25E70D9D00A02AF5 /* Search Artist */ = {
+			isa = PBXGroup;
+			children = (
+				DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */,
+				DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */,
+				DA4717E025E70E1900A02AF5 /* RemoteSearchArtistMapper.swift */,
+			);
+			path = "Search Artist";
 			sourceTree = "<group>";
 		};
 		DA563E8D25E6BFEE00A2FE44 /* Token */ = {
@@ -535,11 +552,14 @@
 				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
+				DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */,
 				DA563E9025E6C01000A2FE44 /* TokenLoader.swift in Sources */,
 				DA563EBF25E6C2F900A2FE44 /* Credentials.swift in Sources */,
 				DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */,
+				DA4717DB25E70DFC00A02AF5 /* SearchArtistLoader.swift in Sources */,
 				DA563EA825E6C15E00A2FE44 /* Request.swift in Sources */,
 				DA563E8825E6BFB300A2FE44 /* RemoteTokenLoader.swift in Sources */,
+				DA4717E125E70E1900A02AF5 /* RemoteSearchArtistMapper.swift in Sources */,
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
 			);
