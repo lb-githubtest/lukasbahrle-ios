@@ -46,9 +46,23 @@ class RemoteTokenLoader: TokenLoader{
 class LoadTokenFromRemoteTests: XCTestCase {
 
     func test_init_doesNotResquestData(){
-        let client = HTTPClientSpy()
-        let sut = RemoteTokenLoader(url: URL.any(), client: client)
+        let (_, client) = makeSUT()
         XCTAssertTrue(client.requests.isEmpty)
+    }
+    
+    func test_load_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        
+
+    }
+    
+    // MARK: Helpers
+    
+    private func makeSUT(url: URL = URL.any()) -> (RemoteTokenLoader, HTTPClientSpy){
+        let client = HTTPClientSpy()
+        let sut = RemoteTokenLoader(url: url, client: client)
+        
+        return (sut, client)
     }
 
 }
