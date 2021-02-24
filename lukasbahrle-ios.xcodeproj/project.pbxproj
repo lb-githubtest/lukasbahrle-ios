@@ -12,6 +12,7 @@
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AB025E685DA002B1782 /* ArtistBrowser.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA419ABD25E68737002B1782 /* HTTPClient.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
 		DA4536C925E2467A0051B93E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C825E2467A0051B93E /* ViewController.swift */; };
@@ -81,6 +82,7 @@
 		DA419AA225E685DA002B1782 /* ArtistBrowserTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArtistBrowserTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419AA925E685DA002B1782 /* ArtistBrowserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistBrowserTests.swift; sourceTree = "<group>"; };
 		DA419AAB25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA419ABD25E68737002B1782 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4536C625E2467A0051B93E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 		DA419A9B25E685DA002B1782 /* ArtistBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				DA419AC325E6873D002B1782 /* API */,
 				DA419A9C25E685DA002B1782 /* ArtistBrowser.h */,
 				DA419A9D25E685DA002B1782 /* Info.plist */,
 			);
@@ -154,6 +157,22 @@
 				DA419AAB25E685DA002B1782 /* Info.plist */,
 			);
 			path = ArtistBrowserTests;
+			sourceTree = "<group>";
+		};
+		DA419ABC25E68717002B1782 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DA419ABD25E68737002B1782 /* HTTPClient.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		DA419AC325E6873D002B1782 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				DA419ABC25E68717002B1782 /* Shared */,
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 		DA4536B825E2467A0051B93E = {
@@ -329,6 +348,7 @@
 				TargetAttributes = {
 					DA419A9925E685DA002B1782 = {
 						CreatedOnToolsVersion = 12.3;
+						LastSwiftMigration = 1230;
 					};
 					DA419AA125E685DA002B1782 = {
 						CreatedOnToolsVersion = 12.3;
@@ -415,6 +435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,6 +526,7 @@
 		DA419AB225E685DA002B1782 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -522,6 +544,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.lukasbahrle.ArtistBrowser;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -532,6 +555,7 @@
 		DA419AB325E685DA002B1782 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -715,6 +739,7 @@
 		DA4536EC25E2467C0051B93E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -734,6 +759,7 @@
 		DA4536ED25E2467C0051B93E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
