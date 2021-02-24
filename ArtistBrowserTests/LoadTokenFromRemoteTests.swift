@@ -55,8 +55,6 @@ class LoadTokenFromRemoteTests: XCTestCase {
         })
     }
     
-   
-    
     func test_load_deliversResultOn200HTTPResponseWithValidTokenJSON() throws{
         
         let builder = BasicRequestBuilder(baseURL: URL(string: "https://test")!, path: "path")
