@@ -63,8 +63,8 @@ class RemoteTokenLoader: TokenLoader{
     func load(completion: @escaping (TokenLoader.Result) -> Void) {
         client.get(request: request()) { result in
             switch result{
-            case let .success(data, httpResponse):
-                completion(.failure(Error.invalidData))
+            case let .success((data, httpResponse)):
+                completion(self.map(data, from: httpResponse))
             case .failure(_):
                 completion(.failure(Error.connectivity))
             }
@@ -74,6 +74,35 @@ class RemoteTokenLoader: TokenLoader{
     private func request() -> URLRequest{
         let request = URLRequest(url: url)
         return request
+    }
+    
+    private func map(_ data: Data, from response: HTTPURLResponse) -> TokenLoader.Result {
+        do {
+            let tokenResponse = try RemoteTokenLoaderMapper.map(data, from: response)
+            return .success(tokenResponse)
+        } catch {
+            return .failure(error)
+        }
+    }
+}
+
+class RemoteTokenLoaderMapper{
+    struct TokenRemoteResponse: Codable{
+        let access_token: String
+        let token_type: String
+        let expires_in: Int
+        let scope: String
+        
+        func toModel() -> Token {
+            return access_token
+        }
+    }
+    
+    static func map(_ data: Data, from response: HTTPURLResponse) throws -> Token {
+        guard response.isOK, let tokenResponse = try? JSONDecoder().decode(TokenRemoteResponse.self, from: data) else {
+            throw RemoteTokenLoader.Error.invalidData
+        }
+        return tokenResponse.toModel()
     }
 }
 
@@ -103,6 +132,15 @@ class LoadTokenFromRemoteTests: XCTestCase {
             })
         }
     }
+    
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWith: failure(.invalidData), when: {
+            client.complete(withStatusCode: 200, data: Data.anyInvalidJsonData())
+        })
+    }
+    
     
     // MARK: Helpers
     
@@ -160,5 +198,16 @@ extension NSError{
 extension Data{
     static func anyJSONData() -> Data{
         "{}".data(using: .utf8)!
+    }
+    
+    static func anyInvalidJsonData() -> Data {
+        Data("invalid json".utf8)
+    }
+}
+
+
+public extension HTTPURLResponse{
+    var isOK: Bool {
+        self.statusCode == 200
     }
 }
