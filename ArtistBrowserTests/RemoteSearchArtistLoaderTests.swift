@@ -26,7 +26,7 @@ class RemoteSearchArtistLoader: SearchArtistLoader {
     }
     
     func load(completion: @escaping (SearchArtistLoader.Result) -> Void) {
-        
+        client.get(request: request.get()) { _ in }
     }
 }
 
@@ -35,6 +35,16 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     func test_init_doesNotResquestData(){
         let (_, client) = makeSUT()
         XCTAssertTrue(client.requests.isEmpty)
+    }
+    
+    func test_load_requestDataFromURL(){
+        let builder = BasicRequestBuilder(baseURL: URL(string: "https://test")!, path: "path")
+        let (sut, client) = makeSUT(request: BasicRequest(builder: builder))
+       
+        sut.load{ _ in}
+        
+        XCTAssertEqual(client.requests.count, 1)
+        XCTAssertEqual(client.requests[0].url, URL(string: "https://test/path"))
     }
 
     // MARK: Helpers
