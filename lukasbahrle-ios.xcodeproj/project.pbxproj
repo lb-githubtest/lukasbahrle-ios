@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA0D427E25E6F35A00C90705 /* BasicRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D427D25E6F35A00C90705 /* BasicRequest.swift */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -90,6 +91,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DA0D427D25E6F35A00C90705 /* BasicRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRequest.swift; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419A9C25E685DA002B1782 /* ArtistBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistBrowser.h; sourceTree = "<group>"; };
 		DA419A9D25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 			children = (
 				DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */,
 				DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */,
+				DA0D427D25E6F35A00C90705 /* BasicRequest.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA0D427E25E6F35A00C90705 /* BasicRequest.swift in Sources */,
 				DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */,
 				DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */,
 				DA563EB525E6C2C900A2FE44 /* HTTPClientSpy.swift in Sources */,

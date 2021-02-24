@@ -52,21 +52,5 @@ extension Credentials{
 
 
 
-struct BasicRequestBuilder: RequestBuilder{
-    var baseURL: URL
-    var path: String
-    
-    static func any() -> BasicRequestBuilder{
-        return BasicRequestBuilder(baseURL: URL.any(), path: "")
-    }
-    
-}
 
-struct BasicRequest: Request{
-    var builder: RequestBuilder
-    
-    static func any() -> Request{
-        BasicRequest(builder: BasicRequestBuilder.any())
-    }
-}
 
