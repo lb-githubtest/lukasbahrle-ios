@@ -20,6 +20,7 @@ class RemoteSearchArtistLoader: SearchArtistLoader {
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
+        case unauthorized
     }
     
     let request: Request
@@ -57,10 +58,19 @@ extension HTTPURLResponse {
     var isOK: Bool {
         statusCode == 200
     }
+    
+    var isUnauthorized: Bool {
+        statusCode == 401
+    }
 }
 
 class RemoteSearchArtistMapper{
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> ArtistList {
+        
+        if response.isUnauthorized {
+            throw RemoteSearchArtistLoader.Error.unauthorized
+        }
+        
         guard response.isOK else {
             throw RemoteSearchArtistLoader.Error.invalidData
         }
@@ -103,6 +113,14 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
                 client.complete(withStatusCode: code, data: Data.anyJSONData(), at: index)
             })
         }
+    }
+    
+    func test_load_deliversUnauthorizedErrorOn401HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWith: failure(.unauthorized), when: {
+            client.complete(withStatusCode: 401, data: Data.anyJSONData())
+        })
     }
 
     // MARK: Helpers
