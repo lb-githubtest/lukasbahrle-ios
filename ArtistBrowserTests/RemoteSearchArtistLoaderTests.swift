@@ -8,7 +8,25 @@
 import XCTest
 import ArtistBrowser
 
-struct ArtistList: Equatable{}
+public struct Artist: Equatable{
+    public let name:String
+    
+    public init(name:String){
+        self.name = name
+    }
+}
+
+struct ArtistList: Equatable{
+    public let items:[Artist]
+    public let offset: Int
+    public let total: Int
+    
+    public init(items:[Artist], offset: Int, total: Int){
+        self.items = items
+        self.offset = offset
+        self.total = total
+    }
+}
 
 protocol SearchArtistLoader{
     typealias Result = Swift.Result<ArtistList, Error>
@@ -65,16 +83,42 @@ extension HTTPURLResponse {
 }
 
 class RemoteSearchArtistMapper{
+    private struct Root: Codable{
+        let artists: ArtistListRemoteResponse
+        
+        func toModel() -> ArtistList{
+            artists.toModel()
+        }
+    }
+    
+    private struct ArtistListRemoteResponse: Codable{
+        let items: [RemoteArtist]
+        let limit: Int
+        let offset: Int
+        let total: Int
+        
+        func toModel() -> ArtistList{
+            ArtistList(items: self.items.map{$0.toModel()}, offset: offset, total: total)
+        }
+    }
+    
+    private struct RemoteArtist: Codable{
+        let name: String
+        func toModel() -> Artist{
+            Artist(name: name)
+        }
+    }
+    
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> ArtistList {
         
         if response.isUnauthorized {
             throw RemoteSearchArtistLoader.Error.unauthorized
         }
         
-        guard response.isOK else {
+        guard response.isOK, let artistListResponse = try? JSONDecoder().decode(Root.self, from: data) else {
             throw RemoteSearchArtistLoader.Error.invalidData
         }
-        return ArtistList()
+        return artistListResponse.toModel()
     }
 }
 
@@ -120,6 +164,14 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         
         expect(sut, toCompleteWith: failure(.unauthorized), when: {
             client.complete(withStatusCode: 401, data: Data.anyJSONData())
+        })
+    }
+    
+    func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWith: failure(.invalidData), when: {
+            client.complete(withStatusCode: 200, data: Data.anyInvalidJsonData())
         })
     }
 
