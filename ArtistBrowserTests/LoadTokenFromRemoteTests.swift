@@ -141,6 +141,21 @@ class LoadTokenFromRemoteTests: XCTestCase {
         })
     }
     
+    func test_load_deliversResultOn200HTTPResponseWithValidTokenJSON() throws{
+        let (sut, client) = makeSUT()
+        
+        let token = "anytoken"
+        let json: [String: Any] = [
+            "access_token": token,
+            "token_type": "Bearer",
+            "expires_in": 3600,
+            "scope": ""
+        ]
+        
+        expect(sut, toCompleteWith: .success(token), when: {
+            client.complete(withStatusCode: 200, data: json.jsonData)
+        })
+    }
     
     // MARK: Helpers
     
@@ -202,6 +217,12 @@ extension Data{
     
     static func anyInvalidJsonData() -> Data {
         Data("invalid json".utf8)
+    }
+}
+
+extension Dictionary where Key: Any, Value:Any {
+    var jsonData:Data {
+        try! JSONSerialization.data(withJSONObject: self)
     }
 }
 
