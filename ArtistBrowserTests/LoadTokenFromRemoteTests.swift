@@ -22,6 +22,19 @@ class HTTPClientSpy: HTTPClient {
     func complete(with error: Error, at index: Int = 0) {
         messages[index].completion(.failure(error))
     }
+    
+    func complete(withStatusCode code: Int, data: Data, at index: Int = 0) {
+        guard let url = requests[index].url else {
+            fatalError()
+        }
+        let response = HTTPURLResponse(
+            url: url,
+            statusCode: code,
+            httpVersion: nil,
+            headerFields: nil
+        )!
+        messages[index].completion(.success((data, response)))
+    }
 }
 
 
@@ -36,6 +49,7 @@ public protocol TokenLoader{
 class RemoteTokenLoader: TokenLoader{
     public enum Error: Swift.Error {
         case connectivity
+        case invalidData
     }
     
     let url: URL
@@ -48,12 +62,17 @@ class RemoteTokenLoader: TokenLoader{
     
     func load(completion: @escaping (TokenLoader.Result) -> Void) {
         client.get(request: request()) { result in
-            completion(.failure(Error.connectivity))
+            switch result{
+            case let .success(data, httpResponse):
+                completion(.failure(Error.invalidData))
+            case .failure(_):
+                completion(.failure(Error.connectivity))
+            }
         }
     }
     
     private func request() -> URLRequest{
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         return request
     }
 }
@@ -68,9 +87,21 @@ class LoadTokenFromRemoteTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompleteWith: .failure(RemoteTokenLoader.Error.connectivity), when: {
+        expect(sut, toCompleteWith: failure(.connectivity), when: {
             client.complete(with: NSError.any())
         })
+    }
+    
+    func test_load_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let samples = [199, 201, 300, 400, 500]
+        
+        samples.enumerated().forEach { index, code in
+            expect(sut, toCompleteWith: failure(.invalidData), when: {
+                client.complete(withStatusCode: code, data: Data.anyJSONData(), at: index)
+            })
+        }
     }
     
     // MARK: Helpers
@@ -104,6 +135,10 @@ class LoadTokenFromRemoteTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
     }
+    
+    private func failure(_ error: RemoteTokenLoader.Error) -> TokenLoader.Result {
+        return .failure(error)
+    }
 
 }
 
@@ -118,5 +153,12 @@ extension URL{
 extension NSError{
     static func any() -> NSError{
         NSError(domain: "any", code: 0)
+    }
+}
+
+
+extension Data{
+    static func anyJSONData() -> Data{
+        "{}".data(using: .utf8)!
     }
 }
