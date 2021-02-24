@@ -25,6 +25,16 @@
 		DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */; };
 		DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */; };
 		DA4536E725E2467C0051B93E /* lukasbahrle_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */; };
+		DA563E8825E6BFB300A2FE44 /* RemoteTokenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */; };
+		DA563E9025E6C01000A2FE44 /* TokenLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E8F25E6C01000A2FE44 /* TokenLoader.swift */; };
+		DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */; };
+		DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563E9D25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift */; };
+		DA563EA825E6C15E00A2FE44 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EA725E6C15E00A2FE44 /* Request.swift */; };
+		DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EAD25E6C1D200A2FE44 /* TokenRequest.swift */; };
+		DA563EB525E6C2C900A2FE44 /* HTTPClientSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */; };
+		DA563EBF25E6C2F900A2FE44 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EBE25E6C2F900A2FE44 /* Credentials.swift */; };
+		DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */; };
+		DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -106,6 +116,16 @@
 		DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lukasbahrle-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosUITests.swift; sourceTree = "<group>"; };
 		DA4536E825E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTokenLoader.swift; sourceTree = "<group>"; };
+		DA563E8F25E6C01000A2FE44 /* TokenLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLoader.swift; sourceTree = "<group>"; };
+		DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteTokenMapper.swift; sourceTree = "<group>"; };
+		DA563E9D25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HTTPURLResponse+Status.swift"; sourceTree = "<group>"; };
+		DA563EA725E6C15E00A2FE44 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		DA563EAD25E6C1D200A2FE44 /* TokenRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRequest.swift; sourceTree = "<group>"; };
+		DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClientSpy.swift; sourceTree = "<group>"; };
+		DA563EBE25E6C2F900A2FE44 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
+		DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
+		DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Basic64EncodedAuthorizationHeader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +172,7 @@
 		DA419A9B25E685DA002B1782 /* ArtistBrowser */ = {
 			isa = PBXGroup;
 			children = (
+				DA563E9B25E6C09E00A2FE44 /* Helpers */,
 				DA419AC325E6873D002B1782 /* API */,
 				DA419A9C25E685DA002B1782 /* ArtistBrowser.h */,
 				DA419A9D25E685DA002B1782 /* Info.plist */,
@@ -162,6 +183,7 @@
 		DA419AA825E685DA002B1782 /* ArtistBrowserTests */ = {
 			isa = PBXGroup;
 			children = (
+				DA563EB325E6C2C000A2FE44 /* Helpers */,
 				DA419AAB25E685DA002B1782 /* Info.plist */,
 				DA419AD325E688A9002B1782 /* LoadTokenFromRemoteTests.swift */,
 				DA419AD225E688A9002B1782 /* ArtistBrowserTests-Bridging-Header.h */,
@@ -174,6 +196,7 @@
 			children = (
 				DA419ABD25E68737002B1782 /* HTTPClient.swift */,
 				DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */,
+				DA563EA725E6C15E00A2FE44 /* Request.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -181,8 +204,11 @@
 		DA419AC325E6873D002B1782 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				DA563E9C25E6C0BC00A2FE44 /* Helpers */,
+				DA563E8D25E6BFEE00A2FE44 /* Token */,
 				DA419AD925E691C4002B1782 /* Sample responses */,
 				DA419ABC25E68717002B1782 /* Shared */,
+				DA563EBE25E6C2F900A2FE44 /* Credentials.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -251,6 +277,42 @@
 				DA4536E825E2467C0051B93E /* Info.plist */,
 			);
 			path = "lukasbahrle-iosUITests";
+			sourceTree = "<group>";
+		};
+		DA563E8D25E6BFEE00A2FE44 /* Token */ = {
+			isa = PBXGroup;
+			children = (
+				DA563E8F25E6C01000A2FE44 /* TokenLoader.swift */,
+				DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */,
+				DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */,
+				DA563EAD25E6C1D200A2FE44 /* TokenRequest.swift */,
+			);
+			path = Token;
+			sourceTree = "<group>";
+		};
+		DA563E9B25E6C09E00A2FE44 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DA563E9C25E6C0BC00A2FE44 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DA563E9D25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift */,
+				DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DA563EB325E6C2C000A2FE44 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */,
+				DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -461,8 +523,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
+				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
+				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
+				DA563E9025E6C01000A2FE44 /* TokenLoader.swift in Sources */,
+				DA563EBF25E6C2F900A2FE44 /* Credentials.swift in Sources */,
 				DA419ABE25E68737002B1782 /* HTTPClient.swift in Sources */,
+				DA563EA825E6C15E00A2FE44 /* Request.swift in Sources */,
+				DA563E8825E6BFB300A2FE44 /* RemoteTokenLoader.swift in Sources */,
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
+				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,7 +540,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */,
 				DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */,
+				DA563EB525E6C2C900A2FE44 /* HTTPClientSpy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
