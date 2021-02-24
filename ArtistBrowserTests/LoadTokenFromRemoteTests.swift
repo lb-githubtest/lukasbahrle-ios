@@ -18,6 +18,10 @@ class HTTPClientSpy: HTTPClient {
     func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) {
         messages.append((request, completion))
     }
+    
+    func complete(with error: Error, at index: Int = 0) {
+        messages[index].completion(.failure(error))
+    }
 }
 
 
@@ -30,6 +34,10 @@ public protocol TokenLoader{
 }
 
 class RemoteTokenLoader: TokenLoader{
+    public enum Error: Swift.Error {
+        case connectivity
+    }
+    
     let url: URL
     let client: HTTPClient
     
@@ -39,7 +47,14 @@ class RemoteTokenLoader: TokenLoader{
     }
     
     func load(completion: @escaping (TokenLoader.Result) -> Void) {
-        
+        client.get(request: request()) { result in
+            completion(.failure(Error.connectivity))
+        }
+    }
+    
+    private func request() -> URLRequest{
+        var request = URLRequest(url: url)
+        return request
     }
 }
 
@@ -53,7 +68,9 @@ class LoadTokenFromRemoteTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-
+        expect(sut, toCompleteWith: .failure(RemoteTokenLoader.Error.connectivity), when: {
+            client.complete(with: NSError.any())
+        })
     }
     
     // MARK: Helpers
@@ -94,5 +111,12 @@ class LoadTokenFromRemoteTests: XCTestCase {
 extension URL{
     static func any() -> URL{
         return URL(string: "any-url")!
+    }
+}
+
+
+extension NSError{
+    static func any() -> NSError{
+        NSError(domain: "any", code: 0)
     }
 }
