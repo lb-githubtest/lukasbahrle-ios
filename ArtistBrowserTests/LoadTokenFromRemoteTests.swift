@@ -20,13 +20,26 @@ class HTTPClientSpy: HTTPClient {
     }
 }
 
-class RemoteTokenLoader{
+
+public typealias Token = String
+
+public protocol TokenLoader{
+    typealias Result = Swift.Result<Token, Error>
+    
+    func load(completion: @escaping (Result) -> Void)
+}
+
+class RemoteTokenLoader: TokenLoader{
     let url: URL
     let client: HTTPClient
     
     init(url: URL, client: HTTPClient){
         self.url = url
         self.client = client
+    }
+    
+    func load(completion: @escaping (TokenLoader.Result) -> Void) {
+        
     }
 }
 
