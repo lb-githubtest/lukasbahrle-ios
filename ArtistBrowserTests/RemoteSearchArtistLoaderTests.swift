@@ -8,7 +8,7 @@
 import XCTest
 import ArtistBrowser
 
-struct ArtistList{}
+struct ArtistList: Equatable{}
 
 protocol SearchArtistLoader{
     typealias Result = Swift.Result<ArtistList, Error>
@@ -17,6 +17,10 @@ protocol SearchArtistLoader{
 }
 
 class RemoteSearchArtistLoader: SearchArtistLoader {
+    public enum Error: Swift.Error {
+        case connectivity
+    }
+    
     let request: Request
     let client: HTTPClient
     
@@ -26,7 +30,16 @@ class RemoteSearchArtistLoader: SearchArtistLoader {
     }
     
     func load(completion: @escaping (SearchArtistLoader.Result) -> Void) {
-        client.get(request: request.get()) { _ in }
+        client.get(request: request.get()) { result in
+            
+            switch result{
+            case .failure(_):
+                completion(.failure(Error.connectivity))
+            default:
+                break
+            }
+            
+        }
     }
 }
 
@@ -46,6 +59,14 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         XCTAssertEqual(client.requests.count, 1)
         XCTAssertEqual(client.requests[0].url, URL(string: "https://test/path"))
     }
+    
+    func test_load_deliversErrorOnClientError() {
+        let (sut, client) = makeSUT()
+        
+        expect(sut, toCompleteWith: failure(.connectivity), when: {
+            client.complete(with: NSError.any())
+        })
+    }
 
     // MARK: Helpers
 
@@ -54,4 +75,32 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         let sut = RemoteSearchArtistLoader(request: request, client: client)
         return (sut, client)
     }
+    
+    private func expect(_ sut: RemoteSearchArtistLoader, toCompleteWith expectedResult: SearchArtistLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedItems), .success(expectedItems)):
+                XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)
+                
+            case let (.failure(receivedError as NSError), .failure(expectedError as NSError)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+                
+            default:
+                XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
+            }
+            
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func failure(_ error: RemoteSearchArtistLoader.Error) -> SearchArtistLoader.Result {
+        return .failure(error)
+    }
+    
 }
