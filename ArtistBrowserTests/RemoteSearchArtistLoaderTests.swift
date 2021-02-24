@@ -174,6 +174,33 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
             client.complete(withStatusCode: 200, data: Data.anyInvalidJsonData())
         })
     }
+    
+    func test_load_deliversArtistListOn200HTTPResponseWithValidArtistListData() {
+        let (sut, client) = makeSUT()
+        
+        let artistList = ArtistList(items: [
+            Artist(name: "artist 1"),
+            Artist(name: "artist 2"),
+            Artist(name: "artist 3")
+        ], offset: 20, total: 100)
+        
+        let json: [String: Any] = [
+            "href": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=0&limit=20",
+            "items": [
+                makeArtistJson(name: "artist 1"),
+                makeArtistJson(name: "artist 2"),
+                makeArtistJson(name: "artist 3")
+            ],
+            "limit": 10,
+            "next": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=20&limit=20",
+            "offset": 20,
+            "total": 100
+        ]
+        
+        expect(sut, toCompleteWith: .success(artistList), when: {
+            client.complete(withStatusCode: 200, data: ["artists":json].jsonData)
+        })
+    }
 
     // MARK: Helpers
 
@@ -208,6 +235,48 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     
     private func failure(_ error: RemoteSearchArtistLoader.Error) -> SearchArtistLoader.Result {
         return .failure(error)
+    }
+    
+    private func makeArtistJson(name: String = "Jack Harlow") -> [String: Any]{
+        
+        return [
+            "external_urls": [
+                "spotify": "https://open.spotify.com/artist/2LIk90788K0zvyj2JJVwkJ"
+            ],
+            "followers": [
+                "total": 715334
+            ],
+            "genres": [
+                "deep underground hip hop",
+                "kentucky hip hop",
+                "pop rap",
+                "rap"
+            ],
+            "href": "https://api.spotify.com/v1/artists/2LIk90788K0zvyj2JJVwkJ",
+            "id": "2LIk90788K0zvyj2JJVwkJ",
+            "images": [
+                [
+                    "height": 640,
+                    "url": "https://i.scdn.co/image/98e354db8bafef4b3be444bad6f0535ad72bf5f6",
+                    "width": 640
+                ],
+                [
+                    "height": 320,
+                    "url": "https://i.scdn.co/image/760c87212373379f77290356031d063ebfb792d2",
+                    "width": 320
+                ],
+                [
+                    "height": 160,
+                    "url": "https://i.scdn.co/image/360bd37c8439b95b4258b233aa12ede454d75b48",
+                    "width": 160
+                ]
+            ],
+            "name": "\(name)",
+            "popularity": 86,
+            "type": "artist",
+            "uri": "spotify:artist:2LIk90788K0zvyj2JJVwkJ"
+        ]
+        
     }
     
 }
