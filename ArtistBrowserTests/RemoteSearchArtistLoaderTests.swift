@@ -19,6 +19,7 @@ protocol SearchArtistLoader{
 class RemoteSearchArtistLoader: SearchArtistLoader {
     public enum Error: Swift.Error {
         case connectivity
+        case invalidData
     }
     
     let request: Request
@@ -35,11 +36,35 @@ class RemoteSearchArtistLoader: SearchArtistLoader {
             switch result{
             case .failure(_):
                 completion(.failure(Error.connectivity))
-            default:
-                break
+            case let .success((data, httpResponse)):
+                completion(self.map(data, from: httpResponse))
             }
             
         }
+    }
+    
+    private func map(_ data: Data, from response: HTTPURLResponse) -> SearchArtistLoader.Result {
+        do {
+            let list = try RemoteSearchArtistMapper.map(data, from: response)
+            return .success(list)
+        } catch {
+            return .failure(error)
+        }
+    }
+}
+
+extension HTTPURLResponse {
+    var isOK: Bool {
+        statusCode == 200
+    }
+}
+
+class RemoteSearchArtistMapper{
+    static func map(_ data: Data, from response: HTTPURLResponse) throws -> ArtistList {
+        guard response.isOK else {
+            throw RemoteSearchArtistLoader.Error.invalidData
+        }
+        return ArtistList()
     }
 }
 
@@ -66,6 +91,18 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         expect(sut, toCompleteWith: failure(.connectivity), when: {
             client.complete(with: NSError.any())
         })
+    }
+    
+    func test_load_deliversErrorOnNon200HTTPResponse() {
+        let (sut, client) = makeSUT()
+        
+        let samples = [199, 201, 300, 400, 500]
+        
+        samples.enumerated().forEach { index, code in
+            expect(sut, toCompleteWith: failure(.invalidData), when: {
+                client.complete(withStatusCode: code, data: Data.anyJSONData(), at: index)
+            })
+        }
     }
 
     // MARK: Helpers
