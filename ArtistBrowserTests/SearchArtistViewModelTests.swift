@@ -13,21 +13,43 @@ class SearchArtistViewModelTests: XCTestCase {
     private typealias ObservedMessage = SearchArtistViewModelObserverSpy.Message
 
     func test_searchArtist_dispatchesInLoadingStateAndNoErrorState(){
-        let loader = SearchArtistLoaderSpy()
-        let obszerver = SearchArtistViewModelObserverSpy()
-        let sut = SearchArtistViewModel(loader: loader)
-        sut.observer = obszerver
+        let (sut, _, observer) = makeSUT()
         
         sut.searchArtist(input: "")
         
-        XCTAssertEqual(obszerver.messages.count, 2)
-        XCTAssertTrue(obszerver.messages.contains(ObservedMessage.loading(true)), "The observer has received the loading message")
-        XCTAssertTrue(obszerver.messages.contains(ObservedMessage.error(nil)), "The observer has received an empty error message")
+        XCTAssertEqual(observer.messages.count, 2)
+        XCTAssertTrue(observer.messages.contains(ObservedMessage.loading(true)), "The observer has received the loading message")
+        XCTAssertTrue(observer.messages.contains(ObservedMessage.error(nil)), "The observer has received an empty error message")
     }
+    
+    func test_searchArtist_dispatchesErrorAndNotLoading_onCompletionWithError() throws{
+        let (sut, loader, observer) = makeSUT()
+        
+        sut.searchArtist(input: "")
+        
+        loader.complete(with: NSError.any())
+        
+        XCTAssertEqual(observer.messages.count, 4)
+        let lastMessages = Array(observer.messages.suffix(2))
+        
+        XCTAssertTrue(lastMessages.contains(ObservedMessage.loading(false)), "The observer has received the stop loading message")
+        let error = try XCTUnwrap(lastMessages.filter { item in return item.isError }.first)
+        XCTAssertFalse(error.isEmptyError)
+    }
+    
+    
 
     
     // MARK: Helpers
     
+    private func makeSUT() -> (SearchArtistViewModel, SearchArtistLoaderSpy, SearchArtistViewModelObserverSpy){
+        let loader = SearchArtistLoaderSpy()
+        let observer = SearchArtistViewModelObserverSpy()
+        let sut = SearchArtistViewModel(loader: loader)
+        sut.observer = observer
+        
+        return (sut, loader, observer)
+    }
     
 }
 
@@ -53,6 +75,24 @@ class SearchArtistViewModelObserverSpy: SearchArtistViewModelObserver{
         case loading(Bool)
         case error(String?)
         case data(ArtistList)
+        
+        var isError: Bool {
+            switch self {
+            case .error(_):
+                return true
+            default:
+                return false
+            }
+        }
+        
+        var isEmptyError: Bool {
+            switch self {
+            case .error(let message):
+                return message == nil
+            default:
+                return true
+            }
+        }
     }
     
     var messages: [Message] = []
