@@ -10,6 +10,8 @@
 		DA0D427E25E6F35A00C90705 /* BasicRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D427D25E6F35A00C90705 /* BasicRequest.swift */; };
 		DA0D428425E6F41500C90705 /* TokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D428325E6F41500C90705 /* TokenRequestTests.swift */; };
 		DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */; };
+		DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */; };
+		DA11AA0525E7E7A800968460 /* SearchArtistViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0425E7E7A800968460 /* SearchArtistViewModelTests.swift */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -99,6 +101,8 @@
 		DA0D427D25E6F35A00C90705 /* BasicRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicRequest.swift; sourceTree = "<group>"; };
 		DA0D428325E6F41500C90705 /* TokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRequestTests.swift; sourceTree = "<group>"; };
 		DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoaderTests.swift; sourceTree = "<group>"; };
+		DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModel.swift; sourceTree = "<group>"; };
+		DA11AA0425E7E7A800968460 /* SearchArtistViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModelTests.swift; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419A9C25E685DA002B1782 /* ArtistBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistBrowser.h; sourceTree = "<group>"; };
 		DA419A9D25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -181,10 +185,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA11A9E525E7DC4700968460 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
 		DA419A9B25E685DA002B1782 /* ArtistBrowser */ = {
 			isa = PBXGroup;
 			children = (
 				DA563E9B25E6C09E00A2FE44 /* Helpers */,
+				DA11A9E525E7DC4700968460 /* Presentation */,
 				DA419AC325E6873D002B1782 /* API */,
 				DA419A9C25E685DA002B1782 /* ArtistBrowser.h */,
 				DA419A9D25E685DA002B1782 /* Info.plist */,
@@ -201,6 +214,7 @@
 				DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */,
 				DA419AD225E688A9002B1782 /* ArtistBrowserTests-Bridging-Header.h */,
 				DA0D428325E6F41500C90705 /* TokenRequestTests.swift */,
+				DA11AA0425E7E7A800968460 /* SearchArtistViewModelTests.swift */,
 			);
 			path = ArtistBrowserTests;
 			sourceTree = "<group>";
@@ -550,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
+				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
 				DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */,
@@ -572,6 +587,7 @@
 				DA0D427E25E6F35A00C90705 /* BasicRequest.swift in Sources */,
 				DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */,
 				DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */,
+				DA11AA0525E7E7A800968460 /* SearchArtistViewModelTests.swift in Sources */,
 				DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */,
 				DA0D428425E6F41500C90705 /* TokenRequestTests.swift in Sources */,
 				DA563EB525E6C2C900A2FE44 /* HTTPClientSpy.swift in Sources */,
