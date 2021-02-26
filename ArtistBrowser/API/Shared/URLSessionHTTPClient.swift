@@ -18,7 +18,7 @@ public final class URLSessionHTTPClient: HTTPClient {
         self.session = session
     }
     
-    public func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) {
+    public func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> CancellableTask{
         let task = session.dataTask(with: request) { data, response, error in
             completion(Result {
                 if let error = error {
@@ -31,5 +31,7 @@ public final class URLSessionHTTPClient: HTTPClient {
             })
         }
         task.resume()
+        
+        return task
     }
 }

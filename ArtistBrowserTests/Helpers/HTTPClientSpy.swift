@@ -9,14 +9,19 @@ import Foundation
 import ArtistBrowser
 
 class HTTPClientSpy: HTTPClient {
+    private struct Task: CancellableTask {
+        func cancel() { }
+    }
+    
     private var messages = [(request: URLRequest, completion: (HTTPClient.Result) -> Void)]()
     
     var requests: [URLRequest] {
         return messages.map { $0.request }
     }
     
-    func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) {
+    func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> CancellableTask {
         messages.append((request, completion))
+        return Task()
     }
     
     func complete(with error: Error, at index: Int = 0) {
