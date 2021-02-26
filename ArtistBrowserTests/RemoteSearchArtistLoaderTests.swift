@@ -65,18 +65,23 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     func test_load_deliversArtistListOn200HTTPResponseWithValidArtistListData() {
         let (sut, client) = makeSUT()
         
+        let artistData_1: (name: String, thumbnail:String) = ("artist 1", "https://image_1.png")
+        let artistData_2: (name: String, thumbnail:String) = ("artist 2", "https://image_2.png")
+        let artistData_3: (name: String, thumbnail:String) = ("artist 3", "https://image_3.png")
+        
+        
         let artistList = ArtistList(items: [
-            Artist(name: "artist 1"),
-            Artist(name: "artist 2"),
-            Artist(name: "artist 3")
+            Artist(name: artistData_1.name, thumbnail: URL(string: artistData_1.thumbnail)),
+            Artist(name: artistData_2.name, thumbnail: URL(string: artistData_2.thumbnail)),
+            Artist(name: artistData_3.name, thumbnail: URL(string: artistData_3.thumbnail))
         ], canLoadMore: true)
         
         let json: [String: Any] = [
             "href": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=0&limit=20",
             "items": [
-                makeArtistJson(name: "artist 1"),
-                makeArtistJson(name: "artist 2"),
-                makeArtistJson(name: "artist 3")
+                makeArtistJson(name: artistData_1.name, thumbnail: artistData_1.thumbnail),
+                makeArtistJson(name: artistData_2.name, thumbnail: artistData_2.thumbnail),
+                makeArtistJson(name: artistData_3.name, thumbnail: artistData_3.thumbnail)
             ],
             "limit": 10,
             "next": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=20&limit=20",
@@ -124,7 +129,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         return .failure(error)
     }
     
-    private func makeArtistJson(name: String = "Jack Harlow") -> [String: Any]{
+    private func makeArtistJson(name: String = "Jack Harlow", thumbnail: String = "https://image.png") -> [String: Any]{
         
         return [
             "external_urls": [
@@ -144,7 +149,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
             "images": [
                 [
                     "height": 640,
-                    "url": "https://i.scdn.co/image/98e354db8bafef4b3be444bad6f0535ad72bf5f6",
+                    "url": "\(thumbnail)",
                     "width": 640
                 ],
                 [

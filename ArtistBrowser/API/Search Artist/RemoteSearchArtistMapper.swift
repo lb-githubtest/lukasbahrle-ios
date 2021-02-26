@@ -29,9 +29,16 @@ class RemoteSearchArtistMapper{
     
     private struct RemoteArtist: Codable{
         let name: String
+        let images: [RemoteArtistImage]
         func toModel() -> Artist{
-            Artist(name: name)
+            Artist(name: name, thumbnail: URL(string: images.first?.url ?? ""))
         }
+    }
+    
+    private struct RemoteArtistImage: Codable{
+        let width: Int
+        let height: Int
+        let url: String
     }
     
     static func map(_ data: Data, from response: HTTPURLResponse) throws -> ArtistList {

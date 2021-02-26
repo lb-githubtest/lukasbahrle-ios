@@ -18,7 +18,7 @@ public enum LoadState{
 public protocol SearchArtistViewModelObserver {
     func onLoadingStateChange()
     func onArtistListUpdated()
-    func onItemPreloadCompleted(result: Result<Data, Error>)
+    func onItemPreloadCompleted(result: (Result<Data, Error>) -> Void)
 }
 
 
@@ -41,10 +41,11 @@ protocol SearchArtistViewModelType {
 
 public struct PresentableArtist{
     let name: String
+    let thumbnail: URL?
 }
 
 protocol ImageDataLoader{
-    
+    func load(from url:URL, completion: Result<Data, Error>) -> CancellableTask
 }
 
 
@@ -91,7 +92,9 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
             return
         }
         
-        //itemLoadingTasks[index] = imageDataLoader.
+//        itemLoadingTasks[index] = imageDataLoader.load(from: dataModel[index].thumbnail){ result in
+//
+//        }
     }
 
     func cancelItem(at index: Int) {
@@ -116,7 +119,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private func onArtistListLoaded(artists: ArtistList){
         pagesLoaded = pagesLoaded + 1
         dataModel.append(contentsOf: artists.items.map{
-            PresentableArtistData(name: $0.name)
+            PresentableArtistData(name: $0.name, thumbnail: $0.thumbnail)
         })
         
         loadState = artists.canLoadMore ? .waiting : .none
