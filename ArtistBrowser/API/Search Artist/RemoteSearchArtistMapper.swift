@@ -23,7 +23,7 @@ class RemoteSearchArtistMapper{
         let total: Int
         
         func toModel() -> ArtistList{
-            ArtistList(items: self.items.map{$0.toModel()}, offset: offset, total: total)
+            ArtistList(items: self.items.map{$0.toModel()}, canLoadMore: offset + limit < total)
         }
     }
     

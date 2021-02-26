@@ -18,7 +18,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     func test_load_requestDataFromURL(){
         let input = "input text"
         let url = URL(string: "https://test/path")!
-        let (sut, client) = makeSUT(request: {_ in URLRequest(url: url)})
+        let (sut, client) = makeSUT(request: {_,_ in URLRequest(url: url)})
        
         sut.load(text: input) { _ in }
         
@@ -69,7 +69,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
             Artist(name: "artist 1"),
             Artist(name: "artist 2"),
             Artist(name: "artist 3")
-        ], offset: 20, total: 100)
+        ], canLoadMore: true)
         
         let json: [String: Any] = [
             "href": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=0&limit=20",
@@ -91,7 +91,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
 
     // MARK: Helpers
 
-    private func makeSUT(request: @escaping (String) -> URLRequest = {_ in URLRequest.any()}) -> (RemoteSearchArtistLoader, HTTPClientSpy){
+    private func makeSUT(request: @escaping (String, Int) -> URLRequest = {_,_  in URLRequest.any()}) -> (RemoteSearchArtistLoader, HTTPClientSpy){
         let client = HTTPClientSpy()
         let sut = RemoteSearchArtistLoader(request: request, client: client)
         return (sut, client)

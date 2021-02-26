@@ -17,13 +17,11 @@ public struct Artist: Equatable{
 
 public struct ArtistList: Equatable{
     public let items:[Artist]
-    public let offset: Int
-    public let total: Int
+    public let canLoadMore: Bool
     
-    public init(items:[Artist], offset: Int, total: Int){
+    public init(items:[Artist], canLoadMore: Bool){
         self.items = items
-        self.offset = offset
-        self.total = total
+        self.canLoadMore = canLoadMore
     }
 }
 
@@ -35,16 +33,16 @@ public class RemoteSearchArtistLoader: SearchArtistLoader {
         case unauthorized
     }
     
-    let request: (String) -> URLRequest
+    let request: (String, Int) -> URLRequest
     let client: HTTPClient
     
-    public init(request: @escaping (String) -> URLRequest, client: HTTPClient){
+    public init(request: @escaping (String, Int) -> URLRequest, client: HTTPClient){
         self.request = request
         self.client = client
     }
     
-    public func load(text: String, completion: @escaping (SearchArtistLoader.Result) -> Void) {
-        client.get(request: request(text)) { result in
+    public func load(text: String, page: Int = 0, completion: @escaping (SearchArtistLoader.Result) -> Void) {
+        client.get(request: request(text, page)) { result in
             switch result{
             case .failure(_):
                 completion(.failure(Error.connectivity))
