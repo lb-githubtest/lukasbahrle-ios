@@ -60,6 +60,9 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private var input:String = ""
     private var pagesLoaded = 0
     
+    private var currentTask: CancellableTask?
+    private var itemLoadingTasks = [Int: CancellableTask]()
+    
     init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader) {
         self.searchArtistLoader = searchArtistLoader
         self.imageDataLoader = imageDataLoader
@@ -84,17 +87,23 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
 
     func preloadItem(at index: Int) {
-
+        guard itemLoadingTasks[index] == nil else {
+            return
+        }
+        
+        //itemLoadingTasks[index] = imageDataLoader.
     }
 
     func cancelItem(at index: Int) {
-
+        itemLoadingTasks[index]?.cancel()
+        itemLoadingTasks[index] = nil
     }
     
     private func search(input: String, page: Int){
         loadState = .loading
+        currentTask?.cancel()
         
-        searchArtistLoader.load(text: input, page: page) { [weak self] (result) in
+        currentTask = searchArtistLoader.load(text: input, page: page) { [weak self] (result) in
             switch result{
                 case .success(let artistList):
                     self?.onArtistListLoaded(artists: artistList)

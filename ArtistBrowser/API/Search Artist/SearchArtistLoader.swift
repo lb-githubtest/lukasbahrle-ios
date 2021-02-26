@@ -10,5 +10,6 @@ import Foundation
 public protocol SearchArtistLoader{
     typealias Result = Swift.Result<ArtistList, Error>
     
-    func load(text: String, page: Int, completion: @escaping (Result) -> Void)
+    @discardableResult
+    func load(text: String, page: Int, completion: @escaping (Result) -> Void) -> CancellableTask
 }

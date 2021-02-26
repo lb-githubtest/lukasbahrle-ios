@@ -41,7 +41,8 @@ public class RemoteSearchArtistLoader: SearchArtistLoader {
         self.client = client
     }
     
-    public func load(text: String, page: Int = 0, completion: @escaping (SearchArtistLoader.Result) -> Void) {
+    @discardableResult
+    public func load(text: String, page: Int = 0, completion: @escaping (SearchArtistLoader.Result) -> Void) -> CancellableTask {
         client.get(request: request(text, page)) { result in
             switch result{
             case .failure(_):
