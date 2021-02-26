@@ -15,15 +15,17 @@ public enum LoadState{
 }
 
 
-public protocol SearchArtistViewModelObserver {
+public protocol SearchArtistViewModelObserver: NSObject {
     func onLoadingStateChange()
     func onArtistListUpdated()
-    func onItemPreloadCompleted(result: (Result<Data, Error>) -> Void)
+    func onItemPreloadCompleted(result: Result<Data, Error>)
 }
 
 
 protocol SearchArtistViewModelType {
     associatedtype PresentableArtistData
+    
+    var observer: SearchArtistViewModelObserver? {get set}
     
     var dataModel: [PresentableArtistData] {get}
     var loadState: LoadState {get}
@@ -44,9 +46,7 @@ public struct PresentableArtist{
     let thumbnail: URL?
 }
 
-protocol ImageDataLoader{
-    func load(from url:URL, completion: Result<Data, Error>) -> CancellableTask
-}
+
 
 
 public class SearchArtistViewModel: SearchArtistViewModelType{
@@ -63,6 +63,8 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     
     private var currentTask: CancellableTask?
     private var itemLoadingTasks = [Int: CancellableTask]()
+    
+    weak var observer: SearchArtistViewModelObserver?
     
     init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader) {
         self.searchArtistLoader = searchArtistLoader
@@ -92,9 +94,14 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
             return
         }
         
-//        itemLoadingTasks[index] = imageDataLoader.load(from: dataModel[index].thumbnail){ result in
-//
-//        }
+        guard let imageURL = dataModel[index].thumbnail else {
+            return
+        }
+        
+        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
+            self?.observer?.onItemPreloadCompleted(result: result)
+            self?.itemLoadingTasks[index] = nil
+        })
     }
 
     func cancelItem(at index: Int) {

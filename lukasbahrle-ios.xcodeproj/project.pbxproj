@@ -22,6 +22,7 @@
 		DA419ADD25E691E4002B1782 /* search.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADA25E691E4002B1782 /* search.json */; };
 		DA419ADE25E691E4002B1782 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADB25E691E4002B1782 /* token.json */; };
 		DA419ADF25E691E4002B1782 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADC25E691E4002B1782 /* albums.json */; };
+		DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F15925E9694100BC09DB /* ImageDataLoader.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
 		DA4536C925E2467A0051B93E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C825E2467A0051B93E /* ViewController.swift */; };
@@ -115,6 +116,7 @@
 		DA419ADA25E691E4002B1782 /* search.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = search.json; sourceTree = "<group>"; };
 		DA419ADB25E691E4002B1782 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		DA419ADC25E691E4002B1782 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
+		DA43F15925E9694100BC09DB /* ImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataLoader.swift; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4536C625E2467A0051B93E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 				DA419AC825E68792002B1782 /* URLSessionHTTPClient.swift */,
 				DA563EA725E6C15E00A2FE44 /* Request.swift */,
 				DA11AA0E25E92C2600968460 /* CancellableTask.swift */,
+				DA43F15925E9694100BC09DB /* ImageDataLoader.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */,
+				DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
 				DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */,
 				DA563E9025E6C01000A2FE44 /* TokenLoader.swift in Sources */,
