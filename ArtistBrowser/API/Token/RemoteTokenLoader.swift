@@ -14,16 +14,16 @@ public class RemoteTokenLoader: TokenLoader{
         case invalidData
     }
     
-    let request: Request
+    let request: () -> URLRequest
     let client: HTTPClient
     
-    public init(request: Request, client: HTTPClient){
+    public init(request: @escaping () -> URLRequest, client: HTTPClient){
         self.request = request
         self.client = client
     }
     
     public func load(completion: @escaping (TokenLoader.Result) -> Void) {
-        client.get(request: request.get()) { result in
+        client.get(request: request()) { result in
             switch result{
             case let .success((data, httpResponse)):
                 completion(self.map(data, from: httpResponse))

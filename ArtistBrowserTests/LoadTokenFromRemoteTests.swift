@@ -18,8 +18,8 @@ class LoadTokenFromRemoteTests: XCTestCase {
     }
     
     func test_load_requestDataFromURL(){
-        let builder = BasicRequestBuilder(baseURL: URL(string: "https://test")!, path: "path")
-        let (sut, client) = makeSUT(request: BasicRequest(builder: builder))
+        let url = URL(string: "https://test/path")!
+        let (sut, client) = makeSUT(request: {URLRequest(url:  url)})
        
         sut.load{ _ in}
         
@@ -57,8 +57,7 @@ class LoadTokenFromRemoteTests: XCTestCase {
     
     func test_load_deliversResultOn200HTTPResponseWithValidTokenJSON() throws{
         
-        let builder = BasicRequestBuilder(baseURL: URL(string: "https://test")!, path: "path")
-        let (sut, client) = makeSUT(request: BasicRequest(builder: builder))
+        let (sut, client) = makeSUT(request: {URLRequest.any()})
         
         let token = "anytoken"
         let json: [String: Any] = [
@@ -75,7 +74,7 @@ class LoadTokenFromRemoteTests: XCTestCase {
     
     // MARK: Helpers
     
-    private func makeSUT(request: Request = BasicRequest.any()) -> (RemoteTokenLoader, HTTPClientSpy){
+    private func makeSUT(request: @escaping () -> URLRequest = {URLRequest.any()}) -> (RemoteTokenLoader, HTTPClientSpy){
         let client = HTTPClientSpy()
         let sut = RemoteTokenLoader(request: request, client: client)
         
@@ -110,5 +109,7 @@ class LoadTokenFromRemoteTests: XCTestCase {
     }
 
 }
+
+
 
 

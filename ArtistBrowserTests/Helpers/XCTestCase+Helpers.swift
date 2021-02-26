@@ -16,11 +16,19 @@ extension URL{
 }
 
 
+extension URLRequest{
+    static func any() -> URLRequest{
+        URLRequest(url: URL.any())
+    }
+}
+
 extension NSError{
     static func any() -> NSError{
         NSError(domain: "any", code: 0)
     }
 }
+
+
 
 
 extension Data{

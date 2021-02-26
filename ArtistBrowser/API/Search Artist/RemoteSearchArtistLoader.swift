@@ -35,16 +35,16 @@ public class RemoteSearchArtistLoader: SearchArtistLoader {
         case unauthorized
     }
     
-    let request: Request
+    let request: (String) -> URLRequest
     let client: HTTPClient
     
-    public init(request: Request, client: HTTPClient){
+    public init(request: @escaping (String) -> URLRequest, client: HTTPClient){
         self.request = request
         self.client = client
     }
     
-    public func load(completion: @escaping (SearchArtistLoader.Result) -> Void) {
-        client.get(request: request.get()) { result in
+    public func load(text: String, completion: @escaping (SearchArtistLoader.Result) -> Void) {
+        client.get(request: request(text)) { result in
             switch result{
             case .failure(_):
                 completion(.failure(Error.connectivity))

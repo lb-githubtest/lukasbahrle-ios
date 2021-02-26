@@ -16,10 +16,11 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     }
     
     func test_load_requestDataFromURL(){
-        let builder = BasicRequestBuilder(baseURL: URL(string: "https://test")!, path: "path")
-        let (sut, client) = makeSUT(request: BasicRequest(builder: builder))
+        let input = "input text"
+        let url = URL(string: "https://test/path")!
+        let (sut, client) = makeSUT(request: {_ in URLRequest(url: url)})
        
-        sut.load{ _ in}
+        sut.load(text: input) { _ in }
         
         XCTAssertEqual(client.requests.count, 1)
         XCTAssertEqual(client.requests[0].url, URL(string: "https://test/path"))
@@ -90,16 +91,16 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
 
     // MARK: Helpers
 
-    private func makeSUT(request: Request = BasicRequest.any()) -> (RemoteSearchArtistLoader, HTTPClientSpy){
+    private func makeSUT(request: @escaping (String) -> URLRequest = {_ in URLRequest.any()}) -> (RemoteSearchArtistLoader, HTTPClientSpy){
         let client = HTTPClientSpy()
         let sut = RemoteSearchArtistLoader(request: request, client: client)
         return (sut, client)
     }
     
-    private func expect(_ sut: RemoteSearchArtistLoader, toCompleteWith expectedResult: SearchArtistLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
+    private func expect(_ sut: RemoteSearchArtistLoader, toCompleteWith expectedResult: SearchArtistLoader.Result, when action: () -> Void, input: String = "", file: StaticString = #filePath, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         
-        sut.load { receivedResult in
+        sut.load(text: input){ receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedItems), .success(expectedItems)):
                 XCTAssertEqual(receivedItems, expectedItems, file: file, line: line)

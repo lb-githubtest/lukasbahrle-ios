@@ -10,5 +10,5 @@ import Foundation
 public protocol SearchArtistLoader{
     typealias Result = Swift.Result<ArtistList, Error>
     
-    func load(completion: @escaping (Result) -> Void)
+    func load(text: String, completion: @escaping (Result) -> Void)
 }
