@@ -12,6 +12,7 @@ import ArtistBrowser
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var appCoordinator: AppCoordinator?
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
@@ -21,8 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        let root = UINavigationController(rootViewController: UIComposer.makeArtistBrowserViewController())
-        window?.rootViewController = root
+        appCoordinator = AppCoordinator()
+        window?.rootViewController = appCoordinator?.start()
         window?.makeKeyAndVisible()
     }
 
@@ -80,7 +81,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQBZurZiFRztlLwtV1AxQJ2CFd0JfZe9zbpA_vU5Od-UDj0porkHtiotLjPqSgBM-2Uxu_GAEnHL3e4FLno"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQDIXetYGc5ro6a-JrScTSo_sAiq-_Msp9chYu12kOupHixK4yg5uaN5Px6kFECSYmxAJyFUdbMiOlsOjkk"]
     
     var body: Data?
     

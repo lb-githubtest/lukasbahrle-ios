@@ -32,6 +32,7 @@ class ArtistBrowserViewController: UITableViewController {
     }
  
     private func configure(){
+        self.definesPresentationContext = true
         navigationItem.hidesSearchBarWhenScrolling = false
         self.title = viewModel?.title
         self.navigationController?.navigationBar.prefersLargeTitles = true

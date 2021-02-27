@@ -8,9 +8,33 @@
 import UIKit
 import ArtistBrowser
 
+
+class AppCoordinator{
+    private let navigationController: UINavigationController
+    
+    init(){
+        navigationController = UINavigationController()
+    }
+    
+    func start() -> UIViewController{
+        let vc = UIComposer.makeArtistBrowserViewController(navigator: self)
+        navigationController.setViewControllers([vc], animated: false)
+        return navigationController
+    }
+}
+
+extension AppCoordinator: SearchArtistNavigator{
+    func didSelect(artist: Artist) {
+        let vc = UIComposer.makeArtistDetailViewController(artist: artist)
+        navigationController.pushViewController(vc, animated: true)
+    }
+}
+
+
+
+
 class UIComposer{
-    static func makeArtistBrowserViewController() -> ArtistBrowserViewController{
-        
+    static func makeArtistBrowserViewController(navigator: SearchArtistNavigator) -> ArtistBrowserViewController{
         let bundle = Bundle(for: ArtistBrowserViewController.self)
         let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
@@ -25,10 +49,20 @@ class UIComposer{
         
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
-        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, onArtistSelected: { artist in
-            print("EOOO:: \(artist.name)")
-        })
+        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)
         
+        controller.viewModel = viewModel
+        
+        return controller
+    }
+    
+    static func makeArtistDetailViewController(artist: Artist) -> ArtistDetailViewController{
+        
+        let bundle = Bundle(for: ArtistDetailViewController.self)
+        let storyboard = UIStoryboard(name: "ArtistDetail", bundle: bundle)
+        let controller = storyboard.instantiateInitialViewController() as! ArtistDetailViewController
+        
+        let viewModel = ArtistDetailViewModel(artist: artist)
         controller.viewModel = viewModel
         
         return controller

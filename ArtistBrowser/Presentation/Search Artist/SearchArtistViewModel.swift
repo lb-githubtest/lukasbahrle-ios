@@ -72,7 +72,9 @@ public struct PresentableSearchArtistError: Equatable{
 
 
 
-
+public protocol SearchArtistNavigator: class{
+    func didSelect(artist: Artist)
+}
 
 
 
@@ -114,13 +116,13 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private var currentTask: CancellableTask?
     private var itemLoadingTasks = [Int: CancellableTask]()
     
-    private var onArtistSelected: (Artist) -> Void
+    private weak var navigator: SearchArtistNavigator?
     
     
-    public init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader, onArtistSelected: @escaping (Artist) -> Void) {
+    public init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader, navigator: SearchArtistNavigator) {
         self.searchArtistLoader = searchArtistLoader
         self.imageDataLoader = imageDataLoader
-        self.onArtistSelected = onArtistSelected
+        self.navigator = navigator
     }
 
     func viewDidLoad() {
@@ -163,7 +165,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     
     public func selectArtist(at index: Int) {
         print("selectArtist: \(index)")
-        onArtistSelected(dataModel[index])
+        navigator?.didSelect(artist: dataModel[index])
     }
     
     public func retryLoad(){
