@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let scene = (scene as? UIWindowScene) else { return }
         
         window = UIWindow(windowScene: scene)
-        window?.rootViewController = makeArtistBrowserViewController()
+        window?.rootViewController = UIComposer.makeArtistBrowserViewController()
         window?.makeKeyAndVisible()
     }
 
@@ -54,28 +54,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     
-    func makeArtistBrowserViewController() -> ArtistBrowserViewController{
-        
-        let bundle = Bundle(for: ArtistBrowserViewController.self)
-        let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
-        let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
-        
-        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
-            var builder = SearchArtistRequestBuilder()
-            builder.set(input: input, loadedItems: loadedItems)
-            let request = SearchArtisRequest(builder: builder)
-            
-            return request.get()
-        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-        
-        let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-        
-        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader)
-        
-        controller.viewModel = viewModel
-        
-        return controller
-    }
+    
 
 }
 
@@ -100,7 +79,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQAF9mlino-XdRGrK0QHN_JgKG10dZVanizwfW0XHKQZrXKzhhXi8TcsmlacTxAZbAO7W_AQa9RtRVlqnMk"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQAlMlKetGDwT7MVZFCecnG86LIJxitJDT3FPUYxYWwU6xcKkcr1cjV3Bq_igZr8UVz0NdTALhhSdKVeKqU"]
     
     var body: Data?
     

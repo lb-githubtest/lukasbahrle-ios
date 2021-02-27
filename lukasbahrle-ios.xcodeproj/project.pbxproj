@@ -13,6 +13,7 @@
 		DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0E25E92C2600968460 /* CancellableTask.swift */; };
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
 		DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */; };
+		DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB2525EA3049000E9656 /* UIComposer.swift */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -109,6 +110,7 @@
 		DA11AA0E25E92C2600968460 /* CancellableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTask.swift; sourceTree = "<group>"; };
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
+		DA18FB2525EA3049000E9656 /* UIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComposer.swift; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419A9C25E685DA002B1782 /* ArtistBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistBrowser.h; sourceTree = "<group>"; };
 		DA419A9D25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				DA43F15F25E96BA100BC09DB /* UI */,
 				DA4536C425E2467A0051B93E /* AppDelegate.swift */,
 				DA4536C625E2467A0051B93E /* SceneDelegate.swift */,
+				DA18FB2525EA3049000E9656 /* UIComposer.swift */,
 				DA4536C825E2467A0051B93E /* ViewController.swift */,
 				DA4536CA25E2467A0051B93E /* Main.storyboard */,
 				DA4536CD25E2467C0051B93E /* Assets.xcassets */,
@@ -639,6 +642,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
+				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA4536C925E2467A0051B93E /* ViewController.swift in Sources */,
 				DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */,
 				DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */,
