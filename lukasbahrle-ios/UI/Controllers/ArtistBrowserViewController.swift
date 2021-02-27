@@ -64,12 +64,12 @@ class ArtistBrowserViewController: UITableViewController, UITableViewDataSourceP
         guard let viewModel = viewModel else {fatalError()}
         
         if indexPath.row == viewModel.dataModel.count {
-            
-            if viewModel.loadState.isError {
+            switch viewModel.loadState {
+            case .error(let error):
                 let errorCell = tableView.dequeueReusableCell(withIdentifier: "ErrorTableViewCell", for: indexPath) as! ErrorTableViewCell
+                errorCell.set(model: error)
                 return errorCell
-            }
-            else{
+            default:
                 let loadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingTableViewCell", for: indexPath) as! LoadingTableViewCell
                 return loadingCell
             }

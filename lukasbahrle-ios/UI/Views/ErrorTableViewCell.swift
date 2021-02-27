@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ArtistBrowser
 
 class ErrorTableViewCell: UITableViewCell {
     
@@ -19,6 +20,11 @@ class ErrorTableViewCell: UITableViewCell {
     
     private func configure(){
         selectionStyle = .none
+    }
+
+    func set(model: PresentableSearchArtistError) {
+        infoLabel.text = model.info
+        retryLabel.text = model.retry
     }
 
 }

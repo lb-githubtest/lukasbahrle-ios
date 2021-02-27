@@ -166,7 +166,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     private func onArtistListLoadError(error: Error){
-        loadState = .error(PresentableSearchArtistError(info: "Error", retry: "Retry"))
+        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
         observer?.onLoadingStateChange()
     }

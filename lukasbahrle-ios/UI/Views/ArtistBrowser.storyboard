@@ -103,6 +103,10 @@
                                         <constraint firstAttribute="bottomMargin" secondItem="aTy-jJ-QVr" secondAttribute="bottom" id="xAJ-mX-Lf6"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="infoLabel" destination="TYT-ik-stR" id="bKQ-qY-3cB"/>
+                                    <outlet property="retryLabel" destination="aTy-jJ-QVr" id="LY7-ov-efN"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

@@ -30,8 +30,6 @@
 		DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
-		DA4536C925E2467A0051B93E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C825E2467A0051B93E /* ViewController.swift */; };
-		DA4536CC25E2467A0051B93E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CA25E2467A0051B93E /* Main.storyboard */; };
 		DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CD25E2467C0051B93E /* Assets.xcassets */; };
 		DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */; };
 		DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */; };
@@ -130,8 +128,6 @@
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DA4536C625E2467A0051B93E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		DA4536C825E2467A0051B93E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		DA4536CB25E2467A0051B93E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DA4536CD25E2467C0051B93E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4536D025E2467C0051B93E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4536D225E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -324,8 +320,6 @@
 				DA4536C425E2467A0051B93E /* AppDelegate.swift */,
 				DA4536C625E2467A0051B93E /* SceneDelegate.swift */,
 				DA18FB2525EA3049000E9656 /* UIComposer.swift */,
-				DA4536C825E2467A0051B93E /* ViewController.swift */,
-				DA4536CA25E2467A0051B93E /* Main.storyboard */,
 				DA4536CD25E2467C0051B93E /* Assets.xcassets */,
 				DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */,
 				DA4536D225E2467C0051B93E /* Info.plist */,
@@ -581,7 +575,6 @@
 				DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */,
 				DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */,
 				DA43F16125E96BE800BC09DB /* ArtistBrowser.storyboard in Resources */,
-				DA4536CC25E2467A0051B93E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -643,7 +636,6 @@
 			files = (
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
-				DA4536C925E2467A0051B93E /* ViewController.swift in Sources */,
 				DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */,
 				DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */,
 				DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */,
@@ -699,14 +691,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		DA4536CA25E2467A0051B93E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				DA4536CB25E2467A0051B93E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
