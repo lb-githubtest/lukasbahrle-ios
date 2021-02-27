@@ -7,19 +7,18 @@
 
 import Foundation
 
-protocol ImageDataLoader{
+public protocol ImageDataLoader{
     func load(from url:URL, completion: @escaping (Result<Data, Error>) -> Void) -> CancellableTask
 }
 
-class RemoteImageDataLoader: ImageDataLoader{
-    
+public class RemoteImageDataLoader: ImageDataLoader{
     private var client: HTTPClient
     
     public init(client: HTTPClient){
         self.client = client
     }
     
-    func load(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) -> CancellableTask {
+    public func load(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) -> CancellableTask {
         
         return client.get(request: URLRequest(url: url)) { (result) in
             switch result{

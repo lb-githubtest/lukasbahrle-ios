@@ -11,5 +11,5 @@ public protocol SearchArtistLoader{
     typealias Result = Swift.Result<ArtistList, Error>
     
     @discardableResult
-    func load(text: String, page: Int, completion: @escaping (Result) -> Void) -> CancellableTask
+    func load(text: String, loadedItems: Int, completion: @escaping (Result) -> Void) -> CancellableTask
 }

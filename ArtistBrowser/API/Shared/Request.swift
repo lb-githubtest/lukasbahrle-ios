@@ -29,30 +29,15 @@ public extension Request {
 public protocol RequestBuilder{
     var baseURL: URL { get }
     var path: String { get }
+    var httpMethod: HTTPMethod { get }
     var params: [URLQueryItem]? { get }
-    var headers: [String: String]? {get}
-    var httpMethod: HTTPMethod {get}
-    var body: Data {get}
+    var headers: [String: String]? { get }
+    var body: Data? {get}
     
     func build() -> URLRequest
 }
 
 public extension RequestBuilder{
-    var headers: [String: String]? {
-        nil
-    }
-    
-    var httpMethod: HTTPMethod{
-        HTTPMethod.GET
-    }
-    
-    var body: Data {
-        Data()
-    }
-    
-    var params: [URLQueryItem]? {
-        nil
-    }
     
     func build() -> URLRequest {
         guard var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: false) else {

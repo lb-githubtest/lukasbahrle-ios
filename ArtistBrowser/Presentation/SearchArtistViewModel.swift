@@ -7,18 +7,27 @@
 
 import Foundation
 
-public enum LoadState{
+public enum LoadState: Equatable{
     case none
     case waiting
     case loading
-    case error
+    case error(PresentableSearchArtistError)
+    
+    public var isError: Bool {
+        switch self {
+        case .error(_):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 
 public protocol SearchArtistViewModelObserver: NSObject {
     func onLoadingStateChange()
     func onArtistListUpdated()
-    func onItemPreloadCompleted(result: Result<Data, Error>)
+    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
 }
 
 
@@ -30,43 +39,55 @@ protocol SearchArtistViewModelType {
     var dataModel: [PresentableArtistData] {get}
     var loadState: LoadState {get}
     
+    var title: String {get}
+    
     func viewDidLoad()
     
     func inputTextChanged(input: String)
-    func loadNextPage()
+    func scrolledToBottom()
     
     func preloadItem(at index: Int)
     func cancelItem(at index: Int)
+
 }
 
 
 
 public struct PresentableArtist{
-    let name: String
-    let thumbnail: URL?
+    public let name: String
+    public let thumbnail: URL?
 }
 
+public struct PresentableSearchArtistError: Equatable{
+    public let info: String
+    public let retry: String
+}
 
 
 
 public class SearchArtistViewModel: SearchArtistViewModelType{
     
-    private(set) var dataModel = [PresentableArtist]()
+    public var title:String {
+        "Artist Browser"
+    }
+    
+    public private(set) var dataModel = [PresentableArtist]()
 
-    private(set) var loadState: LoadState = .none
+    public private(set) var loadState: LoadState = .none
+    
+    public weak var observer: SearchArtistViewModelObserver?
 
     private let searchArtistLoader: SearchArtistLoader
     private let imageDataLoader: ImageDataLoader
     
     private var input:String = ""
-    private var pagesLoaded = 0
     
     private var currentTask: CancellableTask?
     private var itemLoadingTasks = [Int: CancellableTask]()
     
-    weak var observer: SearchArtistViewModelObserver?
+   
     
-    init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader) {
+    public init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader) {
         self.searchArtistLoader = searchArtistLoader
         self.imageDataLoader = imageDataLoader
     }
@@ -75,22 +96,21 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         
     }
 
-    func inputTextChanged(input: String) {
+    public func inputTextChanged(input: String) {
         self.input = input
-        self.pagesLoaded = 0
         dataModel = []
 
-        search(input: input, page: pagesLoaded)
+        search(input: input, loadedItems: 0)
     }
     
-    func loadNextPage() {
-        guard loadState != .loading else {return}
-        
-        search(input: input, page: pagesLoaded)
+    public func scrolledToBottom(){
+        loadNextPage()
     }
+    
+   
 
-    func preloadItem(at index: Int) {
-        guard itemLoadingTasks[index] == nil else {
+    public func preloadItem(at index: Int) {
+        guard itemLoadingTasks[index] == nil, index < dataModel.count else {
             return
         }
         
@@ -99,41 +119,56 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         }
         
         itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
-            self?.observer?.onItemPreloadCompleted(result: result)
-            self?.itemLoadingTasks[index] = nil
+            DispatchQueue.main.async {
+                self?.observer?.onItemPreloadCompleted(index: index, result: result)
+                self?.itemLoadingTasks[index] = nil
+            }
         })
     }
 
-    func cancelItem(at index: Int) {
+    public func cancelItem(at index: Int) {
         itemLoadingTasks[index]?.cancel()
         itemLoadingTasks[index] = nil
     }
     
-    private func search(input: String, page: Int){
+    private func loadNextPage() {
+        guard loadState != .loading, loadState != .none, dataModel.count > 0 else {return}
+        
+        search(input: input, loadedItems: dataModel.count)
+    }
+    
+    private func search(input: String, loadedItems: Int){
         loadState = .loading
         currentTask?.cancel()
         
-        currentTask = searchArtistLoader.load(text: input, page: page) { [weak self] (result) in
-            switch result{
-                case .success(let artistList):
-                    self?.onArtistListLoaded(artists: artistList)
-                case .failure(let error):
-                    self?.onArtistListLoadError(error: error)
+        print("Search: \(input)")
+        
+        currentTask = searchArtistLoader.load(text: input, loadedItems: loadedItems) { [weak self] (result) in
+            DispatchQueue.main.async {
+                switch result{
+                    case .success(let artistList):
+                        self?.onArtistListLoaded(artists: artistList)
+                    case .failure(let error):
+                        self?.onArtistListLoadError(error: error)
+                }
             }
         }
     }
     
     private func onArtistListLoaded(artists: ArtistList){
-        pagesLoaded = pagesLoaded + 1
         dataModel.append(contentsOf: artists.items.map{
             PresentableArtistData(name: $0.name, thumbnail: $0.thumbnail)
         })
         
         loadState = artists.canLoadMore ? .waiting : .none
+        
+        observer?.onArtistListUpdated()
     }
     
     private func onArtistListLoadError(error: Error){
-        loadState = .error
+        loadState = .error(PresentableSearchArtistError(info: "Error", retry: "Retry"))
+        
+        observer?.onLoadingStateChange()
     }
     
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ArtistBrowser
 
 @available(iOS 13.0, *)
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
@@ -17,7 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        guard let scene = (scene as? UIWindowScene) else { return }
+        
+        window = UIWindow(windowScene: scene)
+        window?.rootViewController = makeArtistBrowserViewController()
+        window?.makeKeyAndVisible()
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -48,6 +53,64 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    
+    func makeArtistBrowserViewController() -> ArtistBrowserViewController{
+        
+        let bundle = Bundle(for: ArtistBrowserViewController.self)
+        let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
+        let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
+        
+        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
+            var builder = SearchArtistRequestBuilder()
+            builder.set(input: input, loadedItems: loadedItems)
+            let request = SearchArtisRequest(builder: builder)
+            
+            return request.get()
+        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+        
+        let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+        
+        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader)
+        
+        controller.viewModel = viewModel
+        
+        return controller
+    }
 
 }
 
+
+
+struct SearchArtisRequest: Request{
+    var builder: RequestBuilder
+    
+    
+}
+
+
+struct SearchArtistRequestBuilder: RequestBuilder {
+    var baseURL: URL = URL(string: "https://api.spotify.com/v1/")!
+    
+    var path: String =  "search"
+    
+    var httpMethod: HTTPMethod = .GET
+    
+    var params: [URLQueryItem]? = [
+        URLQueryItem(name: "type", value: "artist"),
+        URLQueryItem(name: "limit", value: "7")
+    ]
+    
+    var headers: [String : String]? =  ["Authorization": "Bearer BQAF9mlino-XdRGrK0QHN_JgKG10dZVanizwfW0XHKQZrXKzhhXi8TcsmlacTxAZbAO7W_AQa9RtRVlqnMk"]
+    
+    var body: Data?
+    
+
+    mutating func set(input: String, loadedItems: Int){
+        var queryParams = params!
+        queryParams.append(URLQueryItem(name: "q", value: input))
+        queryParams.append(URLQueryItem(name: "offset", value: "\(loadedItems)"))
+        
+        params = queryParams
+    }
+    
+}
