@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Qwc-He-C9O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AHA-wv-Xqh">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Artist Detail View Controller-->
+        <!--View Controller-->
         <scene sceneID="DcO-cw-FYf">
             <objects>
-                <viewController storyboardIdentifier="ArtistDetailViewController" id="Qwc-He-C9O" customClass="ArtistDetailViewController" customModule="lukasbahrle_ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Qwc-He-C9O" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Fni-Ye-0pI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,7 +35,110 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="47K-Qq-rce" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133" y="219"/>
+            <point key="canvasLocation" x="-299" y="226"/>
+        </scene>
+        <!--Artist Detail View Controller-->
+        <scene sceneID="5Vr-Sv-IVN">
+            <objects>
+                <collectionViewController storyboardIdentifier="ArtistDetailViewController" id="AHA-wv-Xqh" customClass="ArtistDetailViewController" customModule="lukasbahrle_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="MIq-lz-fIN">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="0Ig-zz-XTr">
+                            <size key="itemSize" width="410" height="410"/>
+                            <size key="headerReferenceSize" width="50" height="600"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumViewCell" id="ONI-cH-qO5" customClass="AlbumViewCell" customModule="lukasbahrle_ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="600" width="49" height="83"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tjq-mr-NaZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="49" height="83"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UC5-6j-tYY">
+                                            <rect key="frame" x="0.0" y="0.0" width="49" height="49"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="UC5-6j-tYY" secondAttribute="height" multiplier="1:1" id="6Rc-Rg-6Po"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wQY-uu-TsV">
+                                            <rect key="frame" x="8" y="59" width="33" height="16"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="UC5-6j-tYY" firstAttribute="top" secondItem="tjq-mr-NaZ" secondAttribute="top" id="KFn-l5-TmN"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="wQY-uu-TsV" secondAttribute="bottom" id="L7q-sb-Iok"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="wQY-uu-TsV" secondAttribute="trailing" id="h6J-E8-V0m"/>
+                                        <constraint firstItem="UC5-6j-tYY" firstAttribute="leading" secondItem="tjq-mr-NaZ" secondAttribute="leading" id="nLK-i0-vL6"/>
+                                        <constraint firstItem="wQY-uu-TsV" firstAttribute="leading" secondItem="tjq-mr-NaZ" secondAttribute="leadingMargin" id="nxM-Nc-ANs"/>
+                                        <constraint firstItem="wQY-uu-TsV" firstAttribute="top" secondItem="UC5-6j-tYY" secondAttribute="bottom" constant="10" id="oVg-l8-8Tx"/>
+                                        <constraint firstAttribute="trailing" secondItem="UC5-6j-tYY" secondAttribute="trailing" id="zQ9-0U-rzQ"/>
+                                    </constraints>
+                                </collectionViewCellContentView>
+                                <connections>
+                                    <outlet property="albumNameLabel" destination="wQY-uu-TsV" id="rvv-BM-1Cr"/>
+                                    <outlet property="thumbnailView" destination="UC5-6j-tYY" id="X67-8E-1aE"/>
+                                </connections>
+                            </collectionViewCell>
+                        </cells>
+                        <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="ArtistDetailHeaderView" id="qlZ-sd-VvK" customClass="ArtistDetailHeaderView" customModule="lukasbahrle_ios" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="600"/>
+                            <autoresizingMask key="autoresizingMask"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="I2h-kk-0oB">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="414"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="I2h-kk-0oB" secondAttribute="height" multiplier="1:1" id="NdW-I6-PVm"/>
+                                    </constraints>
+                                </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Artist Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5c-bb-nK2">
+                                    <rect key="frame" x="8" y="431" width="398" height="41"/>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2d-7c-gcs">
+                                    <rect key="frame" x="8" y="480" width="398" height="112"/>
+                                    <string key="text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries</string>
+                                    <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="O5c-bb-nK2" firstAttribute="top" secondItem="I2h-kk-0oB" secondAttribute="bottom" constant="17" id="19Y-GE-6bJ"/>
+                                <constraint firstItem="I2h-kk-0oB" firstAttribute="top" secondItem="qlZ-sd-VvK" secondAttribute="top" id="1Zx-29-lhG"/>
+                                <constraint firstItem="M2d-7c-gcs" firstAttribute="top" secondItem="O5c-bb-nK2" secondAttribute="bottom" constant="8" symbolic="YES" id="C20-1D-vU1"/>
+                                <constraint firstItem="M2d-7c-gcs" firstAttribute="trailing" secondItem="O5c-bb-nK2" secondAttribute="trailing" id="DzL-yW-X0H"/>
+                                <constraint firstItem="I2h-kk-0oB" firstAttribute="leading" secondItem="qlZ-sd-VvK" secondAttribute="leading" id="Gzg-41-5Kw"/>
+                                <constraint firstItem="O5c-bb-nK2" firstAttribute="leading" secondItem="qlZ-sd-VvK" secondAttribute="leadingMargin" id="S6d-J5-JFk"/>
+                                <constraint firstAttribute="trailingMargin" secondItem="O5c-bb-nK2" secondAttribute="trailing" id="WMe-l2-5E9"/>
+                                <constraint firstAttribute="bottomMargin" secondItem="M2d-7c-gcs" secondAttribute="bottom" id="kA0-i8-3KS"/>
+                                <constraint firstItem="M2d-7c-gcs" firstAttribute="leading" secondItem="O5c-bb-nK2" secondAttribute="leading" id="tVN-Q1-zKk"/>
+                                <constraint firstAttribute="trailing" secondItem="I2h-kk-0oB" secondAttribute="trailing" id="wZf-Dx-ASM"/>
+                            </constraints>
+                            <connections>
+                                <outlet property="artistNameLabel" destination="O5c-bb-nK2" id="bUh-FB-P81"/>
+                                <outlet property="infoLabel" destination="M2d-7c-gcs" id="iAQ-UP-eku"/>
+                                <outlet property="thumbnailView" destination="I2h-kk-0oB" id="Sgu-rC-vu2"/>
+                            </connections>
+                        </collectionReusableView>
+                        <connections>
+                            <outlet property="dataSource" destination="AHA-wv-Xqh" id="z3q-GS-OFU"/>
+                            <outlet property="delegate" destination="AHA-wv-Xqh" id="9x7-ZR-54V"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="W2I-Ka-cfd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="928.98550724637687" y="205.58035714285714"/>
         </scene>
     </scenes>
     <resources>
