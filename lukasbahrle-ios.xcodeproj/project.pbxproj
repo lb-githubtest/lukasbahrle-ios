@@ -14,6 +14,8 @@
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
 		DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */; };
 		DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB2525EA3049000E9656 /* UIComposer.swift */; };
+		DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */; };
+		DA18FB4325EA4AEE000E9656 /* ArtistDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -109,6 +111,8 @@
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB2525EA3049000E9656 /* UIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComposer.swift; sourceTree = "<group>"; };
+		DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewController.swift; sourceTree = "<group>"; };
+		DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ArtistDetail.storyboard; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419A9C25E685DA002B1782 /* ArtistBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistBrowser.h; sourceTree = "<group>"; };
 		DA419A9D25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -213,8 +217,26 @@
 		DA18FB3125EA3F11000E9656 /* Artist Detail */ = {
 			isa = PBXGroup;
 			children = (
+				DA18FB3625EA4A0F000E9656 /* Controllers */,
+				DA18FB3725EA4A17000E9656 /* Views */,
 			);
 			path = "Artist Detail";
+			sourceTree = "<group>";
+		};
+		DA18FB3625EA4A0F000E9656 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		DA18FB3725EA4A17000E9656 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		DA419A9B25E685DA002B1782 /* ArtistBrowser */ = {
@@ -588,6 +610,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA18FB4325EA4AEE000E9656 /* ArtistDetail.storyboard in Resources */,
 				DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */,
 				DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */,
 				DA43F16125E96BE800BC09DB /* ArtistBrowser.storyboard in Resources */,
@@ -650,6 +673,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */,
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */,

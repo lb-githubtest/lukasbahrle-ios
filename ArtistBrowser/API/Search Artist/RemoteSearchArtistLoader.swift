@@ -8,10 +8,12 @@
 import Foundation
 
 public struct Artist: Equatable{
+    public let id: String
     public let name:String
     public let thumbnail: URL?
     
-    public init(name:String, thumbnail: URL?){
+    public init(id: String, name:String, thumbnail: URL?){
+        self.id = id
         self.name = name
         self.thumbnail = thumbnail
     }

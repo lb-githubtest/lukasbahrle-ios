@@ -61,13 +61,13 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let viewModel = viewModel else {return 0}
         let extraLoadingCell = viewModel.loadState != .none ? 1 : 0
-        return viewModel.dataModel.count + extraLoadingCell
+        return viewModel.numberOfArtists + extraLoadingCell
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let viewModel = viewModel else {fatalError()}
         
-        if indexPath.row == viewModel.dataModel.count {
+        if indexPath.row == viewModel.numberOfArtists {
             switch viewModel.loadState {
             case .error(let error):
                 let errorCell = tableView.dequeueReusableCell(withIdentifier: "ErrorTableViewCell", for: indexPath) as! ErrorTableViewCell
@@ -79,8 +79,12 @@ extension ArtistBrowserViewController{
             }
         }
         
+        guard let artist = viewModel.artist(at: indexPath.row) else {
+            fatalError()
+        }
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistSearchResultCell", for: indexPath) as! ArtistSearchResultCell
-        cell.configure(artist: viewModel.dataModel[indexPath.row])
+        cell.configure(artist: artist)
         return cell
     }
     
@@ -88,7 +92,7 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {fatalError()}
         
-        if indexPath.row == viewModel.dataModel.count {
+        if indexPath.row == viewModel.numberOfArtists {
             // loading cell
             viewModel.scrolledToBottom()
         }
@@ -100,7 +104,7 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {fatalError()}
         
-        if indexPath.row < viewModel.dataModel.count {
+        if indexPath.row < viewModel.numberOfArtists {
             viewModel.cancelItem(at: indexPath.row)
         }
     }
@@ -109,7 +113,7 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {fatalError()}
         
-        guard indexPath.row < viewModel.dataModel.count else {
+        guard indexPath.row < viewModel.numberOfArtists else {
             //is not an artist row
             if viewModel.loadState.isError {
                 viewModel.retryLoad()

@@ -25,7 +25,9 @@ class UIComposer{
         
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
-        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader)
+        let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, onArtistSelected: { artist in
+            print("EOOO:: \(artist.name)")
+        })
         
         controller.viewModel = viewModel
         

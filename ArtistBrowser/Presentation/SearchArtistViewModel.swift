@@ -36,7 +36,9 @@ protocol SearchArtistViewModelType {
     
     var observer: SearchArtistViewModelObserver? {get set}
     
-    var dataModel: [PresentableArtistData] {get}
+    var numberOfArtists: Int {get}
+    func artist(at index: Int) -> PresentableArtistData?
+    
     var loadState: LoadState {get}
     
     var title: String {get}
@@ -69,8 +71,13 @@ public struct PresentableSearchArtistError: Equatable{
 
 
 
+
+
+
+
+
 public class SearchArtistViewModel: SearchArtistViewModelType{
-    
+
     public var title:String {
         "Artist Browser"
     }
@@ -79,8 +86,16 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         "Artist name"
     }
     
-    public private(set) var dataModel = [PresentableArtist]()
-
+    public var numberOfArtists: Int {
+        return dataModel.count
+    }
+    
+    public func artist(at index: Int) -> PresentableArtist? {
+        guard index < dataModel.count else {return nil}
+        let artist = dataModel[index]
+        return PresentableArtistData(name: artist.name, thumbnail: artist.thumbnail)
+    }
+   
     public private(set) var loadState: LoadState = .none {
         didSet{
             observer?.onLoadingStateChange(value: loadState, previous: oldValue)
@@ -88,6 +103,8 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     public weak var observer: SearchArtistViewModelObserver?
+    
+    private var dataModel = [Artist]()
 
     private let searchArtistLoader: SearchArtistLoader
     private let imageDataLoader: ImageDataLoader
@@ -97,11 +114,13 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private var currentTask: CancellableTask?
     private var itemLoadingTasks = [Int: CancellableTask]()
     
-   
+    private var onArtistSelected: (Artist) -> Void
     
-    public init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader) {
+    
+    public init(searchArtistLoader: SearchArtistLoader, imageDataLoader: ImageDataLoader, onArtistSelected: @escaping (Artist) -> Void) {
         self.searchArtistLoader = searchArtistLoader
         self.imageDataLoader = imageDataLoader
+        self.onArtistSelected = onArtistSelected
     }
 
     func viewDidLoad() {
@@ -144,6 +163,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     
     public func selectArtist(at index: Int) {
         print("selectArtist: \(index)")
+        onArtistSelected(dataModel[index])
     }
     
     public func retryLoad(){
@@ -180,9 +200,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     private func onArtistListLoaded(artists: ArtistList){
-        dataModel.append(contentsOf: artists.items.map{
-            PresentableArtistData(name: $0.name, thumbnail: $0.thumbnail)
-        })
+        dataModel.append(contentsOf: artists.items)
         
         loadState = artists.canLoadMore ? .waiting : .none
         
