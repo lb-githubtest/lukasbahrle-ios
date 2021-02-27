@@ -8,28 +8,19 @@
 import UIKit
 import ArtistBrowser
 
-class ArtistBrowserViewController: UITableViewController, UITableViewDataSourcePrefetching {
+class ArtistBrowserViewController: UITableViewController {
 
-    
     var viewModel: SearchArtistViewModel? {
         didSet { bind() }
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
         guard let viewModel = viewModel else {fatalError("set the vc viewModel")}
-        tableView.prefetchDataSource = self
         viewModel.inputTextChanged(input: "ja")
     }
-    
-    
     
     private func bind(){
         guard let viewModel = viewModel else {
@@ -39,13 +30,6 @@ class ArtistBrowserViewController: UITableViewController, UITableViewDataSourceP
         title = viewModel.title
         viewModel.observer = self
     }
-    
-    
-    
-    
-    
-    
-    
     
 
     // MARK: - Table view data source
@@ -100,18 +84,19 @@ class ArtistBrowserViewController: UITableViewController, UITableViewDataSourceP
             viewModel.cancelItem(at: indexPath.row)
         }
     }
-    
 
-    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { indexPath in
-            //viewModel?.preloadItem(at: indexPath.row)
-        }
-    }
     
-    func tableView(_ tableView: UITableView, cancelPrefetchingForRowsAt indexPaths: [IndexPath]) {
-        indexPaths.forEach { indexPath in
-            //viewModel?.cancelItem(at: indexPath.row)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let viewModel = viewModel else {fatalError()}
+        
+        guard indexPath.row < viewModel.dataModel.count else {
+            //is not an artist row
+            if viewModel.loadState.isError {
+                viewModel.retryLoad()
+            }
+            return
         }
+        viewModel.selectArtist(at: indexPath.row)
     }
 }
 

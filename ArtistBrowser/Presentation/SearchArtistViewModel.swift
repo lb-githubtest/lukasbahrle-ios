@@ -48,6 +48,9 @@ protocol SearchArtistViewModelType {
     
     func preloadItem(at index: Int)
     func cancelItem(at index: Int)
+    
+    func selectArtist(at index: Int)
+    func retryLoad()
 
 }
 
@@ -73,7 +76,11 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     
     public private(set) var dataModel = [PresentableArtist]()
 
-    public private(set) var loadState: LoadState = .none
+    public private(set) var loadState: LoadState = .none {
+        didSet{
+            observer?.onLoadingStateChange()
+        }
+    }
     
     public weak var observer: SearchArtistViewModelObserver?
 
@@ -107,8 +114,6 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         loadNextPage()
     }
     
-   
-
     public func preloadItem(at index: Int) {
         guard itemLoadingTasks[index] == nil, index < dataModel.count else {
             return
@@ -131,9 +136,16 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         itemLoadingTasks[index] = nil
     }
     
+    public func selectArtist(at index: Int) {
+        print("selectArtist: \(index)")
+    }
+    
+    public func retryLoad(){
+        search(input: input, loadedItems: dataModel.count)
+    }
+    
     private func loadNextPage() {
         guard loadState != .loading, loadState != .none, dataModel.count > 0 else {return}
-        
         search(input: input, loadedItems: dataModel.count)
     }
     
@@ -168,7 +180,6 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private func onArtistListLoadError(error: Error){
         loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
-        observer?.onLoadingStateChange()
     }
     
 
