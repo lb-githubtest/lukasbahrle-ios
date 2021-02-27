@@ -9,6 +9,8 @@ import UIKit
 import ArtistBrowser
 
 class ArtistBrowserViewController: UITableViewController {
+    
+    var searchController: UISearchController?
 
     var viewModel: SearchArtistViewModel? {
         didSet { bind() }
@@ -16,23 +18,41 @@ class ArtistBrowserViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        configure()
         // self.clearsSelectionOnViewWillAppear = false
 
-        guard let viewModel = viewModel else {fatalError("set the vc viewModel")}
-        viewModel.inputTextChanged(input: "ja")
     }
     
     private func bind(){
         guard let viewModel = viewModel else {
             fatalError("Set first the vc viewModel")
         }
-        
-        title = viewModel.title
         viewModel.observer = self
     }
+ 
+    private func configure(){
+        navigationItem.hidesSearchBarWhenScrolling = false
+        self.title = viewModel?.title
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
+        configureSearchView()
+    }
     
+    private func configureSearchView(){
+        searchController = UISearchController(searchResultsController: nil)
+        searchController?.searchResultsUpdater = self
+        searchController?.searchBar.placeholder = viewModel?.searchPlaceholder
+        searchController?.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+    }
+}
 
-    // MARK: - Table view data source
+
+    
+// MARK: - Table view data source
+
+extension ArtistBrowserViewController{
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -100,18 +120,36 @@ class ArtistBrowserViewController: UITableViewController {
     }
 }
 
+// MARK: - Search Controller
+
+extension ArtistBrowserViewController: UISearchResultsUpdating{
+    func updateSearchResults(for searchController: UISearchController) {
+        //print("updateSearchResults: \(searchController.searchBar.text)")
+        
+        viewModel?.inputTextChanged(input: searchController.searchBar.text ?? "")
+    }
+}
+
+
+// MARK: - ViewModel Observer
 
 extension ArtistBrowserViewController: SearchArtistViewModelObserver{
     
-    func onLoadingStateChange() {
+    func onLoadingStateChange(value: LoadState, previous: LoadState) {
         print("onLoadingStateChange: \(viewModel?.loadState)")
         
 //        guard let viewModel = viewModel, viewModel.loadState != .none else {
 //            return
 //        }
         
-        let indexPath = IndexPath(item: tableView.numberOfRows(inSection: 0) - 1, section: 0)
-        tableView.reloadRows(at: [indexPath], with: .fade)
+//        let loadingCellStateChanged = (value.isError && !previous.isError) || (!value.isError && previous.isError)
+//
+//
+//        if loadingCellStateChanged, tableView.numberOfRows(inSection: 0) > 0{
+//
+//            let indexPath = IndexPath(item: tableView.numberOfRows(inSection: 0) - 1, section: 0)
+//            tableView.reloadRows(at: [indexPath], with: .fade)
+//        }
     }
     
     func onArtistListUpdated() {

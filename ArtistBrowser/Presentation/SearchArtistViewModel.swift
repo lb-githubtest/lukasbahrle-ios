@@ -25,7 +25,7 @@ public enum LoadState: Equatable{
 
 
 public protocol SearchArtistViewModelObserver: NSObject {
-    func onLoadingStateChange()
+    func onLoadingStateChange(value: LoadState, previous: LoadState)
     func onArtistListUpdated()
     func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
 }
@@ -40,6 +40,7 @@ protocol SearchArtistViewModelType {
     var loadState: LoadState {get}
     
     var title: String {get}
+    var searchPlaceholder: String {get}
     
     func viewDidLoad()
     
@@ -74,11 +75,15 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         "Artist Browser"
     }
     
+    public var searchPlaceholder: String {
+        "Artist name"
+    }
+    
     public private(set) var dataModel = [PresentableArtist]()
 
     public private(set) var loadState: LoadState = .none {
         didSet{
-            observer?.onLoadingStateChange()
+            observer?.onLoadingStateChange(value: loadState, previous: oldValue)
         }
     }
     
@@ -104,6 +109,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
 
     public func inputTextChanged(input: String) {
+        guard !input.isEmpty else {return}
         self.input = input
         dataModel = []
 
@@ -150,6 +156,12 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     private func search(input: String, loadedItems: Int){
+        
+        guard !input.isEmpty else {
+            print("input is empty")
+            return
+        }
+        
         loadState = .loading
         currentTask?.cancel()
         

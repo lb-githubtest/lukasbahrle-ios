@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //SceneceDelegate sets the root vc
         } else {
             window = UIWindow(frame: UIScreen.main.bounds)
-            window?.rootViewController = UIComposer.makeArtistBrowserViewController()
+            let root = UINavigationController(rootViewController: UIComposer.makeArtistBrowserViewController())
+            window?.rootViewController = root
             window?.makeKeyAndVisible()
         }
         return true

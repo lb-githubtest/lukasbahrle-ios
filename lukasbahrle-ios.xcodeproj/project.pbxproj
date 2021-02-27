@@ -201,6 +201,22 @@
 			path = Presentation;
 			sourceTree = "<group>";
 		};
+		DA18FB3025EA3EFF000E9656 /* Search Artist */ = {
+			isa = PBXGroup;
+			children = (
+				DA43F16725E96C1200BC09DB /* Controllers */,
+				DA43F16625E96C0800BC09DB /* Views */,
+			);
+			path = "Search Artist";
+			sourceTree = "<group>";
+		};
+		DA18FB3125EA3F11000E9656 /* Artist Detail */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Artist Detail";
+			sourceTree = "<group>";
+		};
 		DA419A9B25E685DA002B1782 /* ArtistBrowser */ = {
 			isa = PBXGroup;
 			children = (
@@ -264,8 +280,8 @@
 		DA43F15F25E96BA100BC09DB /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				DA43F16725E96C1200BC09DB /* Controllers */,
-				DA43F16625E96C0800BC09DB /* Views */,
+				DA18FB3025EA3EFF000E9656 /* Search Artist */,
+				DA18FB3125EA3F11000E9656 /* Artist Detail */,
 			);
 			path = UI;
 			sourceTree = "<group>";
