@@ -22,6 +22,7 @@
 		DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE3E25EB766D00A294CC /* LoadingView.swift */; };
 		DA32CE4525EB785400A294CC /* LoadingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */; };
 		DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */; };
+		DA32CE5525EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
 		DA419AAC25E685DA002B1782 /* ArtistBrowser.h in Headers */ = {isa = PBXBuildFile; fileRef = DA419A9C25E685DA002B1782 /* ArtistBrowser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -125,6 +126,7 @@
 		DA32CE3E25EB766D00A294CC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtistDetailViewController+DragDrop.swift"; sourceTree = "<group>"; };
+		DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtistDetailViewController+Layout.swift"; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA419A9C25E685DA002B1782 /* ArtistBrowser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArtistBrowser.h; sourceTree = "<group>"; };
 		DA419A9D25E685DA002B1782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -241,6 +243,7 @@
 			children = (
 				DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */,
 				DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */,
+				DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -716,6 +719,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA32CE5525EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift in Sources */,
 				DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */,
 				DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */,
 				DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */,

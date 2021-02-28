@@ -8,10 +8,7 @@
 import UIKit
 import ArtistBrowser
 
-extension ArtistDetailViewController: UICollectionViewDragDelegate, UICollectionViewDropDelegate{
-    
-    // drag
-    
+extension ArtistDetailViewController: UICollectionViewDragDelegate{
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         guard let item = self.viewModel.album(at: indexPath.row) else {
             return []
@@ -21,9 +18,10 @@ extension ArtistDetailViewController: UICollectionViewDragDelegate, UICollection
         dragItem.localObject = item
         return [dragItem]
     }
-    
-    // drop
-    
+}
+
+
+extension ArtistDetailViewController: UICollectionViewDropDelegate{
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         var destinationIndexPath: IndexPath
         if let indexPath = coordinator.destinationIndexPath {
