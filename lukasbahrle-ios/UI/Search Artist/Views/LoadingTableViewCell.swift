@@ -8,7 +8,6 @@
 import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
-    
     @IBOutlet private var indicator: UIActivityIndicatorView!
 
     override func awakeFromNib() {
@@ -25,5 +24,4 @@ class LoadingTableViewCell: UITableViewCell {
     private func configure(){
         selectionStyle = .none
     }
-
 }
