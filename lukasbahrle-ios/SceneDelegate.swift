@@ -81,7 +81,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQDIXetYGc5ro6a-JrScTSo_sAiq-_Msp9chYu12kOupHixK4yg5uaN5Px6kFECSYmxAJyFUdbMiOlsOjkk"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQDROk5scc6R7AnST0Fs8pkaJQ2q0Whs1WTrwYzjdkVkQ6sFEFI89CPijQzJkPmjFOZUhSIWD0cf0UT3d38"]
     
     var body: Data?
     
