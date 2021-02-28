@@ -20,8 +20,6 @@ class ArtistBrowserViewController: UITableViewController {
         super.viewDidLoad()
         
         configure()
-        // self.clearsSelectionOnViewWillAppear = false
-
     }
     
     private func bind(){

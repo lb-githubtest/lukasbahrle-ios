@@ -62,7 +62,19 @@ class UIComposer{
         let storyboard = UIStoryboard(name: "ArtistDetail", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! ArtistDetailViewController
         
-        let viewModel = ArtistDetailViewModel(artist: artist)
+        
+        let albumsLoader = RemoteAlbumsLoader(request: { loadedItems in
+            var builder = AlbumsRequestBuilder()
+            builder.set(artistId: artist.id, loadedItems: loadedItems)
+            let request = SearchArtisRequest(builder: builder)
+            
+            return request.get()
+        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+        
+        let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+        
+        
+        let viewModel = ArtistDetailViewModel(artist: artist, albumsLoader: albumsLoader, imageDataLoader: imageLoader)
         controller.viewModel = viewModel
         
         return controller

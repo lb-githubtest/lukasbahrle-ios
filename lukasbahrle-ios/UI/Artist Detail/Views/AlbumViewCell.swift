@@ -17,11 +17,29 @@ class AlbumViewCell: UICollectionViewCell {
         configure()
     }
     
+    override func prepareForReuse() {
+        thumbnailView.image = nil
+    }
+    
     private func configure(){
-        self.contentView.backgroundColor = .red
+        
     }
     
     func set(info: PresentableAlbum){
         albumNameLabel.text = info.name
+    }
+    
+    func onImageLoadResult(result: Result<Data, Error>){
+        switch result {
+        case .success(let data):
+            UIView.transition(with: self.thumbnailView,
+                          duration:0.5,
+                          options: .transitionCrossDissolve,
+                          animations: { [weak self] in self?.thumbnailView.image = UIImage(data: data) },
+                          completion: nil)
+            
+        default:
+            break
+        }
     }
 }

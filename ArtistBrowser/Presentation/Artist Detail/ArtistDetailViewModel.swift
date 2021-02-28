@@ -17,7 +17,7 @@ public protocol ArtistDetailViewModelObserver: NSObject {
 protocol ArtistDetailViewModelType {
     associatedtype PresentableAlbumData
     
-    var observer: SearchArtistViewModelObserver? {get set}
+    var observer: ArtistDetailViewModelObserver? {get set}
     
     var numberOfAlbums: Int {get}
     func album(at index: Int) -> PresentableAlbumData?
@@ -42,18 +42,14 @@ protocol ArtistDetailViewModelType {
 public struct PresentableAlbum{
     public let id: String
     public let name:String
-    public let thumbnail: String
+    public let thumbnail: URL?
 }
 
-struct Album{
-    let id: String
-    let name: String
-    let thumbnail: String
-}
+
 
 public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
-    public var observer: SearchArtistViewModelObserver?
+    public var observer: ArtistDetailViewModelObserver?
     
     public var numberOfAlbums: Int {
         return albumsDataModel.count
@@ -72,37 +68,47 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     private let artist: Artist
     private var albumsDataModel = [Album]()
     
-    public init(artist: Artist){
+    private let albumsLoader: AlbumsLoader
+    private let imageDataLoader: ImageDataLoader
+    
+    private var currentTask: CancellableTask?
+    private var itemLoadingTasks = [Int: CancellableTask]()
+    
+    public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){
         self.artist = artist
         self.title = artist.name
-        
-        print("Detail of: \(artist.name)")
-        
-        albumsDataModel = [
-            Album(id: "1", name: "AAA", thumbnail: ""),
-            Album(id: "2", name: "BBB", thumbnail: ""),
-            Album(id: "3", name: "CCC", thumbnail: ""),
-            Album(id: "4", name: "DDD", thumbnail: ""),
-            Album(id: "5", name: "EEE", thumbnail: ""),
-            Album(id: "6", name: "FFF", thumbnail: ""),
-            Album(id: "7", name: "GGG", thumbnail: "")
-        ]
+        self.albumsLoader = albumsLoader
+        self.imageDataLoader = imageDataLoader
     }
     
     public func viewDidLoad() {
-        
+        loadAlbums(loadedItems: 0)
     }
     
     public func scrolledToBottom() {
-        
+        loadNextPage()
     }
     
     public func preloadItem(at index: Int) {
+        guard itemLoadingTasks[index] == nil, index < albumsDataModel.count else {
+            return
+        }
         
+        guard let imageURL = albumsDataModel[index].thumbnail else {
+            return
+        }
+        
+        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
+            DispatchQueue.main.async {
+                self?.observer?.onItemPreloadCompleted(index: index, result: result)
+                self?.itemLoadingTasks[index] = nil
+            }
+        })
     }
     
     public func cancelItem(at index: Int) {
-        
+        itemLoadingTasks[index]?.cancel()
+        itemLoadingTasks[index] = nil
     }
     
     public func retryLoad() {
@@ -113,6 +119,42 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         let album = albumsDataModel[from]
         albumsDataModel.remove(at: from)
         albumsDataModel.insert(album, at: to)
+    }
+    
+    private func loadNextPage() {
+        guard loadState != .loading, loadState != .none, albumsDataModel.count > 0 else {return}
+        loadAlbums(loadedItems: albumsDataModel.count)
+    }
+    
+    private func loadAlbums(loadedItems: Int){
+        loadState = .loading
+        currentTask?.cancel()
+        
+        currentTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
+            
+            DispatchQueue.main.async {
+                switch result{
+                    case .success(let albumsList):
+                        self?.onAlbumListLoaded(albums: albumsList)
+                    case .failure(let error):
+                        self?.onAlbumListLoadError(error: error)
+                }
+            }
+        }
+    }
+    
+    private func onAlbumListLoaded(albums: AlbumList){
+        
+        albumsDataModel.append(contentsOf: albums.items)
+        
+        loadState = albums.canLoadMore ? .waiting : .none
+        
+        observer?.onAlbumListUpdated()
+    }
+    
+    private func onAlbumListLoadError(error: Error){
+        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
+        
     }
     
 }

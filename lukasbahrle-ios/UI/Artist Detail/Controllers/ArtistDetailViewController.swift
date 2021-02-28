@@ -24,6 +24,8 @@ class ArtistDetailViewController: UICollectionViewController {
         collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LoadingCollectionViewCell.self))
         
         enableDragDrop()
+        
+        viewModel.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,6 +35,7 @@ class ArtistDetailViewController: UICollectionViewController {
     
     private func bind(){
         self.title = viewModel.title
+        viewModel.observer = self
     }
     
     private func enableDragDrop(){
@@ -42,6 +45,23 @@ class ArtistDetailViewController: UICollectionViewController {
     }
 }
 
+
+extension ArtistDetailViewController: ArtistDetailViewModelObserver{
+    func onLoadingStateChange(value: LoadState, previous: LoadState) {
+        
+    }
+    
+    func onAlbumListUpdated() {
+        collectionView.reloadData()
+    }
+    
+    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>) {
+        guard let cell = collectionView.cellForItem(at: IndexPath(row: index, section: 0)) as? AlbumViewCell else {return}
+        cell.onImageLoadResult(result: result)
+    }
+    
+    
+}
 
 
 // MARK: UICollectionViewDataSource
@@ -84,8 +104,23 @@ extension ArtistDetailViewController{
         
         return headerView
     }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == viewModel.numberOfAlbums {
+            // loading cell
+            viewModel.scrolledToBottom()
+        }
+        else{
+            viewModel.preloadItem(at: indexPath.row)
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row < viewModel.numberOfAlbums {
+            viewModel.cancelItem(at: indexPath.row)
+        }
+    }
 }
-
 
 
 

@@ -81,7 +81,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQDROk5scc6R7AnST0Fs8pkaJQ2q0Whs1WTrwYzjdkVkQ6sFEFI89CPijQzJkPmjFOZUhSIWD0cf0UT3d38"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQAbMPVweJCNmTr4tAkpnAOT32wnlRUadIeykG3OTfhJfyDHj-6TognFYKtHQEcl4OjYH1QZmtik1pVWk9c"]
     
     var body: Data?
     
@@ -89,6 +89,36 @@ struct SearchArtistRequestBuilder: RequestBuilder {
     mutating func set(input: String, loadedItems: Int){
         var queryParams = params!
         queryParams.append(URLQueryItem(name: "q", value: input))
+        queryParams.append(URLQueryItem(name: "offset", value: "\(loadedItems)"))
+        
+        params = queryParams
+    }
+    
+}
+
+
+
+
+struct AlbumsRequestBuilder: RequestBuilder {
+    var baseURL: URL = URL(string: "https://api.spotify.com/v1/")!
+    
+    var path: String =  ""
+    
+    var httpMethod: HTTPMethod = .GET
+    
+    var params: [URLQueryItem]? = [
+        URLQueryItem(name: "limit", value: "5")
+    ]
+    
+    var headers: [String : String]? =  ["Authorization": "Bearer BQAbMPVweJCNmTr4tAkpnAOT32wnlRUadIeykG3OTfhJfyDHj-6TognFYKtHQEcl4OjYH1QZmtik1pVWk9c"]
+    
+    var body: Data?
+    
+    mutating func set(artistId: String, loadedItems: Int){
+        
+        path = "artists/\(artistId)/albums"
+        
+        var queryParams = params!
         queryParams.append(URLQueryItem(name: "offset", value: "\(loadedItems)"))
         
         params = queryParams

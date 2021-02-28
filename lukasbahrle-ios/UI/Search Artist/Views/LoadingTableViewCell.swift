@@ -13,6 +13,7 @@ class LoadingTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
+
     }
     
     
