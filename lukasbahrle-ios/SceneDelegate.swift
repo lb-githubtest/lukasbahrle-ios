@@ -81,7 +81,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQAbMPVweJCNmTr4tAkpnAOT32wnlRUadIeykG3OTfhJfyDHj-6TognFYKtHQEcl4OjYH1QZmtik1pVWk9c"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQCUqtM3p23FEIN-oSEW6mNMqhYiqN3k8CkGtBszPuUVOl35ZZHKzOtrezIQXcs7_NXg2bgmxnc7vhlnsGg"]
     
     var body: Data?
     
@@ -110,7 +110,7 @@ struct AlbumsRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "5")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQAbMPVweJCNmTr4tAkpnAOT32wnlRUadIeykG3OTfhJfyDHj-6TognFYKtHQEcl4OjYH1QZmtik1pVWk9c"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQCUqtM3p23FEIN-oSEW6mNMqhYiqN3k8CkGtBszPuUVOl35ZZHKzOtrezIQXcs7_NXg2bgmxnc7vhlnsGg"]
     
     var body: Data?
     

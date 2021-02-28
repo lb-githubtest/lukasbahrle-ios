@@ -12,6 +12,7 @@ public protocol ArtistDetailViewModelObserver: NSObject {
     func onLoadingStateChange(value: LoadState, previous: LoadState)
     func onAlbumListUpdated()
     func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
+    func onAlbumsFilterDatesChanged(start: (text: String, date:Date)? , end: (text: String, date: Date)?)
 }
 
 protocol ArtistDetailViewModelType {
@@ -26,6 +27,9 @@ protocol ArtistDetailViewModelType {
     
     var title: String {get}
     
+    var albumsStartDate: (text: String, date:Date)? {get}
+    var albumsEndDate: (text: String, date: Date)? {get}
+    
     func viewDidLoad()
     
     func scrolledToBottom()
@@ -36,6 +40,9 @@ protocol ArtistDetailViewModelType {
     func retryLoad()
     
     func reorderAlbum(from: Int, to: Int)
+    
+    func onAlbumsFilterStartDateChange(_ date: Date)
+    func onAlbumsFilterEndDateChange(_ date: Date)
 }
 
 
@@ -44,7 +51,6 @@ public struct PresentableAlbum{
     public let name:String
     public let thumbnail: URL?
 }
-
 
 
 public class ArtistDetailViewModel: ArtistDetailViewModelType{
@@ -65,6 +71,18 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
     public var title: String = ""
     
+    public var albumsStartDate: (text: String, date: Date)? {
+        didSet{
+            
+            onAlbumsFilterDatesChanged()
+        }
+    }
+    public var albumsEndDate: (text: String, date: Date)? {
+        didSet{
+            onAlbumsFilterDatesChanged()
+        }
+    }
+    
     private let artist: Artist
     private var albumsDataModel = [Album]()
     
@@ -73,6 +91,12 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
     private var currentTask: CancellableTask?
     private var itemLoadingTasks = [Int: CancellableTask]()
+    
+    private lazy var dateFormatter:DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
     
     public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){
         self.artist = artist
@@ -121,6 +145,16 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         albumsDataModel.insert(album, at: to)
     }
     
+    
+    public func onAlbumsFilterStartDateChange(_ date: Date){
+        albumsStartDate = (text: formattedDate(date: date), date: date)
+    }
+    
+    public func onAlbumsFilterEndDateChange(_ date: Date) {
+        albumsEndDate = (text: formattedDate(date: date), date: date)
+    }
+    
+    
     private func loadNextPage() {
         guard loadState != .loading, loadState != .none, albumsDataModel.count > 0 else {return}
         loadAlbums(loadedItems: albumsDataModel.count)
@@ -144,7 +178,6 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     private func onAlbumListLoaded(albums: AlbumList){
-        
         albumsDataModel.append(contentsOf: albums.items)
         
         loadState = albums.canLoadMore ? .waiting : .none
@@ -155,6 +188,16 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     private func onAlbumListLoadError(error: Error){
         loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
+    }
+    
+    private func onAlbumsFilterDatesChanged(){
+        
+        observer?.onAlbumsFilterDatesChanged(start: albumsStartDate, end: albumsEndDate)
+    }
+    
+    private func formattedDate(date: Date) -> String{
+        let text = dateFormatter.string(from: date)
+        return text
     }
     
 }

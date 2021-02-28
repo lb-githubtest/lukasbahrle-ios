@@ -20,7 +20,7 @@ public final class URLSessionHTTPClient: HTTPClient {
     
     public func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> CancellableTask{
         
-        print("HTTPClient: \((request.url))")
+        //print("HTTPClient: \((request.url))")
         
         let task = session.dataTask(with: request) { data, response, error in
             completion(Result {

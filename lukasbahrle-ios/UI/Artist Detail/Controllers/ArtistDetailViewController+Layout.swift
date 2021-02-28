@@ -10,10 +10,18 @@ import UIKit
 
 extension ArtistDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+
         let availableWidth = collectionView.bounds.size.width
+        
+        if indexPath.row == 0 {
+            // dates
+            return CGSize(width: availableWidth, height: 100)
+        }
+        
+        
         let columns:CGFloat = 2
         let cellWidth = ((availableWidth) / columns).rounded(.down)
-        
+
         return CGSize(width: cellWidth, height: cellWidth + 40)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -27,6 +35,7 @@ extension ArtistDetailViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+
             let indexPath = IndexPath(row: 0, section: section)
             let headerView = self.collectionView(collectionView, viewForSupplementaryElementOfKind: UICollectionView.elementKindSectionHeader, at: indexPath)
 

@@ -37,9 +37,9 @@ class RemoteAlbumsMapper{
         let id: String
         let name: String
         let images: [RemoteAlbumImage]
-        //let release_date: Date
+        let release_date: Date
         func toModel() -> Album{
-            Album(id: id, name: name, thumbnail: URL(string: images.first?.url ?? ""), releaseDate: Date())
+            Album(id: id, name: name, thumbnail: URL(string: images.first?.url ?? ""), releaseDate: release_date)
         }
     }
     
@@ -55,9 +55,15 @@ class RemoteAlbumsMapper{
             throw RemoteSearchArtistLoader.Error.unauthorized
         }
         
-        guard response.isOK, let albumListResponse = try? JSONDecoder().decode(AlbumsListRemoteResponse.self, from: data) else {
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .formatted(DateFormatter.yyyyMMdd)
+        guard response.isOK, let albumListResponse = try? decoder.decode(AlbumsListRemoteResponse.self, from: data) else {
             throw RemoteSearchArtistLoader.Error.invalidData
         }
         return albumListResponse.toModel()
     }
 }
+
+
+
+

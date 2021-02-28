@@ -30,13 +30,15 @@ class AlbumViewCell: UICollectionViewCell {
     }
     
     func onImageLoadResult(result: Result<Data, Error>){
+        
         switch result {
         case .success(let data):
-            UIView.transition(with: self.thumbnailView,
-                          duration:0.5,
-                          options: .transitionCrossDissolve,
-                          animations: { [weak self] in self?.thumbnailView.image = UIImage(data: data) },
-                          completion: nil)
+            self.thumbnailView.image = UIImage(data: data)
+//            UIView.transition(with: self.thumbnailView,
+//                          duration:0.5,
+//                          options: .transitionCrossDissolve,
+//                          animations: { [weak self] in self?.thumbnailView.image = UIImage(data: data) },
+//                          completion: nil)
             
         default:
             break
