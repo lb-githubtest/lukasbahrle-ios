@@ -64,6 +64,8 @@
 		DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */; };
 		DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */; };
 		DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */; };
+		DA9C398B25EE9D5500076EBC /* TokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C398A25EE9D5500076EBC /* TokenCache.swift */; };
+		DA9C399525EE9D9600076EBC /* KeychainTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C399425EE9D9600076EBC /* KeychainTokenStore.swift */; };
 		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
 		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
@@ -189,6 +191,8 @@
 		DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Basic64EncodedAuthorizationHeader.swift"; sourceTree = "<group>"; };
 		DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistResultCellViewModel.swift; sourceTree = "<group>"; };
 		DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLoaderWithFallback.swift; sourceTree = "<group>"; };
+		DA9C398A25EE9D5500076EBC /* TokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCache.swift; sourceTree = "<group>"; };
+		DA9C399425EE9D9600076EBC /* KeychainTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenStore.swift; sourceTree = "<group>"; };
 		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
 		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
@@ -532,6 +536,8 @@
 		DA9C398925EE9CF500076EBC /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				DA9C398A25EE9D5500076EBC /* TokenCache.swift */,
+				DA9C399425EE9D9600076EBC /* KeychainTokenStore.swift */,
 			);
 			path = Token;
 			sourceTree = "<group>";
@@ -754,6 +760,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA9C398B25EE9D5500076EBC /* TokenCache.swift in Sources */,
 				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
@@ -776,6 +783,7 @@
 				DA4717E125E70E1900A02AF5 /* RemoteSearchArtistMapper.swift in Sources */,
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
+				DA9C399525EE9D9600076EBC /* KeychainTokenStore.swift in Sources */,
 				DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
