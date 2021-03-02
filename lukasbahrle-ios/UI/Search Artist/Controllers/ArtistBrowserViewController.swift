@@ -78,12 +78,12 @@ extension ArtistBrowserViewController{
             }
         }
         
-        guard let artist = viewModel.artist(at: indexPath.row) else {
+        guard let item = viewModel.result(at: indexPath.row) else {
             fatalError()
         }
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistSearchResultCell", for: indexPath) as! ArtistSearchResultCell
-        cell.configure(artist: artist)
+        cell.setup(viewModel: item)
         return cell
     }
     
@@ -91,20 +91,20 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {fatalError()}
         
+        if let cell = cell as? CellPreloadable{
+            cell.preload()
+        }
+        
         if indexPath.row == viewModel.numberOfArtists {
             // loading cell
             viewModel.scrolledToBottom()
         }
-        else{
-            viewModel.preloadItem(at: indexPath.row)
-        }
     }
     
     override func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        guard let viewModel = viewModel else {fatalError()}
-        
-        if indexPath.row < viewModel.numberOfArtists {
-            viewModel.cancelItem(at: indexPath.row)
+    
+        if let cell = cell as? CellPreloadable{
+            cell.cancelLoad()
         }
     }
 
@@ -161,10 +161,10 @@ extension ArtistBrowserViewController: SearchArtistViewModelObserver{
         print("onArtistListUpdated")
     }
     
-    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>) {
-        print("Image load completed \(index)")
-        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ArtistSearchResultCell else {return}
-        
-        cell.onImageLoadResult(result: result)
-    }
+//    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>) {
+//        print("Image load completed \(index)")
+//        guard let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ArtistSearchResultCell else {return}
+//
+//        cell.onImageLoadResult(result: result)
+//    }
 }

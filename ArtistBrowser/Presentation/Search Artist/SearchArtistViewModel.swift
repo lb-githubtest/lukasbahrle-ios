@@ -27,17 +27,17 @@ public enum LoadState: Equatable{
 public protocol SearchArtistViewModelObserver: NSObject {
     func onLoadingStateChange(value: LoadState, previous: LoadState)
     func onArtistListUpdated()
-    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
+//    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
 }
 
 
 protocol SearchArtistViewModelType {
-    associatedtype PresentableArtistData
+    associatedtype SearchResutlViewModel
     
     var observer: SearchArtistViewModelObserver? {get set}
     
     var numberOfArtists: Int {get}
-    func artist(at index: Int) -> PresentableArtistData?
+    func result(at index: Int) -> SearchResutlViewModel?
     
     var loadState: LoadState {get}
     
@@ -49,8 +49,8 @@ protocol SearchArtistViewModelType {
     func inputTextChanged(input: String)
     func scrolledToBottom()
     
-    func preloadItem(at index: Int)
-    func cancelItem(at index: Int)
+//    func preloadItem(at index: Int)
+//    func cancelItem(at index: Int)
     
     func selectArtist(at index: Int)
     func retryLoad()
@@ -59,24 +59,15 @@ protocol SearchArtistViewModelType {
 
 
 
-public struct PresentableArtist{
-    public let name: String
-    public let thumbnail: URL?
-}
-
 public struct PresentableSearchArtistError: Equatable{
     public let info: String
     public let retry: String
 }
 
 
-
-
 public protocol SearchArtistNavigator: class{
     func didSelect(artist: Artist)
 }
-
-
 
 public class SearchArtistViewModel: SearchArtistViewModelType{
 
@@ -92,10 +83,10 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         return dataModel.count
     }
     
-    public func artist(at index: Int) -> PresentableArtist? {
+    public func result(at index: Int) -> SearchArtistResultCellViewModel? {
         guard index < dataModel.count else {return nil}
         let artist = dataModel[index]
-        return PresentableArtistData(name: artist.name, thumbnail: artist.thumbnail)
+        return SearchArtistResultCellViewModel(artistName: artist.name, arttistThumbnail: artist.thumbnail, imageLoader: imageDataLoader)
     }
    
     public private(set) var loadState: LoadState = .none {
@@ -141,27 +132,27 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         loadNextPage()
     }
     
-    public func preloadItem(at index: Int) {
-        guard itemLoadingTasks[index] == nil, index < dataModel.count else {
-            return
-        }
-        
-        guard let imageURL = dataModel[index].thumbnail else {
-            return
-        }
-        
-        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
-            DispatchQueue.main.async {
-                self?.observer?.onItemPreloadCompleted(index: index, result: result)
-                self?.itemLoadingTasks[index] = nil
-            }
-        })
-    }
+//    public func preloadItem(at index: Int) {
+//        guard itemLoadingTasks[index] == nil, index < dataModel.count else {
+//            return
+//        }
+//
+//        guard let imageURL = dataModel[index].thumbnail else {
+//            return
+//        }
+//
+//        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
+//            DispatchQueue.main.async {
+//                self?.observer?.onItemPreloadCompleted(index: index, result: result)
+//                self?.itemLoadingTasks[index] = nil
+//            }
+//        })
+//    }
 
-    public func cancelItem(at index: Int) {
-        itemLoadingTasks[index]?.cancel()
-        itemLoadingTasks[index] = nil
-    }
+//    public func cancelItem(at index: Int) {
+//        itemLoadingTasks[index]?.cancel()
+//        itemLoadingTasks[index] = nil
+//    }
     
     public func selectArtist(at index: Int) {
         print("selectArtist: \(index)")

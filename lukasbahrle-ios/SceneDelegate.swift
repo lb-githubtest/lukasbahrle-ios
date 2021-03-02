@@ -81,11 +81,10 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQCUqtM3p23FEIN-oSEW6mNMqhYiqN3k8CkGtBszPuUVOl35ZZHKzOtrezIQXcs7_NXg2bgmxnc7vhlnsGg"]
+    var headers: [String : String]? =  ["Authorization": "Bearer BQARFpB4iA5qQ6iAffUDck01Q0Ek4kUfekgBEIFj7nmX0hxiIvgOb_md5hy8f-fu419nVwdQ7D5gCmPfeOs"]
     
     var body: Data?
     
-
     mutating func set(input: String, loadedItems: Int){
         var queryParams = params!
         queryParams.append(URLQueryItem(name: "q", value: input))
@@ -93,7 +92,6 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         
         params = queryParams
     }
-    
 }
 
 

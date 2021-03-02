@@ -13,9 +13,11 @@ protocol AlbumsFilterDatesViewDelegate: class{
 }
 
 class AlbumsDatesCollectionViewCell: UICollectionViewCell {
-    @IBOutlet private var titleView: UILabel!
-    @IBOutlet private var startDateView: UITextField!
-    @IBOutlet private var endDateView: UITextField!
+    private var titleView: UILabel = UILabel()
+    private var startDateView: UITextField = UITextField()
+    private var endDateView: UITextField = UITextField()
+    
+    var cellWidth: CGFloat = 200
     
     private let datePicker = UIDatePicker()
     
@@ -33,11 +35,31 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         return toolbar
     }()
     
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configure()
     }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configure()
+    }
+    
+    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
+
+            var targetSize = targetSize
+            targetSize.width = cellWidth
+            targetSize.height = CGFloat.greatestFiniteMagnitude
+
+            let size = super.systemLayoutSizeFitting(
+                    targetSize,
+                    withHorizontalFittingPriority: .required,
+                    verticalFittingPriority: .fittingSizeLevel
+                )
+
+            return size
+        }
+    
     
     override func prepareForReuse() {
         delegate = nil
@@ -53,11 +75,47 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     }
     
     private func configure(){
+        
+        contentView.addSubview(titleView)
+        contentView.addSubview(startDateView)
+        contentView.addSubview(endDateView)
+        
         datePicker.datePickerMode = .date
         startDateView.inputAccessoryView = inputToolbar
         startDateView.inputView = datePicker
         endDateView.inputAccessoryView = inputToolbar
         endDateView.inputView = datePicker
+        
+        configureConstraints()
+        
+        contentView.backgroundColor = .green
+        
+        titleView.text = "Albums"
+        startDateView.placeholder = "Start date"
+        endDateView.placeholder = "End date"
+    }
+    
+    
+    private func configureConstraints(){
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        startDateView.translatesAutoresizingMaskIntoConstraints = false
+        endDateView.translatesAutoresizingMaskIntoConstraints = false
+        
+        let margins = contentView.layoutMarginsGuide
+        NSLayoutConstraint.activate([
+            titleView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            titleView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            titleView.topAnchor.constraint(equalTo: margins.topAnchor),
+            
+            startDateView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 0),
+            startDateView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
+            startDateView.trailingAnchor.constraint(equalTo: endDateView.leadingAnchor),
+            startDateView.widthAnchor.constraint(equalTo: endDateView.widthAnchor),
+            
+            endDateView.topAnchor.constraint(equalTo: startDateView.topAnchor, constant: 0),
+            endDateView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            endDateView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+        ])
     }
     
     

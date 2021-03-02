@@ -62,6 +62,12 @@
 		DA563EBF25E6C2F900A2FE44 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EBE25E6C2F900A2FE44 /* Credentials.swift */; };
 		DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */; };
 		DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */; };
+		DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */; };
+		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
+		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
+		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
+		DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2918525ED342400B82B14 /* TestDetailViewController.swift */; };
+		DAA2918C25ED347700B82B14 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +186,12 @@
 		DA563EBE25E6C2F900A2FE44 /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
 		DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Basic64EncodedAuthorizationHeader.swift"; sourceTree = "<group>"; };
+		DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistResultCellViewModel.swift; sourceTree = "<group>"; };
+		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
+		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
+		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
+		DAA2918525ED342400B82B14 /* TestDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDetailViewController.swift; sourceTree = "<group>"; };
+		DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +268,8 @@
 				DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */,
 				DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */,
 				DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */,
+				DAA2918525ED342400B82B14 /* TestDetailViewController.swift */,
+				DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -269,6 +283,7 @@
 				DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */,
 				DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */,
 				DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */,
+				DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -277,6 +292,7 @@
 			isa = PBXGroup;
 			children = (
 				DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */,
+				DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */,
 			);
 			path = "Search Artist";
 			sourceTree = "<group>";
@@ -371,6 +387,7 @@
 		DA43F15F25E96BA100BC09DB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DAA2917025ED1F9700B82B14 /* Helpers */,
 				DA32CE3D25EB75B800A294CC /* Shared */,
 				DA18FB3025EA3EFF000E9656 /* Search Artist */,
 				DA18FB3125EA3F11000E9656 /* Artist Detail */,
@@ -496,6 +513,15 @@
 			children = (
 				DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */,
 				DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DAA2917025ED1F9700B82B14 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */,
+				DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -713,6 +739,7 @@
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */,
+				DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */,
 				DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
 				DA32CE7025EBBC0600A294CC /* AlbumsLoader.swift in Sources */,
@@ -752,14 +779,19 @@
 				DA32CE8B25EBE2D000A294CC /* TestCollectionCell.swift in Sources */,
 				DA32CE5525EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift in Sources */,
 				DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */,
+				DAA2918C25ED347700B82B14 /* TestCollectionViewCell.swift in Sources */,
 				DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */,
 				DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */,
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
+				DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */,
+				DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */,
 				DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */,
 				DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */,
+				DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */,
 				DA32CE9125EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift in Sources */,
+				DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */,
 				DA18FB6925EAB30B000E9656 /* ArtistDetailHeaderView.swift in Sources */,
 				DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */,
 				DA43F16925E96C4200BC09DB /* ArtistBrowserViewController.swift in Sources */,
