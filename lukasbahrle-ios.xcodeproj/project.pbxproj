@@ -63,6 +63,7 @@
 		DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */; };
 		DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */; };
 		DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */; };
+		DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */; };
 		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
 		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
@@ -187,6 +188,7 @@
 		DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+Helpers.swift"; sourceTree = "<group>"; };
 		DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Basic64EncodedAuthorizationHeader.swift"; sourceTree = "<group>"; };
 		DA9C397C25EE877100076EBC /* SearchArtistResultCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistResultCellViewModel.swift; sourceTree = "<group>"; };
+		DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLoaderWithFallback.swift; sourceTree = "<group>"; };
 		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
 		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 			children = (
 				DA563E9B25E6C09E00A2FE44 /* Helpers */,
 				DA11A9E525E7DC4700968460 /* Presentation */,
+				DA9C398825EE9CE800076EBC /* Cache */,
 				DA419AC325E6873D002B1782 /* API */,
 				DA419A9C25E685DA002B1782 /* ArtistBrowser.h */,
 				DA419A9D25E685DA002B1782 /* Info.plist */,
@@ -487,6 +490,7 @@
 				DA563E8725E6BFB300A2FE44 /* RemoteTokenLoader.swift */,
 				DA563E9525E6C06400A2FE44 /* RemoteTokenMapper.swift */,
 				DA563EAD25E6C1D200A2FE44 /* TokenRequest.swift */,
+				DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */,
 			);
 			path = Token;
 			sourceTree = "<group>";
@@ -515,6 +519,21 @@
 				DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DA9C398825EE9CE800076EBC /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				DA9C398925EE9CF500076EBC /* Token */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		DA9C398925EE9CF500076EBC /* Token */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Token;
 			sourceTree = "<group>";
 		};
 		DAA2917025ED1F9700B82B14 /* Helpers */ = {
@@ -757,6 +776,7 @@
 				DA4717E125E70E1900A02AF5 /* RemoteSearchArtistMapper.swift in Sources */,
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
+				DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
