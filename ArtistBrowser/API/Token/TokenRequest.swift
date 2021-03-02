@@ -7,18 +7,18 @@
 
 import Foundation
 
-struct TokenRequest: Request {
-    typealias CredentialsLoader = () -> Credentials
+public struct TokenRequest: Request {
+    public typealias CredentialsLoader = () -> Credentials
     
-    let builder: RequestBuilder
+    public let builder: RequestBuilder
     let credentialsLoader: CredentialsLoader
     
-    init(builder: RequestBuilder, credentialsLoader: @escaping CredentialsLoader){
+    public init(builder: RequestBuilder, credentialsLoader: @escaping CredentialsLoader){
         self.builder = builder
         self.credentialsLoader = credentialsLoader
     }
     
-    func get() -> URLRequest {
+    public func get() -> URLRequest {
         let credentials = credentialsLoader()
         
         var request = builder.build()

@@ -66,6 +66,8 @@
 		DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */; };
 		DA9C398B25EE9D5500076EBC /* TokenCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C398A25EE9D5500076EBC /* TokenCache.swift */; };
 		DA9C399525EE9D9600076EBC /* KeychainTokenStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C399425EE9D9600076EBC /* KeychainTokenStore.swift */; };
+		DA9C399B25EE9E4800076EBC /* AuthorizedHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C399A25EE9E4800076EBC /* AuthorizedHTTPClient.swift */; };
+		DA9C39A125EE9ED700076EBC /* Result+Unauthorized.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9C39A025EE9ED700076EBC /* Result+Unauthorized.swift */; };
 		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
 		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
@@ -193,6 +195,8 @@
 		DA9C398225EE9C4400076EBC /* TokenLoaderWithFallback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenLoaderWithFallback.swift; sourceTree = "<group>"; };
 		DA9C398A25EE9D5500076EBC /* TokenCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenCache.swift; sourceTree = "<group>"; };
 		DA9C399425EE9D9600076EBC /* KeychainTokenStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainTokenStore.swift; sourceTree = "<group>"; };
+		DA9C399A25EE9E4800076EBC /* AuthorizedHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizedHTTPClient.swift; sourceTree = "<group>"; };
+		DA9C39A025EE9ED700076EBC /* Result+Unauthorized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Result+Unauthorized.swift"; sourceTree = "<group>"; };
 		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
 		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
@@ -363,6 +367,7 @@
 				DA563EA725E6C15E00A2FE44 /* Request.swift */,
 				DA11AA0E25E92C2600968460 /* CancellableTask.swift */,
 				DA43F15925E9694100BC09DB /* ImageDataLoader.swift */,
+				DA9C399A25EE9E4800076EBC /* AuthorizedHTTPClient.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -512,6 +517,7 @@
 				DA563E9D25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift */,
 				DA563ECA25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift */,
 				DA32CE9625EC0BC100A294CC /* DateFormatter+yyyyMMdd.swift */,
+				DA9C39A025EE9ED700076EBC /* Result+Unauthorized.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -765,6 +771,7 @@
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */,
+				DA9C399B25EE9E4800076EBC /* AuthorizedHTTPClient.swift in Sources */,
 				DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */,
 				DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
@@ -784,6 +791,7 @@
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
 				DA9C399525EE9D9600076EBC /* KeychainTokenStore.swift in Sources */,
+				DA9C39A125EE9ED700076EBC /* Result+Unauthorized.swift in Sources */,
 				DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

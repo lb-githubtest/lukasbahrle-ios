@@ -69,6 +69,24 @@ struct SearchArtisRequest: Request{
 }
 
 
+
+struct TokenRequestBuilder: RequestBuilder {
+    var baseURL: URL = URL(string: "https://accounts.spotify.com/")!
+    
+    var path: String =  "api/token"
+    
+    var httpMethod: HTTPMethod = .POST
+    
+    var params: [URLQueryItem]?
+    
+    var headers: [String : String]? =  ["Content-Type": "application/x-www-form-urlencoded"]
+    
+    var body: Data? = "grant_type=client_credentials".data(using: .utf8)
+}
+
+
+
+
 struct SearchArtistRequestBuilder: RequestBuilder {
     var baseURL: URL = URL(string: "https://api.spotify.com/v1/")!
     
@@ -81,7 +99,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "7")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQARFpB4iA5qQ6iAffUDck01Q0Ek4kUfekgBEIFj7nmX0hxiIvgOb_md5hy8f-fu419nVwdQ7D5gCmPfeOs"]
+    var headers: [String : String]?
     
     var body: Data?
     
@@ -108,7 +126,7 @@ struct AlbumsRequestBuilder: RequestBuilder {
         URLQueryItem(name: "limit", value: "5")
     ]
     
-    var headers: [String : String]? =  ["Authorization": "Bearer BQCUqtM3p23FEIN-oSEW6mNMqhYiqN3k8CkGtBszPuUVOl35ZZHKzOtrezIQXcs7_NXg2bgmxnc7vhlnsGg"]
+    var headers: [String : String]?
     
     var body: Data?
     

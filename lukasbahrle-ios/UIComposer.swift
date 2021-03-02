@@ -9,15 +9,50 @@ import UIKit
 import ArtistBrowser
 
 
+
 class AppCoordinator{
     private let navigationController: UINavigationController
+
+    
+    private lazy var client: HTTPClient = {
+        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+    }()
+    
+    private lazy var remoteTokenLoader: TokenLoader = {
+        let tokenRequest = TokenRequest(builder: TokenRequestBuilder(), credentialsLoader: {
+            Credentials(username: "80684ef2c87a4ce19f2e9f6b87edea97", password: "e0341c48219d481591187ff1dfdee64b")
+        })
+        
+        let url = URL(string: "https://accounts.spotify.com/api/token")!
+        let remoteLoader = RemoteTokenLoader(request: {tokenRequest.get()}, client: client)
+            
+        return remoteLoader
+//        return RemoteTokenLoaderWithCachingBehaviour(tokenLoader: remoteLoader, tokenCache: tokenCache)
+    }()
+    
+    private lazy var authClient: AuthorizedHTTPClient = {
+        
+        let tokenCache = TokenCache(store: KeychainTokenStore())
+        
+        let tokenLoader = TokenLoaderFallback(primary: tokenCache, fallback: remoteTokenLoader)
+        return AuthorizedHTTPClient(client: client, tokenLoader: tokenLoader, tokenRefreshLoader: remoteTokenLoader)
+    }()
     
     init(){
         navigationController = UINavigationController()
     }
     
     func start() -> UIViewController{
-        let vc = UIComposer.makeArtistBrowserViewController(navigator: self)
+        
+        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
+                    var builder = SearchArtistRequestBuilder()
+                    builder.set(input: input, loadedItems: loadedItems)
+                    let request = SearchArtisRequest(builder: builder)
+        
+                    return request.get()
+                }, client: authClient)
+
+        let vc = UIComposer.makeArtistBrowserViewController(navigator: self, searchArtistLoader: searchArtistLoader)
         navigationController.setViewControllers([vc], animated: false)
         return navigationController
     }
@@ -34,19 +69,19 @@ extension AppCoordinator: SearchArtistNavigator{
 
 
 class UIComposer{
-    static func makeArtistBrowserViewController(navigator: SearchArtistNavigator) -> ArtistBrowserViewController{
+    static func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader) -> ArtistBrowserViewController{
         let bundle = Bundle(for: ArtistBrowserViewController.self)
         let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
         
-        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
-            var builder = SearchArtistRequestBuilder()
-            builder.set(input: input, loadedItems: loadedItems)
-            let request = SearchArtisRequest(builder: builder)
-            
-            return request.get()
-        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-        
+//        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
+//            var builder = SearchArtistRequestBuilder()
+//            builder.set(input: input, loadedItems: loadedItems)
+//            let request = SearchArtisRequest(builder: builder)
+//
+//            return request.get()
+//        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+//
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
         let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)

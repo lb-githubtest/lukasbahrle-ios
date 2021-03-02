@@ -12,6 +12,7 @@ public class RemoteTokenLoader: TokenLoader{
     public enum Error: Swift.Error {
         case connectivity
         case invalidData
+        case unauthorized
     }
     
     let request: () -> URLRequest
