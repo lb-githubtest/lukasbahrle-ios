@@ -48,8 +48,8 @@ class ArtistDetailViewController: UICollectionViewController {
         
         viewModel.albumsLoadState.valueChanged = { [weak self] state in
             switch state {
-            case .loaded(canLoadMore: _, countAdded: let count):
-                self?.onAlbumsLoaded(countAdded: count)
+            case .loaded(canLoadMore:let canLoadMore, countAdded: let count):
+                self?.onAlbumsLoaded(canLoadMore: canLoadMore, countAdded: count)
             default:
                 break
             }
@@ -62,18 +62,19 @@ class ArtistDetailViewController: UICollectionViewController {
         collectionView.dragInteractionEnabled = true
     }
     
-    private func onAlbumsLoaded(countAdded: Int){
+    private func onAlbumsLoaded(canLoadMore: Bool, countAdded: Int){
         
         let startIndex = viewModel.numberOfContentItems - countAdded
-        let endIndex = viewModel.numberOfContentItems - 1
+        var endIndex = viewModel.numberOfContentItems - 1
         var indexPaths: [IndexPath] = []
+        
+        if !canLoadMore {
+            endIndex = endIndex - 1
+        }
         
         for index in startIndex...endIndex{
             indexPaths.append(IndexPath(row: index, section: 0))
         }
-        
-        
-        
         collectionView.insertItems(at: indexPaths)
     }
 }
@@ -120,10 +121,21 @@ extension ArtistDetailViewController{
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numberOfContentItems
+        
+        var count = viewModel.numberOfContentItems
+        let loadingState = viewModel.albumsLoadState.current
+        if loadingState.canLoadMore || loadingState == .failed {
+            count = count + 1
+        }
+        
+        return count
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        guard indexPath.row < viewModel.numberOfContentItems else{
+            return makeLoadingCell(state: viewModel.albumsLoadState.current, collectionView: collectionView, indexPath: indexPath)
+        }
         
         let contentType = viewModel.contentType(at: indexPath.row)
         
@@ -133,6 +145,7 @@ extension ArtistDetailViewController{
         case .albumsFilterDates:
             return makeAlbumsFilterDatesCell(collectionView: collectionView, indexPath: indexPath)
         case .album:
+            
             return makeAlbumCell(collectionView: collectionView, indexPath: indexPath)
         }
     }
@@ -152,6 +165,9 @@ extension ArtistDetailViewController{
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CellPreloadable{
             cell.preload()
+        }
+        else if indexPath.row >= viewModel.numberOfContentItems, viewModel.albumsLoadState.current.canLoadMore {
+            viewModel.scrolledToBottom()
         }
     }
     
@@ -190,6 +206,13 @@ extension ArtistDetailViewController{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumViewCell.self), for: indexPath) as! AlbumViewCell
         
         cell.setup(viewModel: albumViewModel)
+        return cell
+    }
+    
+    func makeLoadingCell(state: AlbumsLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LoadingCollectionViewCell.self), for: indexPath) as! LoadingCollectionViewCell
+        
         return cell
     }
 }

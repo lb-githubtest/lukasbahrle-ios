@@ -15,6 +15,9 @@ public class Observable<T> {
             }
         }
     }
+    public var current: T {
+        return value
+    }
     public var valueChanged: ((T) -> Void)?
     
     public init(_ value: T){

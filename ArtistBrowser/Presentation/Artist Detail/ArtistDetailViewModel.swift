@@ -80,7 +80,7 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     public func album(at index: Int) -> AlbumCellViewModel? {
-        AlbumCellViewModel(album: albumsDataModel[0], imageLoader: imageDataLoader)
+        AlbumCellViewModel(album: albumsDataModel[index - (contentTypes.count - 1)], imageLoader: imageDataLoader)
     }
     
     public func artistInfoViewModel() -> ArtistInfoCellViewModel {
@@ -99,7 +99,7 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     public func scrolledToBottom() {
-        
+        loadNextPage()
     }
     
     public func reorderAlbum(from: Int, to: Int) {
