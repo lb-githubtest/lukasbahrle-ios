@@ -12,5 +12,7 @@ public class AlbumsDatesFilterCellViewModel{
     public  var endDate: (text: String, date: Date)?
     
     
-   
+    func changeStartDate(_ date:Date){
+        
+    }
 }

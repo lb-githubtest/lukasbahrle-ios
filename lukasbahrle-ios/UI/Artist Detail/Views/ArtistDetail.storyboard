@@ -95,7 +95,7 @@
                                     <outlet property="titleView" destination="JWb-sm-JV4" id="Ljl-1b-Z4S"/>
                                 </connections>
                             </collectionViewCell>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AlbumViewCell" id="ONI-cH-qO5" customClass="AlbumViewCell" customModule="lukasbahrle_ios" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="ONI-cH-qO5">
                                 <rect key="frame" x="0.0" y="698" width="49" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tjq-mr-NaZ">

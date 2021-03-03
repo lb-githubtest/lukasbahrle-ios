@@ -62,10 +62,10 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(infoLabel)
         
-        imageView.backgroundColor = .yellow
+        imageView.backgroundColor = .lightGray
         
-        nameLabel.numberOfLines = 0
-        infoLabel.numberOfLines = 0
+        nameLabel.set(style: .largeTitle)
+        infoLabel.set(style: .body)
         
         nameLabel.text = "Artist name"
         infoLabel.text = "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset."
@@ -109,5 +109,14 @@ extension ArtistDetailInfoCell: CellPreloadable{
     
     func cancelLoad() {
         viewModel?.cancel()
+    }
+}
+
+
+extension UILabel {
+    func set(style: UIFont.TextStyle, numberOfLines: Int = 0, dynamicType: Bool = true){
+        self.numberOfLines = numberOfLines
+        self.font = UIFont.preferredFont(forTextStyle: style)
+        self.adjustsFontForContentSizeCategory = dynamicType
     }
 }

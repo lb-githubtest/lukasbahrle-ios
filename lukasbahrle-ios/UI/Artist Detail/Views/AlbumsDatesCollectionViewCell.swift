@@ -74,6 +74,7 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         configureConstraints()
         
         titleView.text = "Albums"
+        titleView.set(style: .title3)
         startDateView.placeholder = "Start date"
         endDateView.placeholder = "End date"
     }
@@ -90,15 +91,14 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
             titleView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             titleView.topAnchor.constraint(equalTo: margins.topAnchor),
             
-            startDateView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 0),
+            startDateView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 8),
             startDateView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
             startDateView.trailingAnchor.constraint(equalTo: endDateView.leadingAnchor, constant: -10),
             startDateView.widthAnchor.constraint(equalTo: endDateView.widthAnchor),
-            startDateView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
             
             endDateView.topAnchor.constraint(equalTo: startDateView.topAnchor, constant: 0),
             endDateView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            endDateView.bottomAnchor.constraint(equalTo: startDateView.bottomAnchor),
+            
         ])
     }
     

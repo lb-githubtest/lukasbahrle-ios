@@ -9,13 +9,18 @@ import UIKit
 import ArtistBrowser
 
 class AlbumViewCell: UICollectionViewCell {
-    @IBOutlet private var thumbnailView: UIImageView!
-    @IBOutlet private var albumNameLabel: UILabel!
+    private var thumbnailView: UIImageView = UIImageView()
+    private var nameLabel: UILabel = UILabel()
     
     private var viewModel: AlbumCellViewModel?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configure()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
         configure()
     }
     
@@ -24,11 +29,32 @@ class AlbumViewCell: UICollectionViewCell {
         reset()
     }
     
-    private func configure(){}
+    private func configure(){
+        contentView.addSubview(thumbnailView)
+        contentView.addSubview(nameLabel)
+        
+        thumbnailView.translatesAutoresizingMaskIntoConstraints = false
+        
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.set(style: .footnote, numberOfLines: 2)
+        
+        let margins = contentView.layoutMarginsGuide
+        
+        NSLayoutConstraint.activate([
+            thumbnailView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            thumbnailView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            thumbnailView.topAnchor.constraint(equalTo: margins.topAnchor),
+            thumbnailView.heightAnchor.constraint(equalTo: thumbnailView.widthAnchor),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            nameLabel.topAnchor.constraint(equalTo: thumbnailView.bottomAnchor, constant: 8),
+        ])
+    }
     
     func setup(viewModel: AlbumCellViewModel){
         self.viewModel = viewModel
-        albumNameLabel.text = viewModel.name
+        nameLabel.text = viewModel.name
         
         viewModel.image.state.valueChanged = { [weak self] state in
             self?.onThumbnailStateChanged(state)

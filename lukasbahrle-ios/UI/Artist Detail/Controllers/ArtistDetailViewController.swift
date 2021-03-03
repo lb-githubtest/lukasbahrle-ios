@@ -28,6 +28,7 @@ class ArtistDetailViewController: UICollectionViewController {
         
         
         collectionView.collectionViewLayout = layout
+        collectionView.register(AlbumViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumViewCell.self))
         collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LoadingCollectionViewCell.self))
         collectionView.register(ArtistDetailInfoCell.self, forCellWithReuseIdentifier: String(describing: ArtistDetailInfoCell.self))
         collectionView.register(AlbumsDatesCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self))
