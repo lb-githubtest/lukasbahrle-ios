@@ -15,88 +15,96 @@ public protocol ArtistDetailViewModelObserver: NSObject {
     func onAlbumsFilterDatesChanged(start: (text: String, date:Date)? , end: (text: String, date: Date)?)
 }
 
-protocol ArtistDetailViewModelType {
-    associatedtype PresentableAlbumData
+
+public enum AlbumsLoadState: Equatable{
+    case notLoaded
+    case loading
+    case failed
+    case loaded(canLoadMore: Bool, countAdded: Int)
     
-    var observer: ArtistDetailViewModelObserver? {get set}
-    
-    var numberOfAlbums: Int {get}
-    func album(at index: Int) -> PresentableAlbumData?
-    
-    var loadState: LoadState {get}
-    
-    var title: String {get}
-    
-    var albumsStartDate: (text: String, date:Date)? {get}
-    var albumsEndDate: (text: String, date: Date)? {get}
-    
-    func viewDidLoad()
-    
-    func scrolledToBottom()
-    
-    func preloadItem(at index: Int)
-    func cancelItem(at index: Int)
-    
-    func retryLoad()
-    
-    func reorderAlbum(from: Int, to: Int)
-    
-    func onAlbumsFilterStartDateChange(_ date: Date)
-    func onAlbumsFilterEndDateChange(_ date: Date)
+    public var canLoadMore: Bool {
+        switch self {
+        case .loaded(canLoadMore: let canLoadMore, countAdded: _):
+            return canLoadMore
+        default:
+            return true
+        }
+    }
 }
 
+public enum ArtistDetailContentType{
+    case artistInfo
+    case albumsFilterDates
+    case album
+}
 
-public struct PresentableAlbum{
-    public let id: String
-    public let name:String
-    public let thumbnail: URL?
+protocol ArtistDetailViewModelType {
+    var title: String {get}
+    
+    var numberOfContentItems: Int {get}
+    func contentType(at index: Int) -> ArtistDetailContentType
+    
+    func artistInfoViewModel() -> ArtistInfoCellViewModel
+    func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel
+    
+    var albumsLoadState: Observable<AlbumsLoadState> {get}
+    var numberOfAlbums: Int {get}
+    func album(at index: Int) -> AlbumCellViewModel?
+    
+    var albumsFilterStartDate: Observable<Date?> {get}
+    var albumsFilterEndDate: Observable<Date?> {get}
+    
+    func viewDidLoad()
+    func scrolledToBottom()
+    
+    func reorderAlbum(from: Int, to: Int)
 }
 
 
 public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
-    public var observer: ArtistDetailViewModelObserver?
+    public var title: String = "Detail"
+    
+    public var numberOfContentItems: Int {contentTypes.count - 1 + numberOfAlbums}
+    public func contentType(at index: Int) -> ArtistDetailContentType {
+        if index < contentTypes.count {
+            return contentTypes[index]
+        }
+        return .album
+    }
+    
+    public var albumsLoadState: Observable<AlbumsLoadState> = Observable(AlbumsLoadState.notLoaded)
     
     public var numberOfAlbums: Int {
-        return albumsDataModel.count
+        albumsDataModel.count
     }
     
-    public func album(at index: Int) -> PresentableAlbum? {
-        guard index < albumsDataModel.count else {return nil}
-        let album = albumsDataModel[index]
-        return PresentableAlbum(id: album.id, name: album.name, thumbnail: album.thumbnail)
+    public func album(at index: Int) -> AlbumCellViewModel? {
+        AlbumCellViewModel(album: albumsDataModel[0], imageLoader: imageDataLoader)
     }
     
-    public var loadState: LoadState = .none
-    
-    public var title: String = ""
-    
-    public var albumsStartDate: (text: String, date: Date)? {
-        didSet{
-            
-            onAlbumsFilterDatesChanged()
-        }
-    }
-    public var albumsEndDate: (text: String, date: Date)? {
-        didSet{
-            onAlbumsFilterDatesChanged()
-        }
+    public func artistInfoViewModel() -> ArtistInfoCellViewModel {
+        ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
     }
     
-    private let artist: Artist
-    private var albumsDataModel = [Album]()
+    public func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel {
+        AlbumsDatesFilterCellViewModel()
+    }
     
-    private let albumsLoader: AlbumsLoader
-    private let imageDataLoader: ImageDataLoader
+    public var albumsFilterStartDate: Observable<Date?> = Observable(nil)
+    public var albumsFilterEndDate: Observable<Date?> = Observable(nil)
     
-    private var currentTask: CancellableTask?
-    private var itemLoadingTasks = [Int: CancellableTask]()
+    public func viewDidLoad() {
+        loadNextPage()
+    }
     
-    private lazy var dateFormatter:DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        return formatter
-    }()
+    public func scrolledToBottom() {
+        
+    }
+    
+    public func reorderAlbum(from: Int, to: Int) {
+        
+    }
     
     public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){
         self.artist = artist
@@ -105,70 +113,42 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         self.imageDataLoader = imageDataLoader
     }
     
-    public func viewDidLoad() {
-        loadAlbums(loadedItems: 0)
-    }
+    // MARK: Private
     
-    public func scrolledToBottom() {
-        loadNextPage()
-    }
+    private let artist: Artist
+    private var albumsDataModel = [Album]()
     
-    public func preloadItem(at index: Int) {
-        guard itemLoadingTasks[index] == nil, index < albumsDataModel.count else {
-            return
-        }
-        
-        guard let imageURL = albumsDataModel[index].thumbnail else {
-            return
-        }
-        
-        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
-            DispatchQueue.main.async {
-                self?.observer?.onItemPreloadCompleted(index: index, result: result)
-                self?.itemLoadingTasks[index] = nil
-            }
-        })
-    }
+    private let albumsLoader: AlbumsLoader
+    private let imageDataLoader: ImageDataLoader
     
-    public func cancelItem(at index: Int) {
-        itemLoadingTasks[index]?.cancel()
-        itemLoadingTasks[index] = nil
-    }
+    private var contentTypes: [ArtistDetailContentType] = [.artistInfo, .albumsFilterDates, .album]
     
-    public func retryLoad() {
-        
-    }
+    private var currentAlbumsTask: CancellableTask?
     
-    public func reorderAlbum(from: Int, to: Int) {
-        let album = albumsDataModel[from]
-        albumsDataModel.remove(at: from)
-        albumsDataModel.insert(album, at: to)
-    }
-    
-    
-    public func onAlbumsFilterStartDateChange(_ date: Date){
-        albumsStartDate = (text: formattedDate(date: date), date: date)
-    }
-    
-    public func onAlbumsFilterEndDateChange(_ date: Date) {
-        albumsEndDate = (text: formattedDate(date: date), date: date)
-    }
-    
-    
+}
+
+
+
+// MARK: Albums
+
+extension ArtistDetailViewModel{
     private func loadNextPage() {
-        guard loadState != .loading, loadState != .none, albumsDataModel.count > 0 else {return}
+        
+        guard albumsLoadState.value != .loading, albumsLoadState.value.canLoadMore else {return}
+
         loadAlbums(loadedItems: albumsDataModel.count)
     }
     
     private func loadAlbums(loadedItems: Int){
-        loadState = .loading
-        currentTask?.cancel()
-        
-        currentTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
-            
+        albumsLoadState.value = .loading
+        currentAlbumsTask?.cancel()
+
+        currentAlbumsTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
+
             DispatchQueue.main.async {
                 switch result{
                     case .success(let albumsList):
+                        
                         self?.onAlbumListLoaded(albums: albumsList)
                     case .failure(let error):
                         self?.onAlbumListLoadError(error: error)
@@ -179,25 +159,171 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
     private func onAlbumListLoaded(albums: AlbumList){
         albumsDataModel.append(contentsOf: albums.items)
-        
-        loadState = albums.canLoadMore ? .waiting : .none
-        
-        observer?.onAlbumListUpdated()
+        albumsLoadState.value = .loaded(canLoadMore: albums.canLoadMore, countAdded: albums.items.count)
     }
     
     private func onAlbumListLoadError(error: Error){
-        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
-        
+        albumsLoadState.value = .failed
+        //loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
     }
-    
-    private func onAlbumsFilterDatesChanged(){
-        
-        observer?.onAlbumsFilterDatesChanged(start: albumsStartDate, end: albumsEndDate)
-    }
-    
-    private func formattedDate(date: Date) -> String{
-        let text = dateFormatter.string(from: date)
-        return text
-    }
-    
 }
+
+
+
+
+
+//public struct PresentableAlbum{
+//    public let id: String
+//    public let name:String
+//    public let thumbnail: URL?
+//}
+
+//
+//public class ArtistDetailViewModel: ArtistDetailViewModelType{
+//
+//    public var observer: ArtistDetailViewModelObserver?
+//
+//    public var numberOfAlbums: Int {
+//        return albumsDataModel.count
+//    }
+//
+//    public func album(at index: Int) -> PresentableAlbum? {
+//        guard index < albumsDataModel.count else {return nil}
+//        let album = albumsDataModel[index]
+//        return PresentableAlbum(id: album.id, name: album.name, thumbnail: album.thumbnail)
+//    }
+//
+//    public var loadState: LoadState = .none
+//
+//    public var title: String = ""
+//
+//    public var albumsStartDate: (text: String, date: Date)? {
+//        didSet{
+//
+//            onAlbumsFilterDatesChanged()
+//        }
+//    }
+//    public var albumsEndDate: (text: String, date: Date)? {
+//        didSet{
+//            onAlbumsFilterDatesChanged()
+//        }
+//    }
+//
+//    private let artist: Artist
+//    private var albumsDataModel = [Album]()
+//
+//    private let albumsLoader: AlbumsLoader
+//    private let imageDataLoader: ImageDataLoader
+//
+//    private var currentTask: CancellableTask?
+//    private var itemLoadingTasks = [Int: CancellableTask]()
+//
+//    private lazy var dateFormatter:DateFormatter = {
+//        let formatter = DateFormatter()
+//        formatter.dateStyle = .short
+//        return formatter
+//    }()
+//
+//    public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){
+//        self.artist = artist
+//        self.title = artist.name
+//        self.albumsLoader = albumsLoader
+//        self.imageDataLoader = imageDataLoader
+//    }
+//
+//    public func viewDidLoad() {
+//        loadAlbums(loadedItems: 0)
+//    }
+//
+//    public func scrolledToBottom() {
+//        loadNextPage()
+//    }
+//
+//    public func preloadItem(at index: Int) {
+//        guard itemLoadingTasks[index] == nil, index < albumsDataModel.count else {
+//            return
+//        }
+//
+//        guard let imageURL = albumsDataModel[index].thumbnail else {
+//            return
+//        }
+//
+//        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
+//            DispatchQueue.main.async {
+//                self?.observer?.onItemPreloadCompleted(index: index, result: result)
+//                self?.itemLoadingTasks[index] = nil
+//            }
+//        })
+//    }
+//
+//    public func cancelItem(at index: Int) {
+//        itemLoadingTasks[index]?.cancel()
+//        itemLoadingTasks[index] = nil
+//    }
+//
+//    public func retryLoad() {
+//
+//    }
+//
+//    public func reorderAlbum(from: Int, to: Int) {
+//        let album = albumsDataModel[from]
+//        albumsDataModel.remove(at: from)
+//        albumsDataModel.insert(album, at: to)
+//    }
+//
+//
+//    public func onAlbumsFilterStartDateChange(_ date: Date){
+//        albumsStartDate = (text: formattedDate(date: date), date: date)
+//    }
+//
+//    public func onAlbumsFilterEndDateChange(_ date: Date) {
+//        albumsEndDate = (text: formattedDate(date: date), date: date)
+//    }
+//
+//
+//    private func loadNextPage() {
+//        guard loadState != .loading, loadState != .none, albumsDataModel.count > 0 else {return}
+//        loadAlbums(loadedItems: albumsDataModel.count)
+//    }
+//
+//    private func loadAlbums(loadedItems: Int){
+//        loadState = .loading
+//        currentTask?.cancel()
+//
+//        currentTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
+//
+//            DispatchQueue.main.async {
+//                switch result{
+//                    case .success(let albumsList):
+//                        self?.onAlbumListLoaded(albums: albumsList)
+//                    case .failure(let error):
+//                        self?.onAlbumListLoadError(error: error)
+//                }
+//            }
+//        }
+//    }
+//
+//    private func onAlbumListLoaded(albums: AlbumList){
+//        albumsDataModel.append(contentsOf: albums.items)
+//
+//        loadState = albums.canLoadMore ? .waiting : .none
+//
+//        observer?.onAlbumListUpdated()
+//    }
+//
+//    private func onAlbumListLoadError(error: Error){
+//        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
+//
+//    }
+//
+//    private func onAlbumsFilterDatesChanged(){
+//
+//        observer?.onAlbumsFilterDatesChanged(start: albumsStartDate, end: albumsEndDate)
+//    }
+//
+//    private func formattedDate(date: Date) -> String{
+//        let text = dateFormatter.string(from: date)
+//        return text
+//    }
+//
+//}

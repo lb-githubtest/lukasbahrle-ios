@@ -35,12 +35,17 @@ class ArtistSearchResultCell: UITableViewCell {
         
         label.text = viewModel.artistName
         
-        viewModel.artistThumbnailState.valueChanged = { [weak self] thumbnailState in
-            self?.onThumbnailStateChanged(thumbnailState)
+//        viewModel.artistThumbnailState.valueChanged = { [weak self] thumbnailState in
+//            self?.onThumbnailStateChanged(thumbnailState)
+//        }
+        
+        viewModel.image.state.valueChanged = { [weak self] state in
+            self?.onThumbnailStateChanged(state)
         }
+
     }
     
-    private func onThumbnailStateChanged(_ state: SearchArtistResultCellViewModel.ArtistThumbnailState){
+    private func onThumbnailStateChanged(_ state: ImageState){
         
         switch state {
         case .loaded(data: let data):

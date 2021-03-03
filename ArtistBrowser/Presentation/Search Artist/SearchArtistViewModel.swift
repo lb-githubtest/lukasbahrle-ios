@@ -86,7 +86,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     public func result(at index: Int) -> SearchArtistResultCellViewModel? {
         guard index < dataModel.count else {return nil}
         let artist = dataModel[index]
-        return SearchArtistResultCellViewModel(artistName: artist.name, arttistThumbnail: artist.thumbnail, imageLoader: imageDataLoader)
+        return SearchArtistResultCellViewModel(artist: artist, imageLoader: imageDataLoader)
     }
    
     public private(set) var loadState: LoadState = .none {

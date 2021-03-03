@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import ArtistBrowser
 
 protocol AlbumsFilterDatesViewDelegate: class{
     func onAlbumsFilterStartDateChange(_ date: Date)
@@ -17,10 +18,9 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     private var startDateView: UITextField = UITextField()
     private var endDateView: UITextField = UITextField()
     
-    var cellWidth: CGFloat = 200
+    private var viewModel: AlbumsDatesFilterCellViewModel?
     
     private let datePicker = UIDatePicker()
-    
     public weak var delegate: AlbumsFilterDatesViewDelegate?
     
     private var startDate: Date?
@@ -45,33 +45,16 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         configure()
     }
     
-    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-
-            var targetSize = targetSize
-            targetSize.width = cellWidth
-            targetSize.height = CGFloat.greatestFiniteMagnitude
-
-            let size = super.systemLayoutSizeFitting(
-                    targetSize,
-                    withHorizontalFittingPriority: .required,
-                    verticalFittingPriority: .fittingSizeLevel
-                )
-
-            return size
-        }
-    
-    
     override func prepareForReuse() {
         delegate = nil
     }
     
-    public func set(start: (text: String, date: Date)?, end: (text: String, date: Date)?){
-        startDate = start?.date
-        startDateView.text = start?.text
+    public func setup(viewModel: AlbumsDatesFilterCellViewModel){
+        startDate = viewModel.startDate?.date
+        startDateView.text = viewModel.startDate?.text
         
-        
-        endDate = end?.date
-        endDateView.text = end?.text
+        endDate = viewModel.endDate?.date
+        endDateView.text = viewModel.endDate?.text
     }
     
     private func configure(){
@@ -83,12 +66,12 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         datePicker.datePickerMode = .date
         startDateView.inputAccessoryView = inputToolbar
         startDateView.inputView = datePicker
+        startDateView.borderStyle = .roundedRect
         endDateView.inputAccessoryView = inputToolbar
         endDateView.inputView = datePicker
+        endDateView.borderStyle = .roundedRect
         
         configureConstraints()
-        
-        contentView.backgroundColor = .green
         
         titleView.text = "Albums"
         startDateView.placeholder = "Start date"
@@ -109,12 +92,13 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
             
             startDateView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 0),
             startDateView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
-            startDateView.trailingAnchor.constraint(equalTo: endDateView.leadingAnchor),
+            startDateView.trailingAnchor.constraint(equalTo: endDateView.leadingAnchor, constant: -10),
             startDateView.widthAnchor.constraint(equalTo: endDateView.widthAnchor),
+            startDateView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
             
             endDateView.topAnchor.constraint(equalTo: startDateView.topAnchor, constant: 0),
             endDateView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            endDateView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            endDateView.bottomAnchor.constraint(equalTo: startDateView.bottomAnchor),
         ])
     }
     

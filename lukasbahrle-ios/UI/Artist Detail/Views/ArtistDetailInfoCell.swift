@@ -6,13 +6,14 @@
 //
 
 import UIKit
+import ArtistBrowser
 
 class ArtistDetailInfoCell: UICollectionViewCell {
     private var imageView = UIImageView()
     private var nameLabel = UILabel()
     private var infoLabel = UILabel()
     
-    var cellWidth: CGFloat = 200
+    private var viewModel: ArtistInfoCellViewModel?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -24,24 +25,39 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         configure()
     }
     
-//    override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-//
-//            var targetSize = targetSize
-//            targetSize.width = 100
-//            targetSize.height = CGFloat.greatestFiniteMagnitude
-//
-//            let size = super.systemLayoutSizeFitting(
-//                    targetSize,
-//                    withHorizontalFittingPriority: .required,
-//                    verticalFittingPriority: .fittingSizeLevel
-//                )
-//
-//            return size
-//        }
+    public func setup(viewModel: ArtistInfoCellViewModel){
+        self.viewModel = viewModel
+        
+        nameLabel.text = viewModel.artistName
+        infoLabel.text = viewModel.artistInfo
+        
+        viewModel.image.state.valueChanged = { [weak self] state in
+            self?.onImageStateChanged(state)
+        }
+    }
+    
+    
+    private func onImageStateChanged(_ state: ImageState){
+        switch state {
+        case .loaded(data: let data):
+            onImageThumbnailDateLoaded(data)
+        default:
+            break
+        }
+    }
+    
+    private func onImageThumbnailDateLoaded(_ data: Data){
+        imageView.image = UIImage(data: data)
+    }
+    
+    private func reset(){
+        imageView.image = nil
+        viewModel?.cancel()
+        viewModel = nil
+    }
     
     
     private func configure(){
-        
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(infoLabel)
@@ -80,5 +96,18 @@ class ArtistDetailInfoCell: UICollectionViewCell {
             infoLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
             infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
+    }
+}
+
+
+
+extension ArtistDetailInfoCell: CellPreloadable{
+    func preload() {
+        
+        viewModel?.preload()
+    }
+    
+    func cancelLoad() {
+        viewModel?.cancel()
     }
 }

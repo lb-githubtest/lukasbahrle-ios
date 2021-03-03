@@ -12,36 +12,57 @@ class AlbumViewCell: UICollectionViewCell {
     @IBOutlet private var thumbnailView: UIImageView!
     @IBOutlet private var albumNameLabel: UILabel!
     
+    private var viewModel: AlbumCellViewModel?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configure()
     }
     
     override func prepareForReuse() {
-        thumbnailView.image = nil
+        super.prepareForReuse()
+        reset()
     }
     
-    private func configure(){
+    private func configure(){}
+    
+    func setup(viewModel: AlbumCellViewModel){
+        self.viewModel = viewModel
+        albumNameLabel.text = viewModel.name
         
+        viewModel.image.state.valueChanged = { [weak self] state in
+            self?.onThumbnailStateChanged(state)
+        }
     }
     
-    func set(info: PresentableAlbum){
-        albumNameLabel.text = info.name
-    }
-    
-    func onImageLoadResult(result: Result<Data, Error>){
-        
-        switch result {
-        case .success(let data):
-            self.thumbnailView.image = UIImage(data: data)
-//            UIView.transition(with: self.thumbnailView,
-//                          duration:0.5,
-//                          options: .transitionCrossDissolve,
-//                          animations: { [weak self] in self?.thumbnailView.image = UIImage(data: data) },
-//                          completion: nil)
-            
+    private func onThumbnailStateChanged(_ state: ImageState){
+        switch state {
+        case .loaded(data: let data):
+            onArtistThumbnailDateLoaded(data)
         default:
             break
         }
+    }
+    
+    private func onArtistThumbnailDateLoaded(_ data: Data){
+        thumbnailView.image = UIImage(data: data)
+    }
+    
+    private func reset(){
+        thumbnailView.image = nil
+        viewModel?.cancel()
+        viewModel = nil
+    }
+    
+}
+
+
+extension AlbumViewCell: CellPreloadable{
+    func preload() {
+        viewModel?.preload()
+    }
+    
+    func cancelLoad() {
+        viewModel?.cancel()
     }
 }

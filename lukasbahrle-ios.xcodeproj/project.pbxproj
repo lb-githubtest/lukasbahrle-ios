@@ -19,6 +19,11 @@
 		DA18FB4B25EA5940000E9656 /* ArtistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB4A25EA5940000E9656 /* ArtistDetailViewModel.swift */; };
 		DA18FB6925EAB30B000E9656 /* ArtistDetailHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB6825EAB30B000E9656 /* ArtistDetailHeaderView.swift */; };
 		DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */; };
+		DA2DBBB925EEE44D005103BB /* ArtistInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */; };
+		DA2DBBBF25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBBE25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift */; };
+		DA2DBBC525EEE4B9005103BB /* AlbumCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBC425EEE4B9005103BB /* AlbumCellViewModel.swift */; };
+		DA2DBBCC25EF5DF4005103BB /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBCB25EF5DF4005103BB /* Observable.swift */; };
+		DA2DBBD325EF5E68005103BB /* ImageStateObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBD225EF5E68005103BB /* ImageStateObservable.swift */; };
 		DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE3E25EB766D00A294CC /* LoadingView.swift */; };
 		DA32CE4525EB785400A294CC /* LoadingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */; };
 		DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */; };
@@ -140,6 +145,11 @@
 		DA18FB4A25EA5940000E9656 /* ArtistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewModel.swift; sourceTree = "<group>"; };
 		DA18FB6825EAB30B000E9656 /* ArtistDetailHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailHeaderView.swift; sourceTree = "<group>"; };
 		DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
+		DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistInfoCellViewModel.swift; sourceTree = "<group>"; };
+		DA2DBBBE25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsDatesFilterCellViewModel.swift; sourceTree = "<group>"; };
+		DA2DBBC425EEE4B9005103BB /* AlbumCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumCellViewModel.swift; sourceTree = "<group>"; };
+		DA2DBBCB25EF5DF4005103BB /* Observable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
+		DA2DBBD225EF5E68005103BB /* ImageStateObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageStateObservable.swift; sourceTree = "<group>"; };
 		DA32CE3E25EB766D00A294CC /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ArtistDetailViewController+DragDrop.swift"; sourceTree = "<group>"; };
@@ -248,6 +258,8 @@
 		DA11A9E525E7DC4700968460 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				DA2DBBCA25EF5DE7005103BB /* Helpers */,
+				DA2DBBD125EF5E2D005103BB /* Shared */,
 				DA18FB4825EA590E000E9656 /* Search Artist */,
 				DA18FB4925EA5920000E9656 /* Artist Detail */,
 			);
@@ -311,8 +323,27 @@
 			isa = PBXGroup;
 			children = (
 				DA18FB4A25EA5940000E9656 /* ArtistDetailViewModel.swift */,
+				DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */,
+				DA2DBBBE25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift */,
+				DA2DBBC425EEE4B9005103BB /* AlbumCellViewModel.swift */,
 			);
 			path = "Artist Detail";
+			sourceTree = "<group>";
+		};
+		DA2DBBCA25EF5DE7005103BB /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				DA2DBBCB25EF5DF4005103BB /* Observable.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DA2DBBD125EF5E2D005103BB /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				DA2DBBD225EF5E68005103BB /* ImageStateObservable.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		DA32CE3D25EB75B800A294CC /* Shared */ = {
@@ -769,10 +800,12 @@
 				DA9C398B25EE9D5500076EBC /* TokenCache.swift in Sources */,
 				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
+				DA2DBBBF25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */,
 				DA9C399B25EE9E4800076EBC /* AuthorizedHTTPClient.swift in Sources */,
 				DA9C397D25EE877100076EBC /* SearchArtistResultCellViewModel.swift in Sources */,
+				DA2DBBB925EEE44D005103BB /* ArtistInfoCellViewModel.swift in Sources */,
 				DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */,
 				DA563ECB25E6C40F00A2FE44 /* URLRequest+Basic64EncodedAuthorizationHeader.swift in Sources */,
 				DA32CE7025EBBC0600A294CC /* AlbumsLoader.swift in Sources */,
@@ -791,7 +824,10 @@
 				DA419AC925E68792002B1782 /* URLSessionHTTPClient.swift in Sources */,
 				DA563EAE25E6C1D200A2FE44 /* TokenRequest.swift in Sources */,
 				DA9C399525EE9D9600076EBC /* KeychainTokenStore.swift in Sources */,
+				DA2DBBCC25EF5DF4005103BB /* Observable.swift in Sources */,
 				DA9C39A125EE9ED700076EBC /* Result+Unauthorized.swift in Sources */,
+				DA2DBBC525EEE4B9005103BB /* AlbumCellViewModel.swift in Sources */,
+				DA2DBBD325EF5E68005103BB /* ImageStateObservable.swift in Sources */,
 				DA9C398325EE9C4400076EBC /* TokenLoaderWithFallback.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

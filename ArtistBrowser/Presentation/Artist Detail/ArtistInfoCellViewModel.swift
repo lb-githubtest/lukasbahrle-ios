@@ -1,19 +1,14 @@
-//
-//  SearchArtistResultCellViewModel.swift
-//  ArtistBrowser
-//
-//  Created by Lukas Bahrle Santana on 02/03/2021.
-//
-
-import Foundation
-
-public class SearchArtistResultCellViewModel{
+public class ArtistInfoCellViewModel{
+    
     public let artistName:String
+    public let artistInfo:String
     public var image: ImageStateObservable
     
     internal init(artist: Artist, imageLoader: ImageDataLoader) {
         self.artistName = artist.name
-        self.image = ImageStateObservable(imageURL: artist.thumbnail, imageLoader: imageLoader)
+        self.artistInfo = "artist info"
+        
+        image = ImageStateObservable(imageURL: artist.thumbnail, imageLoader: imageLoader)
     }
     
     public func preload(){
@@ -24,6 +19,3 @@ public class SearchArtistResultCellViewModel{
         image.cancel()
     }
 }
-
-
-

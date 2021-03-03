@@ -60,7 +60,18 @@ class AppCoordinator{
 
 extension AppCoordinator: SearchArtistNavigator{
     func didSelect(artist: Artist) {
-        let vc = UIComposer.makeArtistDetailViewController(artist: artist)
+        
+        let albumsLoader = RemoteAlbumsLoader(request: { loadedItems in
+            var builder = AlbumsRequestBuilder()
+            builder.set(artistId: artist.id, loadedItems: loadedItems)
+            let request = SearchArtisRequest(builder: builder)
+            
+            return request.get()
+        }, client: authClient)
+       
+        
+        
+        let vc = UIComposer.makeArtistDetailViewController(artist: artist, albumsLoader: albumsLoader)
         navigationController.pushViewController(vc, animated: true)
     }
 }
@@ -73,15 +84,6 @@ class UIComposer{
         let bundle = Bundle(for: ArtistBrowserViewController.self)
         let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
-        
-//        let searchArtistLoader = RemoteSearchArtistLoader(request: { input, loadedItems in
-//            var builder = SearchArtistRequestBuilder()
-//            builder.set(input: input, loadedItems: loadedItems)
-//            let request = SearchArtisRequest(builder: builder)
-//
-//            return request.get()
-//        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-//
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
         let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)
@@ -91,23 +93,13 @@ class UIComposer{
         return controller
     }
     
-    static func makeArtistDetailViewController(artist: Artist) -> ArtistDetailViewController{
+    static func makeArtistDetailViewController(artist: Artist, albumsLoader: AlbumsLoader) -> ArtistDetailViewController{
         
         let bundle = Bundle(for: ArtistDetailViewController.self)
         let storyboard = UIStoryboard(name: "ArtistDetail", bundle: bundle)
         let controller = storyboard.instantiateInitialViewController() as! ArtistDetailViewController
         
-        
-        let albumsLoader = RemoteAlbumsLoader(request: { loadedItems in
-            var builder = AlbumsRequestBuilder()
-            builder.set(artistId: artist.id, loadedItems: loadedItems)
-            let request = SearchArtisRequest(builder: builder)
-            
-            return request.get()
-        }, client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-        
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
-        
         
         let viewModel = ArtistDetailViewModel(artist: artist, albumsLoader: albumsLoader, imageDataLoader: imageLoader)
         controller.viewModel = viewModel
