@@ -31,8 +31,9 @@ class RemoteSearchArtistMapper{
         let id: String
         let name: String
         let images: [RemoteArtistImage]
+        let genres: [String]
         func toModel() -> Artist{
-            Artist(id: id, name: name, thumbnail: URL(string: images.first?.url ?? ""))
+            Artist(id: id, name: name, thumbnail: URL(string: images.first?.url ?? ""), genres: genres)
         }
     }
     

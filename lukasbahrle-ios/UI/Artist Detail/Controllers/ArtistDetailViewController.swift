@@ -64,19 +64,47 @@ class ArtistDetailViewController: UICollectionViewController {
     }
     
     private func onAlbumsLoaded(canLoadMore: Bool, countAdded: Int){
+        guard countAdded > 0 else {
+            return
+        }
         
         let startIndex = viewModel.numberOfContentItems - countAdded
-        var endIndex = viewModel.numberOfContentItems - 1
+        let endIndex = viewModel.numberOfContentItems - 1
         var indexPaths: [IndexPath] = []
         
-        if !canLoadMore {
-            endIndex = endIndex - 1
+        collectionView.performBatchUpdates {
+            if endIndex >= startIndex {
+               for index in startIndex...endIndex{
+                   indexPaths.append(IndexPath(row: index, section: 0))
+               }
+               collectionView.insertItems(at: indexPaths)
+           }
+            
+            if !viewModel.albumsLoadState.current.canLoadMore {
+                collectionView.deleteSections(IndexSet([1]))
+            }
         }
+
         
-        for index in startIndex...endIndex{
-            indexPaths.append(IndexPath(row: index, section: 0))
-        }
-        collectionView.insertItems(at: indexPaths)
+        
+        
+    
+        
+//
+//        var indexPaths: [IndexPath] = []
+//
+////        if !canLoadMore {
+////            endIndex = endIndex - 1
+////        }
+//
+//        if endIndex >= startIndex {
+//            for index in startIndex...endIndex{
+//                indexPaths.append(IndexPath(row: index, section: 0))
+//            }
+//            collectionView.insertItems(at: indexPaths)
+//        }
+        
+        
     }
 }
 
@@ -118,23 +146,28 @@ class ArtistDetailViewController: UICollectionViewController {
 extension ArtistDetailViewController{
     
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        let loadingOrErrorSection = viewModel.albumsLoadState.current.canLoadMore ? 1 : 0
+        
+        return 1 + loadingOrErrorSection
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        var count = viewModel.numberOfContentItems
-        let loadingState = viewModel.albumsLoadState.current
-        if loadingState.canLoadMore || loadingState == .failed {
-            count = count + 1
+        switch section{
+        case 0:
+            return  viewModel.numberOfContentItems
+        case 1:
+            return viewModel.albumsLoadState.current.canLoadMore ? 1 : 0
+        default:
+            return 0
         }
         
-        return count
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard indexPath.row < viewModel.numberOfContentItems else{
+        guard indexPath.section == 0 else{
             return makeLoadingCell(state: viewModel.albumsLoadState.current, collectionView: collectionView, indexPath: indexPath)
         }
         
@@ -152,22 +185,22 @@ extension ArtistDetailViewController{
     }
     
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-
-        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(ArtistDetailHeaderView.self)",
-                for: indexPath) as? ArtistDetailHeaderView
-              else {
-                fatalError("Invalid view type")
-            }
-
-        return headerView
-    }
+//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+//
+//        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(ArtistDetailHeaderView.self)",
+//                for: indexPath) as? ArtistDetailHeaderView
+//              else {
+//                fatalError("Invalid view type")
+//            }
+//
+//        return headerView
+//    }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CellPreloadable{
             cell.preload()
         }
-        else if indexPath.row >= viewModel.numberOfContentItems, viewModel.albumsLoadState.current.canLoadMore {
+        else if indexPath.section == 1, viewModel.albumsLoadState.current.canLoadMore {
             viewModel.scrolledToBottom()
         }
     }
@@ -217,3 +250,6 @@ extension ArtistDetailViewController{
         return cell
     }
 }
+
+
+

@@ -12,18 +12,25 @@ extension ArtistDetailViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let availableWidth = collectionView.bounds.size.width
-        
-        let contentType = viewModel.contentType(at: indexPath.row)
-        
-        switch contentType {
-        case .artistInfo:
-            return CGSize(width: availableWidth, height: 460)
-        case .albumsFilterDates:
-            return CGSize(width: availableWidth, height: 90)
+
+        switch indexPath.section {
+        case 0:
+            let contentType = viewModel.contentType(at: indexPath.row)
+            
+            switch contentType {
+            case .artistInfo:
+                return CGSize(width: availableWidth, height: 470)
+            case .albumsFilterDates:
+                return CGSize(width: availableWidth, height: 90)
+            default:
+                let columns:CGFloat = 2
+                let cellWidth = ((availableWidth) / columns).rounded(.down)
+                return CGSize(width: cellWidth, height: cellWidth + 40)
+            }
+        case 1:
+            return CGSize(width: availableWidth, height: 100)
         default:
-            let columns:CGFloat = 2
-            let cellWidth = ((availableWidth) / columns).rounded(.down)
-            return CGSize(width: cellWidth, height: cellWidth + 40)
+            return CGSize.zero
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

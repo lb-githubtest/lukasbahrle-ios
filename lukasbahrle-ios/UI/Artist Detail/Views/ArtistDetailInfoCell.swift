@@ -65,7 +65,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         imageView.backgroundColor = .lightGray
         
         nameLabel.set(style: .largeTitle)
-        infoLabel.set(style: .body)
+        infoLabel.set(style: .subheadline)
         
         nameLabel.text = "Artist name"
         infoLabel.text = "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset."
@@ -94,7 +94,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
             infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0),
             infoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             infoLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
         ])
     }
 }

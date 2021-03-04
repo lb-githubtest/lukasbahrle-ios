@@ -11,11 +11,13 @@ public struct Artist: Equatable{
     public let id: String
     public let name:String
     public let thumbnail: URL?
+    public let genres: [String]
     
-    public init(id: String, name:String, thumbnail: URL?){
+    public init(id: String, name:String, thumbnail: URL?, genres: [String]){
         self.id = id
         self.name = name
         self.thumbnail = thumbnail
+        self.genres = genres
     }
 }
 
@@ -28,7 +30,6 @@ public struct ArtistList: Equatable{
         self.canLoadMore = canLoadMore
     }
 }
-
 
 public class RemoteSearchArtistLoader: SearchArtistLoader {
     public enum Error: Swift.Error {

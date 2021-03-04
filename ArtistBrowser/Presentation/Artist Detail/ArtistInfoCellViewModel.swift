@@ -6,7 +6,7 @@ public class ArtistInfoCellViewModel{
     
     internal init(artist: Artist, imageLoader: ImageDataLoader) {
         self.artistName = artist.name
-        self.artistInfo = "artist info"
+        self.artistInfo = artist.genres.joined(separator: ", ")
         
         image = ImageStateObservable(imageURL: artist.thumbnail, imageLoader: imageLoader)
     }

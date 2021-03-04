@@ -77,6 +77,9 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         titleView.set(style: .title3)
         startDateView.placeholder = "Start date"
         endDateView.placeholder = "End date"
+        
+        startDateView.adjustsFontForContentSizeCategory = true
+        endDateView.adjustsFontForContentSizeCategory = true
     }
     
     
