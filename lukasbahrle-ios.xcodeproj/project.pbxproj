@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DA0D428425E6F41500C90705 /* TokenRequestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D428325E6F41500C90705 /* TokenRequestTests.swift */; };
 		DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */; };
+		DA0DD34825F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */; };
+		DA0DD35225F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD35125F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift */; };
 		DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */; };
 		DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0E25E92C2600968460 /* CancellableTask.swift */; };
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
@@ -135,6 +137,8 @@
 /* Begin PBXFileReference section */
 		DA0D428325E6F41500C90705 /* TokenRequestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRequestTests.swift; sourceTree = "<group>"; };
 		DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoaderTests.swift; sourceTree = "<group>"; };
+		DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
+		DA0DD35125F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsHeaderCellViewModel.swift; sourceTree = "<group>"; };
 		DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModel.swift; sourceTree = "<group>"; };
 		DA11AA0E25E92C2600968460 /* CancellableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTask.swift; sourceTree = "<group>"; };
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -306,6 +310,7 @@
 				DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */,
 				DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */,
 				DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */,
+				DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 				DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */,
 				DA2DBBBE25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift */,
 				DA2DBBC425EEE4B9005103BB /* AlbumCellViewModel.swift */,
+				DA0DD35125F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift */,
 			);
 			path = "Artist Detail";
 			sourceTree = "<group>";
@@ -800,6 +806,7 @@
 				DA9C398B25EE9D5500076EBC /* TokenCache.swift in Sources */,
 				DA563E9E25E6C10D00A2FE44 /* HTTPURLResponse+Status.swift in Sources */,
 				DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */,
+				DA0DD35225F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift in Sources */,
 				DA2DBBBF25EEE48B005103BB /* AlbumsDatesFilterCellViewModel.swift in Sources */,
 				DA563E9625E6C06400A2FE44 /* RemoteTokenMapper.swift in Sources */,
 				DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */,
@@ -859,6 +866,7 @@
 				DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */,
+				DA0DD34825F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift in Sources */,
 				DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */,
 				DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */,
 				DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */,

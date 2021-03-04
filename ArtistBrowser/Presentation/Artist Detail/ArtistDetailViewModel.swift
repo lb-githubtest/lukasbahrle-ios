@@ -34,17 +34,20 @@ public enum AlbumsLoadState: Equatable{
 
 public enum ArtistDetailContentType{
     case artistInfo
+    case albumTitle
     case albumsFilterDates
-    case album
+    case albumCollection
 }
 
 protocol ArtistDetailViewModelType {
     var title: String {get}
     
-    var numberOfContentItems: Int {get}
-    func contentType(at index: Int) -> ArtistDetailContentType
+    var numberOfSections: Int {get}
+    func sectionType(at index: Int) -> ArtistDetailContentType
+    func sectionIndexFor(type: ArtistDetailContentType) -> Int?
     
     func artistInfoViewModel() -> ArtistInfoCellViewModel
+    func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel
     func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel
     
     var albumsLoadState: Observable<AlbumsLoadState> {get}
@@ -61,16 +64,22 @@ protocol ArtistDetailViewModelType {
 }
 
 
+
 public class ArtistDetailViewModel: ArtistDetailViewModelType{
     
     public var title: String = "Detail"
     
-    public var numberOfContentItems: Int {contentTypes.count - 1 + numberOfAlbums}
-    public func contentType(at index: Int) -> ArtistDetailContentType {
-        if index < contentTypes.count {
-            return contentTypes[index]
+    public var numberOfSections: Int {arrSectionTypes.count}
+    
+    public func sectionType(at index: Int) -> ArtistDetailContentType {
+        if index < arrSectionTypes.count {
+            return arrSectionTypes[index]
         }
-        return .album
+        return .albumCollection
+    }
+    
+    public func sectionIndexFor(type: ArtistDetailContentType) -> Int?{
+        return arrSectionTypes.firstIndex(of: type)
     }
     
     public var albumsLoadState: Observable<AlbumsLoadState> = Observable(AlbumsLoadState.notLoaded)
@@ -80,11 +89,15 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     public func album(at index: Int) -> AlbumCellViewModel? {
-        AlbumCellViewModel(album: albumsDataModel[index - (contentTypes.count - 1)], imageLoader: imageDataLoader)
+        AlbumCellViewModel(album: albumsDataModel[index], imageLoader: imageDataLoader)
     }
     
     public func artistInfoViewModel() -> ArtistInfoCellViewModel {
         ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
+    }
+    
+    public func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel {
+        AlbumsHeaderCellViewModel(title: "Albumssss")
     }
     
     public func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel {
@@ -121,10 +134,9 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     private let albumsLoader: AlbumsLoader
     private let imageDataLoader: ImageDataLoader
     
-    private var contentTypes: [ArtistDetailContentType] = [.artistInfo, .albumsFilterDates, .album]
+    private var arrSectionTypes: [ArtistDetailContentType] = [.artistInfo, .albumTitle, .albumsFilterDates, .albumCollection]
     
     private var currentAlbumsTask: CancellableTask?
-    
 }
 
 

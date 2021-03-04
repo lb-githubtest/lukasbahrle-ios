@@ -24,6 +24,9 @@ public class RemoteAlbumsLoader: AlbumsLoader {
     
     @discardableResult
     public func load(loadedItems: Int = 0, completion: @escaping (AlbumsLoader.Result) -> Void) -> CancellableTask {
+        
+        print("\(request(loadedItems).url)")
+        
         return client.get(request: request(loadedItems)) { result in
             switch result{
             case .failure(_):

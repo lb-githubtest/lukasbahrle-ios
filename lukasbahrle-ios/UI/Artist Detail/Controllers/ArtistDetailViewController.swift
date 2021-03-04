@@ -32,6 +32,7 @@ class ArtistDetailViewController: UICollectionViewController {
         collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LoadingCollectionViewCell.self))
         collectionView.register(ArtistDetailInfoCell.self, forCellWithReuseIdentifier: String(describing: ArtistDetailInfoCell.self))
         collectionView.register(AlbumsDatesCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self))
+        collectionView.register(AlbumsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumsHeaderCollectionViewCell.self))
         
         enableDragDrop()
         
@@ -64,143 +65,87 @@ class ArtistDetailViewController: UICollectionViewController {
     }
     
     private func onAlbumsLoaded(canLoadMore: Bool, countAdded: Int){
-        guard countAdded > 0 else {
+        guard countAdded > 0, let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
             return
         }
         
-        let startIndex = viewModel.numberOfContentItems - countAdded
-        let endIndex = viewModel.numberOfContentItems - 1
+        let loadingSection = viewModel.numberOfSections
+        let startIndex = viewModel.numberOfAlbums - countAdded
+        let endIndex = viewModel.numberOfAlbums - 1
         var indexPaths: [IndexPath] = []
         
         collectionView.performBatchUpdates {
             if endIndex >= startIndex {
+                
                for index in startIndex...endIndex{
-                   indexPaths.append(IndexPath(row: index, section: 0))
+                   indexPaths.append(IndexPath(row: index, section: albumsSection))
                }
                collectionView.insertItems(at: indexPaths)
            }
             
             if !viewModel.albumsLoadState.current.canLoadMore {
-                collectionView.deleteSections(IndexSet([1]))
+                collectionView.deleteSections(IndexSet([loadingSection]))
             }
+            
+        
         }
-
-        
-        
-        
-    
-        
-//
-//        var indexPaths: [IndexPath] = []
-//
-////        if !canLoadMore {
-////            endIndex = endIndex - 1
-////        }
-//
-//        if endIndex >= startIndex {
-//            for index in startIndex...endIndex{
-//                indexPaths.append(IndexPath(row: index, section: 0))
-//            }
-//            collectionView.insertItems(at: indexPaths)
-//        }
         
         
     }
 }
 
 
-//extension ArtistDetailViewController: ArtistDetailViewModelObserver{
-//
-//    func onLoadingStateChange(value: LoadState, previous: LoadState) {
-//
-//    }
-//
-//    func onAlbumListUpdated() {
-//        collectionView.reloadData()
-//    }
-//
-//    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>) {
-//        guard let cell = collectionView.cellForItem(at: IndexPath(row: index + numberOfTopCells, section: 0)) as? AlbumViewCell else {return}
-//        cell.onImageLoadResult(result: result)
-//    }
-//
-//    func onAlbumsFilterDatesChanged(start: (text: String, date: Date)?, end: (text: String, date: Date)?) {
-//        guard let cell = collectionView.cellForItem(at: IndexPath(row: 0, section: 0)) as? AlbumsDatesCollectionViewCell else {return}
-//        cell.set(start: start, end: end)
-//    }
-//}
-//
-//extension ArtistDetailViewController: AlbumsFilterDatesViewDelegate{
-//    func onAlbumsFilterStartDateChange(_ date: Date) {
-//        viewModel.onAlbumsFilterStartDateChange(date)
-//    }
-//
-//    func onAlbumsFilterEndDateChange(_ date: Date) {
-//        viewModel.onAlbumsFilterEndDateChange(date)
-//    }
-//}
-
-
 // MARK: UICollectionViewDataSource
 
 extension ArtistDetailViewController{
-    
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
         let loadingOrErrorSection = viewModel.albumsLoadState.current.canLoadMore ? 1 : 0
         
-        return 1 + loadingOrErrorSection
+        return viewModel.numberOfSections + loadingOrErrorSection
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        switch section{
-        case 0:
-            return  viewModel.numberOfContentItems
-        case 1:
-            return viewModel.albumsLoadState.current.canLoadMore ? 1 : 0
-        default:
-            return 0
+        if section >= viewModel.numberOfSections {
+            return 1
         }
         
+        let sectionType = viewModel.sectionType(at: section)
         
+        switch sectionType {
+        case .albumCollection:
+            return viewModel.numberOfAlbums
+        default:
+            return 1
+        }
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard indexPath.section == 0 else{
+        guard indexPath.section < viewModel.numberOfSections else{
             return makeLoadingCell(state: viewModel.albumsLoadState.current, collectionView: collectionView, indexPath: indexPath)
         }
         
-        let contentType = viewModel.contentType(at: indexPath.row)
+        let sectionType = viewModel.sectionType(at: indexPath.section)
         
-        switch contentType {
-        case .artistInfo:
-            return makeArtistInfoCell(collectionView: collectionView, indexPath: indexPath)
-        case .albumsFilterDates:
-            return makeAlbumsFilterDatesCell(collectionView: collectionView, indexPath: indexPath)
-        case .album:
-            
-            return makeAlbumCell(collectionView: collectionView, indexPath: indexPath)
+        switch sectionType {
+            case .artistInfo:
+                return makeArtistInfoCell(collectionView: collectionView, indexPath: indexPath)
+            case .albumTitle:
+                return makerAlbumsTitleCell(collectionView: collectionView, indexPath: indexPath)
+            case .albumsFilterDates:
+                return makeAlbumsFilterDatesCell(collectionView: collectionView, indexPath: indexPath)
+            case .albumCollection:
+                return makeAlbumCell(collectionView: collectionView, indexPath: indexPath)
         }
     }
     
-    
-//    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-//
-//        guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "\(ArtistDetailHeaderView.self)",
-//                for: indexPath) as? ArtistDetailHeaderView
-//              else {
-//                fatalError("Invalid view type")
-//            }
-//
-//        return headerView
-//    }
     
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let cell = cell as? CellPreloadable{
             cell.preload()
         }
-        else if indexPath.section == 1, viewModel.albumsLoadState.current.canLoadMore {
+        else if indexPath.section == viewModel.numberOfSections {
             viewModel.scrolledToBottom()
         }
     }
@@ -246,6 +191,14 @@ extension ArtistDetailViewController{
     func makeLoadingCell(state: AlbumsLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LoadingCollectionViewCell.self), for: indexPath) as! LoadingCollectionViewCell
+        
+        return cell
+    }
+    
+    func makerAlbumsTitleCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumsHeaderCollectionViewCell.self), for: indexPath) as! AlbumsHeaderCollectionViewCell
+        
+        cell.setup(viewModel: viewModel.albumsHeaderViewModel())
         
         return cell
     }
