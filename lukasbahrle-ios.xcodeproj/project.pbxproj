@@ -11,6 +11,7 @@
 		DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */; };
 		DA0DD34825F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */; };
 		DA0DD35225F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD35125F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift */; };
+		DA0DD35825F18E5500CFB922 /* Dragable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD35725F18E5500CFB922 /* Dragable.swift */; };
 		DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */; };
 		DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0E25E92C2600968460 /* CancellableTask.swift */; };
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
@@ -139,6 +140,7 @@
 		DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoaderTests.swift; sourceTree = "<group>"; };
 		DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsHeaderCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA0DD35125F13AD500CFB922 /* AlbumsHeaderCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsHeaderCellViewModel.swift; sourceTree = "<group>"; };
+		DA0DD35725F18E5500CFB922 /* Dragable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dragable.swift; sourceTree = "<group>"; };
 		DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModel.swift; sourceTree = "<group>"; };
 		DA11AA0E25E92C2600968460 /* CancellableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTask.swift; sourceTree = "<group>"; };
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 			isa = PBXGroup;
 			children = (
 				DA32CE3E25EB766D00A294CC /* LoadingView.swift */,
+				DA0DD35725F18E5500CFB922 /* Dragable.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -861,6 +864,7 @@
 				DAA2918C25ED347700B82B14 /* TestCollectionViewCell.swift in Sources */,
 				DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */,
 				DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */,
+				DA0DD35825F18E5500CFB922 /* Dragable.swift in Sources */,
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
 				DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */,
 				DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */,

@@ -92,3 +92,17 @@ extension AlbumViewCell: CellPreloadable{
         viewModel?.cancel()
     }
 }
+
+
+extension AlbumViewCell: Draggable{
+    var dragItemProvider: NSItemProviderWriting {
+        (viewModel?.id ?? "") as NSString
+    }
+    var dragLocalObject: Any? {
+        viewModel
+    }
+}
+
+
+
+

@@ -68,7 +68,7 @@ class ArtistDetailViewController: UICollectionViewController {
         guard countAdded > 0, let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
             return
         }
-        
+       
         let loadingSection = viewModel.numberOfSections
         let startIndex = viewModel.numberOfAlbums - countAdded
         let endIndex = viewModel.numberOfAlbums - 1

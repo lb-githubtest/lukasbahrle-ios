@@ -61,6 +61,7 @@ protocol ArtistDetailViewModelType {
     func scrolledToBottom()
     
     func reorderAlbum(from: Int, to: Int)
+    
 }
 
 
@@ -116,7 +117,9 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     public func reorderAlbum(from: Int, to: Int) {
-        
+        let album = albumsDataModel[from]
+        albumsDataModel.remove(at: from)
+        albumsDataModel.insert(album, at: to)
     }
     
     public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){

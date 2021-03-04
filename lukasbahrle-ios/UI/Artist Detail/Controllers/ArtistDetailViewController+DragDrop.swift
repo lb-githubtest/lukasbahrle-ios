@@ -10,12 +10,15 @@ import ArtistBrowser
 
 extension ArtistDetailViewController: UICollectionViewDragDelegate{
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-        guard let item = self.viewModel.album(at: indexPath.row) else {
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? Draggable else{
             return []
         }
-        let itemProvider = NSItemProvider(object: item.id as NSString)
+        
+        let itemProvider = NSItemProvider(object: cell.dragItemProvider)
         let dragItem = UIDragItem(itemProvider: itemProvider)
-        dragItem.localObject = item
+        dragItem.localObject = cell.dragLocalObject
+        
         return [dragItem]
     }
 }
@@ -24,11 +27,26 @@ extension ArtistDetailViewController: UICollectionViewDragDelegate{
 extension ArtistDetailViewController: UICollectionViewDropDelegate{
     func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) {
         var destinationIndexPath: IndexPath
-        if let indexPath = coordinator.destinationIndexPath {
-            destinationIndexPath = indexPath
-        } else {
-            let row = collectionView.numberOfItems(inSection: 0)
-            destinationIndexPath = IndexPath(item: row - 1, section: 0)
+        
+        guard let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
+            return
+        }
+        
+        if  let targetIndexPath = coordinator.destinationIndexPath {
+            if targetIndexPath.section < albumsSection {
+                destinationIndexPath = IndexPath(item: 0, section: albumsSection)
+            }
+            else if targetIndexPath.section > albumsSection {
+                let row = collectionView.numberOfItems(inSection: albumsSection)
+                destinationIndexPath = IndexPath(item: row - 1, section: albumsSection)
+            }
+            else {
+                destinationIndexPath = targetIndexPath
+            }
+        }
+        else{
+            let row = collectionView.numberOfItems(inSection: albumsSection)
+            destinationIndexPath = IndexPath(item: row - 1, section: albumsSection)
         }
         
         if coordinator.proposal.operation == .move {
@@ -37,10 +55,17 @@ extension ArtistDetailViewController: UICollectionViewDropDelegate{
     }
     
     func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
-        if collectionView.hasActiveDrag {
-            return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        guard let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
+            
+            return UICollectionViewDropProposal(operation: .cancel)
         }
-        return UICollectionViewDropProposal(operation: .forbidden)
+        
+        guard collectionView.hasActiveDrag, let destinationIndexPath = destinationIndexPath, destinationIndexPath.section == albumsSection else {
+            
+            return UICollectionViewDropProposal(operation: .cancel)
+        }
+        
+        return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
     private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath:IndexPath, collectionView: UICollectionView) {
