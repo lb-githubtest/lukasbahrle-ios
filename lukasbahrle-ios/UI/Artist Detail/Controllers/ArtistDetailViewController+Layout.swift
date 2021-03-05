@@ -23,9 +23,9 @@ extension ArtistDetailViewController: UICollectionViewDelegateFlowLayout {
             case .artistInfo:
                 return CGSize(width: availableWidth, height: availableWidth + 100)
             case .albumTitle:
-                return CGSize(width: availableWidth, height: 90)
+                return CGSize(width: availableWidth, height: 40)
             case .albumsFilters:
-                return CGSize(width: availableWidth, height: 90)
+                return CGSize(width: availableWidth, height: 60)
             case .albumCollection:
                 let columns:CGFloat = 2
                 let cellWidth = ((availableWidth) / columns).rounded(.down)

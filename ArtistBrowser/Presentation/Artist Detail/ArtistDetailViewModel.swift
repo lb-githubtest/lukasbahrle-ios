@@ -7,93 +7,36 @@
 
 import Foundation
 
-
-public enum AlbumsLoadState: Equatable{
-    case notLoaded
-    case loading
-    case failed
-    case loaded(canLoadMore: Bool, countAdded: Int)
-    
-    public var canLoadMore: Bool {
-        switch self {
-        case .loaded(canLoadMore: let canLoadMore, countAdded: _):
-            return canLoadMore
-        default:
-            return true
-        }
-    }
-}
-
-public enum ArtistDetailContentType{
-    case artistInfo
-    case albumTitle
-    case albumsFilters
-    case albumCollection
-}
-
-
-public enum AlbumsFilter{
-    case date(start: Date?, end: Date?)
-    
-    func filter(album: Album) -> Bool{
-        switch self {
-        case let .date(start: startDate, end: endDate):
-            return filterByDates(album: album, start: startDate, end: endDate)
-        }
-    }
-    
-    func filterByDates(album: Album, start: Date?, end: Date?) -> Bool{
-        if let start = start, start > album.releaseDate{
-            return false
-        }
-        
-        if let end = end, end < album.releaseDate{
-            return false
-        }
-        
-        return true
-    }
-}
-
-
-
-
-
-
-protocol ArtistDetailViewModelType {
-    var title: String {get}
-    
-    var numberOfSections: Int {get}
-    func sectionType(at index: Int) -> ArtistDetailContentType
-    func sectionIndexFor(type: ArtistDetailContentType) -> Int?
-    
-    var numberOfAlbumFilters: Int {get}
-    func albumFilterType(at index: Int) -> AlbumsFilter?
-    
-    func artistInfoViewModel() -> ArtistInfoCellViewModel
-    func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel
-    func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel
-    
-    var albumsLoadState: Observable<AlbumsLoadState> {get}
-    var numberOfAlbums: Int {get}
-    func album(at index: Int) -> AlbumCellViewModel?
-    
-    func viewDidLoad()
-    func scrolledToBottom()
-    
-    func reorderAlbum(from: Int, to: Int)
-    
-    var onAlbumsCollectionUpdate: (() -> Void)? {get set}
-    
-    func updateAlbumsFilterStartDateChange(_ date: Date)
-    func updateAlbumsFilterEndDateChange(_ date: Date)
-}
-
-
-
-public class ArtistDetailViewModel: ArtistDetailViewModelType{
+public class ArtistDetailViewModel{
     
     public var title: String = "Detail"
+    
+    public func viewDidLoad() {
+        loadNextPage()
+    }
+    
+    
+    // MARK: ViewModels
+    
+    public func artistInfoViewModel() -> ArtistInfoCellViewModel {
+        ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
+    }
+    
+    public func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel {
+        AlbumsHeaderCellViewModel(title: "Albums")
+    }
+    
+    public func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel {
+        AlbumsDatesFilterCellViewModel(startDate: albumsFilterStartDate, endDate: albumsFilterEndDate)
+    }
+    
+    public func album(at index: Int) -> AlbumCellViewModel? {
+        let pos = filteredAlbumsDataModel?[index] ?? index
+        return AlbumCellViewModel(album: albumsDataModel[pos], imageLoader: imageDataLoader)
+    }
+    
+    
+    // MARK: Sections
     
     public var numberOfSections: Int {arrSectionTypes.count}
     
@@ -108,46 +51,23 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         return arrSectionTypes.firstIndex(of: type)
     }
     
-    public var albumsLoadState: Observable<AlbumsLoadState> = Observable(AlbumsLoadState.notLoaded)
+    
+    // MARK: Albums
+    
+    public var onAlbumsCollectionUpdate: (() -> Void)?
+    
+    public var albumsLoadState: Observable<ContentLoadState> = Observable(ContentLoadState.notLoaded)
     
     public var numberOfAlbums: Int {
         filteredAlbumsDataModel?.count ?? albumsDataModel.count
     }
-    
-    public func album(at index: Int) -> AlbumCellViewModel? {
-        let pos = filteredAlbumsDataModel?[index] ?? index
-        return AlbumCellViewModel(album: albumsDataModel[pos], imageLoader: imageDataLoader)
-    }
-    
-    public var numberOfAlbumFilters: Int {
-        albumsFilters.count
-    }
-    
-    public func albumFilterType(at index: Int) -> AlbumsFilter? {
-        albumsFilters[index]
-    }
-    
-    public func artistInfoViewModel() -> ArtistInfoCellViewModel {
-        ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
-    }
-    
-    public func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel {
-        AlbumsHeaderCellViewModel(title: "Albumssss")
-    }
-    
-    public func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel {
-        AlbumsDatesFilterCellViewModel(startDate: albumsFilterStartDate, endDate: albumsFilterEndDate)
-    }
-    
-    public var onAlbumsCollectionUpdate: (() -> Void)?
-    
-    public func viewDidLoad() {
-        loadNextPage()
-    }
-    
+   
     public func scrolledToBottom() {
         loadNextPage()
     }
+    
+    
+    // MARK: Reorder
     
     public func reorderAlbum(from: Int, to: Int) {
         let posFrom = filteredAlbumsDataModel?[from] ?? from
@@ -159,6 +79,16 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     }
     
     
+    // MARK: Filters
+    
+    public var numberOfAlbumFilters: Int {
+        albumsFilters.count
+    }
+    
+    public func albumFilterType(at index: Int) -> AlbumsFilter? {
+        albumsFilters[index]
+    }
+    
     public func updateAlbumsFilterStartDateChange(_ date: Date){
         albumsFilterStartDate = date
     }
@@ -166,6 +96,7 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     public func updateAlbumsFilterEndDateChange(_ date: Date) {
         albumsFilterEndDate = date
     }
+    
     
     public init(artist: Artist, albumsLoader: AlbumsLoader, imageDataLoader: ImageDataLoader){
         self.artist = artist
@@ -204,13 +135,12 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
 
 
 
-// MARK: Albums
+// MARK: Load Albums
 
 extension ArtistDetailViewModel{
     private func loadNextPage() {
-        
         guard albumsLoadState.value != .loading, albumsLoadState.value.canLoadMore else {return}
-
+        
         loadAlbums(loadedItems: albumsDataModel.count)
     }
     
@@ -219,11 +149,9 @@ extension ArtistDetailViewModel{
         currentAlbumsTask?.cancel()
 
         currentAlbumsTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
-
             DispatchQueue.main.async {
                 switch result{
                     case .success(let albumsList):
-                        
                         self?.onAlbumListLoaded(albums: albumsList)
                     case .failure(let error):
                         self?.onAlbumListLoadError(error: error)
@@ -247,8 +175,6 @@ extension ArtistDetailViewModel{
         
         albumsDataModel.append(contentsOf: albums.items)
         albumsLoadState.value = .loaded(canLoadMore: albums.canLoadMore, countAdded: countAdded)
-        
-        print("countAdded: \(countAdded)")
     }
     
     private func onAlbumListLoadError(error: Error){
@@ -257,10 +183,15 @@ extension ArtistDetailViewModel{
         print("onAlbumListLoadError: \(error)")
     }
     
+   
+}
+
+
+// MARK: Album Filters
+
+extension ArtistDetailViewModel{
     private func onAlbumsDatesFilterUpdate(){
-        
         filteredAlbumsDataModel = filter(albums: albumsDataModel, filters: albumsFilters)
-        
         onAlbumsCollectionUpdate?()
     }
     

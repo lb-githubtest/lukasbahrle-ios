@@ -14,7 +14,6 @@ protocol AlbumsFilterDatesViewDelegate: class{
 }
 
 class AlbumsDatesCollectionViewCell: UICollectionViewCell {
-    private var titleView: UILabel = UILabel()
     private var startDateView: UITextField = UITextField()
     private var endDateView: UITextField = UITextField()
     
@@ -61,8 +60,6 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     }
     
     private func configure(){
-        
-        contentView.addSubview(titleView)
         contentView.addSubview(startDateView)
         contentView.addSubview(endDateView)
         
@@ -76,8 +73,6 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         
         configureConstraints()
         
-        titleView.text = "Albums"
-        titleView.set(style: .title3)
         startDateView.placeholder = "Start date"
         endDateView.placeholder = "End date"
         
@@ -87,18 +82,13 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     
     
     private func configureConstraints(){
-        titleView.translatesAutoresizingMaskIntoConstraints = false
         startDateView.translatesAutoresizingMaskIntoConstraints = false
         endDateView.translatesAutoresizingMaskIntoConstraints = false
         
         let margins = contentView.layoutMarginsGuide
         NSLayoutConstraint.activate([
-            titleView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            titleView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            titleView.topAnchor.constraint(equalTo: margins.topAnchor),
-            
-            startDateView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 8),
-            startDateView.leadingAnchor.constraint(equalTo: titleView.leadingAnchor),
+            startDateView.topAnchor.constraint(equalTo: margins.topAnchor, constant: 0),
+            startDateView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             startDateView.trailingAnchor.constraint(equalTo: endDateView.leadingAnchor, constant: -10),
             startDateView.widthAnchor.constraint(equalTo: endDateView.widthAnchor),
             

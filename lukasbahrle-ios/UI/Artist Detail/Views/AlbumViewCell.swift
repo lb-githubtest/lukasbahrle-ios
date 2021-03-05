@@ -57,7 +57,7 @@ class AlbumViewCell: UICollectionViewCell {
             
             nameLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 8),
+            nameLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 3),
         ])
     }
     

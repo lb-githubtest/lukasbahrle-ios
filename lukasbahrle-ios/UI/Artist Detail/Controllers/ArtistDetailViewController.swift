@@ -243,7 +243,7 @@ extension ArtistDetailViewController{
         return cell
     }
     
-    func makeLoadingCell(state: AlbumsLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
+    func makeLoadingCell(state: ContentLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LoadingCollectionViewCell.self), for: indexPath) as! LoadingCollectionViewCell
         

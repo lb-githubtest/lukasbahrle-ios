@@ -27,6 +27,8 @@ public class RemoteTokenLoader: TokenLoader{
         client.get(request: request()) { result in
             switch result{
             case let .success((data, httpResponse)):
+                print(String(data: data, encoding: .utf8))
+                print(httpResponse.statusCode)
                 completion(self.map(data, from: httpResponse))
             case .failure(_):
                 completion(.failure(Error.connectivity))
