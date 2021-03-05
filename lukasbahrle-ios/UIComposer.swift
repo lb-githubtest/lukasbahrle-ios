@@ -19,6 +19,8 @@ class AppCoordinator{
     }()
     
     private lazy var remoteTokenLoader: TokenLoader = {
+        let tokenCache = TokenCache(store: KeychainTokenStore())
+        
         let tokenRequest = TokenRequest(builder: TokenRequestBuilder(), credentialsLoader: {
             Credentials(username: "80684ef2c87a4ce19f2e9f6b87edea97", password: "e0341c48219d481591187ff1dfdee64b")
         })
@@ -26,8 +28,7 @@ class AppCoordinator{
         let url = URL(string: "https://accounts.spotify.com/api/token")!
         let remoteLoader = RemoteTokenLoader(request: {tokenRequest.get()}, client: client)
             
-        return remoteLoader
-//        return RemoteTokenLoaderWithCachingBehaviour(tokenLoader: remoteLoader, tokenCache: tokenCache)
+        return RemoteTokenLoaderWithCachingBehaviour(tokenLoader: remoteLoader, tokenCache: tokenCache)
     }()
     
     private lazy var authClient: AuthorizedHTTPClient = {
@@ -105,5 +106,38 @@ class UIComposer{
         controller.viewModel = viewModel
         
         return controller
+    }
+}
+
+
+
+
+public class RemoteTokenLoaderWithCachingBehaviour: TokenLoader{
+    let tokenLoader: TokenLoader
+    let tokenCache: TokenSaver
+    
+    public init(tokenLoader: TokenLoader, tokenCache: TokenSaver){
+        self.tokenLoader = tokenLoader
+        self.tokenCache = tokenCache
+    }
+    
+    public func load(completion: @escaping (TokenLoader.Result) -> Void) {
+        tokenLoader.load { [weak self] (result) in
+            print("on token load result:")
+            print(result)
+            
+            
+            guard let token = try? result.get() else{
+                print("TOKEN error")
+                completion(result)
+                return
+            }
+            
+            print("TOKEN: \(token)")
+            
+            self?.tokenCache.save(token: token) { _ in
+                completion(result)
+            }
+        }
     }
 }

@@ -46,10 +46,13 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
+        super.prepareForReuse()
         delegate = nil
     }
     
     public func setup(viewModel: AlbumsDatesFilterCellViewModel){
+        self.viewModel = viewModel
+        
         startDate = viewModel.startDate?.date
         startDateView.text = viewModel.startDate?.text
         
@@ -101,7 +104,6 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
             
             endDateView.topAnchor.constraint(equalTo: startDateView.topAnchor, constant: 0),
             endDateView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            
         ])
     }
     

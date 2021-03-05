@@ -12,7 +12,6 @@ public class RemoteTokenMapper{
         let access_token: String
         let token_type: String
         let expires_in: Int
-        let scope: String
         
         func toModel() -> Token {
             return access_token

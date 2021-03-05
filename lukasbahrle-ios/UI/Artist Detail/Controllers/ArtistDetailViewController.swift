@@ -18,6 +18,10 @@ class ArtistDetailViewController: UICollectionViewController {
         }
     }
     
+    private var loadingIndexPath: IndexPath {
+        return IndexPath(row: 0, section: viewModel.numberOfSections)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.delegate = self
@@ -56,6 +60,10 @@ class ArtistDetailViewController: UICollectionViewController {
                 break
             }
         }
+        
+        viewModel.onAlbumsCollectionUpdate = { [weak self] in
+            self?.collectionView.reloadData()
+        }
     }
     
     private func enableDragDrop(){
@@ -65,18 +73,27 @@ class ArtistDetailViewController: UICollectionViewController {
     }
     
     private func onAlbumsLoaded(canLoadMore: Bool, countAdded: Int){
-        guard countAdded > 0, let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
+        guard let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
             return
         }
-       
+        
+//        collectionView.reloadData()
+//
+//        return
+        
+        
         let loadingSection = viewModel.numberOfSections
         let startIndex = viewModel.numberOfAlbums - countAdded
         let endIndex = viewModel.numberOfAlbums - 1
         var indexPaths: [IndexPath] = []
         
+        print("onAlbumsLoaded:: \(countAdded) \(startIndex) \(endIndex)")
+        print("viewModel.numberOfAlbums: \(viewModel.numberOfAlbums)")
+        
         collectionView.performBatchUpdates {
-            if endIndex >= startIndex {
+            if endIndex >= startIndex, endIndex >= 0, startIndex >= 0 {
                 
+                print("startIndex: \(startIndex) \(endIndex)")
                for index in startIndex...endIndex{
                    indexPaths.append(IndexPath(row: index, section: albumsSection))
                }
@@ -86,11 +103,15 @@ class ArtistDetailViewController: UICollectionViewController {
             if !viewModel.albumsLoadState.current.canLoadMore {
                 collectionView.deleteSections(IndexSet([loadingSection]))
             }
-            
-        
+        } completion: { [weak self] completed in
+            guard let self = self else {return}
+            if self.collectionView.indexPathsForVisibleItems.contains(self.loadingIndexPath){
+                if canLoadMore {
+                    self.viewModel.scrolledToBottom()
+                }
+            }
         }
-        
-        
+
     }
 }
 
@@ -171,7 +192,7 @@ extension ArtistDetailViewController{
     
     func makeAlbumsFilterDatesCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self), for: indexPath) as! AlbumsDatesCollectionViewCell
-        
+        cell.delegate = self
         cell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
         return cell
     }
@@ -205,4 +226,12 @@ extension ArtistDetailViewController{
 }
 
 
-
+extension ArtistDetailViewController: AlbumsFilterDatesViewDelegate{
+    func onAlbumsFilterStartDateChange(_ date: Date) {
+        viewModel.updateAlbumsFilterStartDateChange(date)
+    }
+    
+    func onAlbumsFilterEndDateChange(_ date: Date) {
+        viewModel?.updateAlbumsFilterEndDateChange(date)
+    }
+}
