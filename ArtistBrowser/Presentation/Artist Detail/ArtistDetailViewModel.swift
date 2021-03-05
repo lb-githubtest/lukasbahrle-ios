@@ -8,14 +8,6 @@
 import Foundation
 
 
-//public protocol ArtistDetailViewModelObserver: NSObject {
-//    func onLoadingStateChange(value: LoadState, previous: LoadState)
-//    func onAlbumListUpdated()
-//    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
-//    func onAlbumsFilterDatesChanged(start: (text: String, date:Date)? , end: (text: String, date: Date)?)
-//}
-
-
 public enum AlbumsLoadState: Equatable{
     case notLoaded
     case loading
@@ -35,7 +27,7 @@ public enum AlbumsLoadState: Equatable{
 public enum ArtistDetailContentType{
     case artistInfo
     case albumTitle
-    case albumsFilterDates
+    case albumsFilters
     case albumCollection
 }
 
@@ -47,8 +39,6 @@ public enum AlbumsFilter{
         switch self {
         case let .date(start: startDate, end: endDate):
             return filterByDates(album: album, start: startDate, end: endDate)
-        default:
-            return true
         }
     }
     
@@ -77,6 +67,9 @@ protocol ArtistDetailViewModelType {
     func sectionType(at index: Int) -> ArtistDetailContentType
     func sectionIndexFor(type: ArtistDetailContentType) -> Int?
     
+    var numberOfAlbumFilters: Int {get}
+    func albumFilterType(at index: Int) -> AlbumsFilter?
+    
     func artistInfoViewModel() -> ArtistInfoCellViewModel
     func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel
     func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel
@@ -84,8 +77,6 @@ protocol ArtistDetailViewModelType {
     var albumsLoadState: Observable<AlbumsLoadState> {get}
     var numberOfAlbums: Int {get}
     func album(at index: Int) -> AlbumCellViewModel?
-    
-    var albumsFilters: [AlbumsFilter] {get}
     
     func viewDidLoad()
     func scrolledToBottom()
@@ -101,6 +92,7 @@ protocol ArtistDetailViewModelType {
 
 
 public class ArtistDetailViewModel: ArtistDetailViewModelType{
+    
     public var title: String = "Detail"
     
     public var numberOfSections: Int {arrSectionTypes.count}
@@ -127,10 +119,13 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         return AlbumCellViewModel(album: albumsDataModel[pos], imageLoader: imageDataLoader)
     }
     
-    public var albumsFilters: [AlbumsFilter] {
-        [AlbumsFilter.date(start: albumsFilterStartDate, end: albumsFilterEndDate)]
+    public var numberOfAlbumFilters: Int {
+        albumsFilters.count
     }
     
+    public func albumFilterType(at index: Int) -> AlbumsFilter? {
+        albumsFilters[index]
+    }
     
     public func artistInfoViewModel() -> ArtistInfoCellViewModel {
         ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
@@ -188,7 +183,7 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
     private let albumsLoader: AlbumsLoader
     private let imageDataLoader: ImageDataLoader
     
-    private var arrSectionTypes: [ArtistDetailContentType] = [.artistInfo, .albumTitle, .albumsFilterDates, .albumCollection]
+    private var arrSectionTypes: [ArtistDetailContentType] = [.artistInfo, .albumTitle, .albumsFilters, .albumCollection]
     
     private var currentAlbumsTask: CancellableTask?
     
@@ -201,6 +196,9 @@ public class ArtistDetailViewModel: ArtistDetailViewModelType{
         didSet{
             onAlbumsDatesFilterUpdate()
         }
+    }
+    private var albumsFilters: [AlbumsFilter] {
+        [AlbumsFilter.date(start: albumsFilterStartDate, end: albumsFilterEndDate)]
     }
 }
 

@@ -15,6 +15,18 @@ public class AlbumsDatesFilterCellViewModel{
 //    private var onEndDateChanged: ((Date) -> Void)?
     
     init(startDate: Date?, endDate: Date?) {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        
+        if let startDate = startDate {
+            self.startDate = (text: formatter.string(from: startDate), date: startDate)
+        }
+        
+        if let endDate = endDate {
+            self.endDate = (text: formatter.string(from: endDate), date: endDate)
+        }
+        
+       
 //        self.onStartDateChanged = onStartDateChanged
 //        self.onEndDateChanged = onEndDateChanged
     }

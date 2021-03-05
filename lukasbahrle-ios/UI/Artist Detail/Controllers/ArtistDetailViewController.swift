@@ -30,7 +30,6 @@ class ArtistDetailViewController: UICollectionViewController {
         let layout = UICollectionViewFlowLayout()
         //layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
-        
         collectionView.collectionViewLayout = layout
         collectionView.register(AlbumViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumViewCell.self))
         collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LoadingCollectionViewCell.self))
@@ -50,7 +49,6 @@ class ArtistDetailViewController: UICollectionViewController {
     
     private func bind(){
         self.title = viewModel.title
-        //viewModel.observer = self
         
         viewModel.albumsLoadState.valueChanged = { [weak self] state in
             switch state {
@@ -111,8 +109,31 @@ class ArtistDetailViewController: UICollectionViewController {
                 }
             }
         }
-
     }
+    
+//    private func updateAlbumsFilterCells(){
+//        guard let section = viewModel.sectionIndexFor(type: .albumsFilters) else{
+//            return
+//        }
+//
+//        for i in 0..<viewModel.numberOfAlbumFilters{
+//
+//            guard let filter = viewModel.albumFilterType(at: i), let cell = collectionView.cellForItem(at: IndexPath(item: i, section: section)) else {
+//                continue
+//            }
+//
+//            switch filter {
+//            case .date(_, _):
+//                guard let datesCell = cell as? AlbumsDatesCollectionViewCell else {
+//                    fatalError()
+//                }
+//
+//                datesCell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
+//            }
+//
+//        }
+//
+//    }
 }
 
 
@@ -136,6 +157,8 @@ extension ArtistDetailViewController{
         switch sectionType {
         case .albumCollection:
             return viewModel.numberOfAlbums
+        case .albumsFilters:
+            return viewModel.numberOfAlbumFilters
         default:
             return 1
         }
@@ -154,8 +177,11 @@ extension ArtistDetailViewController{
                 return makeArtistInfoCell(collectionView: collectionView, indexPath: indexPath)
             case .albumTitle:
                 return makerAlbumsTitleCell(collectionView: collectionView, indexPath: indexPath)
-            case .albumsFilterDates:
-                return makeAlbumsFilterDatesCell(collectionView: collectionView, indexPath: indexPath)
+            case .albumsFilters:
+                guard let filterType = viewModel.albumFilterType(at: indexPath.row) else {
+                    fatalError()
+                }
+                return makeAlbumFilterCell(type: filterType, collectionView: collectionView, indexPath: indexPath)
             case .albumCollection:
                 return makeAlbumCell(collectionView: collectionView, indexPath: indexPath)
         }
@@ -190,8 +216,16 @@ extension ArtistDetailViewController{
         return cell
     }
     
+    func makeAlbumFilterCell(type: AlbumsFilter, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
+        switch type{
+            case .date(_, _):
+                return makeAlbumsFilterDatesCell(collectionView: collectionView, indexPath: indexPath)
+        }
+    }
+    
     func makeAlbumsFilterDatesCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self), for: indexPath) as! AlbumsDatesCollectionViewCell
+        
         cell.delegate = self
         cell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
         return cell

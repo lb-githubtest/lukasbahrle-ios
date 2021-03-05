@@ -201,6 +201,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     private func onArtistListLoadError(error: Error){
+        print(error)
         loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
     }
