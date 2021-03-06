@@ -8,7 +8,7 @@
 import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
-    @IBOutlet private var indicator: UIActivityIndicatorView!
+    private var indicator:UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,5 +24,16 @@ class LoadingTableViewCell: UITableViewCell {
     
     private func configure(){
         selectionStyle = .none
+        
+        contentView.addSubview(indicator)
+        
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
     }
+    
+    
 }

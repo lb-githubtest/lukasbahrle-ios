@@ -19,14 +19,8 @@ public final class URLSessionHTTPClient: HTTPClient {
     }
     
     public func get(request: URLRequest, completion: @escaping (HTTPClient.Result) -> Void) -> CancellableTask{
-        
-        //print("HTTPClient: \((request.url))")
-        
+    
         let task = session.dataTask(with: request) { data, response, error in
-            
-            if let code = (response as? HTTPURLResponse)?.statusCode{
-                print("URLSessionHTTPClient response:: \(code) \(error)")
-            }
             
             completion(Result {
                 if let error = error {

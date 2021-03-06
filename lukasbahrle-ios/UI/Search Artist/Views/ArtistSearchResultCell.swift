@@ -16,14 +16,21 @@ protocol CellPreloadable{
 
 class ArtistSearchResultCell: UITableViewCell {
     
-    @IBOutlet private var label: UILabel!
-    @IBOutlet private var thumbnail: UIImageView!
+    private var nameLabel = UILabel()
+    private var thumbnailView = UIImageView(frame: .zero)
     
     private var viewModel: SearchArtistResultCellViewModel?
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        configure()
     }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
 
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -33,16 +40,35 @@ class ArtistSearchResultCell: UITableViewCell {
     func setup(viewModel: SearchArtistResultCellViewModel){
         self.viewModel = viewModel
         
-        label.text = viewModel.artistName
-        
-//        viewModel.artistThumbnailState.valueChanged = { [weak self] thumbnailState in
-//            self?.onThumbnailStateChanged(thumbnailState)
-//        }
-        
+        nameLabel.text = viewModel.artistName
+    
         viewModel.image.state.valueChanged = { [weak self] state in
             self?.onThumbnailStateChanged(state)
         }
 
+    }
+    
+    private func configure(){
+        contentView.addSubview(thumbnailView)
+        contentView.addSubview(nameLabel)
+        
+        thumbnailView.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.translatesAutoresizingMaskIntoConstraints = false
+        nameLabel.set(style: .body, numberOfLines: 0)
+        
+        let margins = contentView.layoutMarginsGuide
+        
+        NSLayoutConstraint.activate([
+            thumbnailView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
+            thumbnailView.topAnchor.constraint(equalTo: margins.topAnchor),
+            thumbnailView.widthAnchor.constraint(equalToConstant: 100),
+            thumbnailView.heightAnchor.constraint(equalTo: thumbnailView.widthAnchor),
+            thumbnailView.bottomAnchor.constraint(equalTo: margins.bottomAnchor),
+            
+            nameLabel.leadingAnchor.constraint(equalTo: thumbnailView.trailingAnchor, constant: 8),
+            nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
+            nameLabel.centerYAnchor.constraint(equalTo: thumbnailView.centerYAnchor),
+        ])
     }
     
     private func onThumbnailStateChanged(_ state: ImageState){
@@ -57,32 +83,14 @@ class ArtistSearchResultCell: UITableViewCell {
     
     
     private func reset(){
-        thumbnail.image = nil
+        thumbnailView.image = nil
         viewModel?.cancel()
         viewModel = nil
     }
     
     private func onArtistThumbnailDateLoaded(_ data: Data){
-        thumbnail.image = UIImage(data: data)
+        thumbnailView.image = UIImage(data: data)
     }
-    
-    
-    
-    
-//    func onImageLoadResult(result: Result<Data, Error>){
-//        switch result {
-//        case .success(let data):
-//            UIView.transition(with: self.thumbnail,
-//                          duration:0.5,
-//                          options: .transitionCrossDissolve,
-//                          animations: { [weak self] in self?.thumbnail.image = UIImage(data: data) },
-//                          completion: nil)
-//
-//        default:
-//            break
-//        }
-//    }
-
 }
 
 

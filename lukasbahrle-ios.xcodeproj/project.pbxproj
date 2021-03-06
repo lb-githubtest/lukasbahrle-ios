@@ -45,7 +45,6 @@
 		DA419ADE25E691E4002B1782 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADB25E691E4002B1782 /* token.json */; };
 		DA419ADF25E691E4002B1782 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADC25E691E4002B1782 /* albums.json */; };
 		DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F15925E9694100BC09DB /* ImageDataLoader.swift */; };
-		DA43F16125E96BE800BC09DB /* ArtistBrowser.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA43F16025E96BE800BC09DB /* ArtistBrowser.storyboard */; };
 		DA43F16925E96C4200BC09DB /* ArtistBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16825E96C4200BC09DB /* ArtistBrowserViewController.swift */; };
 		DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
@@ -177,7 +176,6 @@
 		DA419ADB25E691E4002B1782 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		DA419ADC25E691E4002B1782 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		DA43F15925E9694100BC09DB /* ImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataLoader.swift; sourceTree = "<group>"; };
-		DA43F16025E96BE800BC09DB /* ArtistBrowser.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ArtistBrowser.storyboard; sourceTree = "<group>"; };
 		DA43F16825E96C4200BC09DB /* ArtistBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistBrowserViewController.swift; sourceTree = "<group>"; };
 		DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchResultCell.swift; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -448,7 +446,6 @@
 		DA43F16625E96C0800BC09DB /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DA43F16025E96BE800BC09DB /* ArtistBrowser.storyboard */,
 				DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */,
 				DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */,
 				DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */,
@@ -815,7 +812,6 @@
 			files = (
 				DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */,
 				DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */,
-				DA43F16125E96BE800BC09DB /* ArtistBrowser.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

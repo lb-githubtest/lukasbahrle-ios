@@ -82,14 +82,10 @@ extension AppCoordinator: SearchArtistNavigator{
 
 class UIComposer{
     static func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader) -> ArtistBrowserViewController{
-        let bundle = Bundle(for: ArtistBrowserViewController.self)
-        let storyboard = UIStoryboard(name: "ArtistBrowser", bundle: bundle)
-        let controller = storyboard.instantiateInitialViewController() as! ArtistBrowserViewController
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
         let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)
-        
-        controller.viewModel = viewModel
+        let controller = ArtistBrowserViewController(viewModel: viewModel)
         
         return controller
     }

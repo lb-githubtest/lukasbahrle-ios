@@ -12,4 +12,8 @@ extension UITableView {
         let identifier = String(describing: T.self)
         return dequeueReusableCell(withIdentifier: identifier) as! T
     }
+    
+    func register(_ cellClass: AnyClass){
+        self.register(cellClass, forCellReuseIdentifier: String(describing: cellClass))
+    }
 }
