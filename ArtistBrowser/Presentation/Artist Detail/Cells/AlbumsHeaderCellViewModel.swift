@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class AlbumsHeaderCellViewModel{
+public struct AlbumsHeaderCellViewModel{
     public let title:String
     
     internal init(title: String) {

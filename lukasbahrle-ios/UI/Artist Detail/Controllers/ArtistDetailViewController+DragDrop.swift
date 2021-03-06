@@ -11,6 +11,10 @@ import ArtistBrowser
 extension ArtistDetailViewController: UICollectionViewDragDelegate{
     func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
         
+        guard viewModel.albumsLoadState.current != .loading else {
+            return []
+        }
+        
         guard let cell = collectionView.cellForItem(at: indexPath) as? Draggable else{
             return []
         }
@@ -68,18 +72,29 @@ extension ArtistDetailViewController: UICollectionViewDropDelegate{
         return UICollectionViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
     }
     
+    
+    func collectionView(_ collectionView: UICollectionView, dropSessionDidEnd session: UIDropSession) {
+        self.onDragDropCompleted()
+    }
     private func reorderItems(coordinator: UICollectionViewDropCoordinator, destinationIndexPath:IndexPath, collectionView: UICollectionView) {
         if let item = coordinator.items.first,
             let sourceIndexPath = item.sourceIndexPath {
             
             collectionView.performBatchUpdates({
                 
-                self.viewModel.reorderAlbum(from: sourceIndexPath.item, to: destinationIndexPath.item)
                 collectionView.deleteItems(at: [sourceIndexPath])
                 collectionView.insertItems(at: [destinationIndexPath])
-            }, completion: nil)
+                self.viewModel.reorderAlbum(from: sourceIndexPath.item, to: destinationIndexPath.item)
+                
+            }, completion: { [weak self] _ in
+                
+            })
             coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
         }
+    }
+    
+    private func onDragDropCompleted(){
+        loadMoreAlbumsIfScrolledBottom(dragDropCompleted: true)
     }
     
 }

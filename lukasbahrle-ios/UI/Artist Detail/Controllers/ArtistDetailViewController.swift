@@ -18,8 +18,27 @@ class ArtistDetailViewController: UICollectionViewController {
         }
     }
     
+    func loadMoreAlbumsIfScrolledBottom(dragDropCompleted: Bool? = nil){
+        
+        if canLoadMoreAlbums &&  isLoadingCellIsVisible{
+            onScrolledToBottom(dragDropCompleted: dragDropCompleted)
+        }
+    }
+    
     private var loadingIndexPath: IndexPath {
         return IndexPath(row: 0, section: viewModel.numberOfSections)
+    }
+    
+    private var canLoadMoreAlbums: Bool {
+        viewModel.albumsLoadState.current.canLoadMore
+    }
+    
+    private var isLoadingCellIsVisible: Bool {
+        self.collectionView.indexPathsForVisibleItems.contains(self.loadingIndexPath)
+    }
+    
+    private var isDragDropActive: Bool{
+        collectionView.hasActiveDrag || collectionView.hasActiveDrop
     }
     
     override func viewDidLoad() {
@@ -31,11 +50,7 @@ class ArtistDetailViewController: UICollectionViewController {
         //layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
         
         collectionView.collectionViewLayout = layout
-        collectionView.register(AlbumViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumViewCell.self))
-        collectionView.register(LoadingCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: LoadingCollectionViewCell.self))
-        collectionView.register(ArtistDetailInfoCell.self, forCellWithReuseIdentifier: String(describing: ArtistDetailInfoCell.self))
-        collectionView.register(AlbumsDatesCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self))
-        collectionView.register(AlbumsHeaderCollectionViewCell.self, forCellWithReuseIdentifier: String(describing: AlbumsHeaderCollectionViewCell.self))
+        registerCells()
         
         enableDragDrop()
         
@@ -64,6 +79,14 @@ class ArtistDetailViewController: UICollectionViewController {
         }
     }
     
+    private func registerCells(){
+        collectionView.register(AlbumViewCell.self)
+        collectionView.register(LoadingCollectionViewCell.self)
+        collectionView.register(ArtistDetailInfoCell.self)
+        collectionView.register(AlbumsDatesCollectionViewCell.self)
+        collectionView.register(AlbumsHeaderCollectionViewCell.self)
+    }
+    
     private func enableDragDrop(){
         collectionView.dragDelegate = self
         collectionView.dropDelegate = self
@@ -74,11 +97,6 @@ class ArtistDetailViewController: UICollectionViewController {
         guard let albumsSection = viewModel.sectionIndexFor(type: .albumCollection) else {
             return
         }
-        
-//        collectionView.reloadData()
-//
-//        return
-        
         
         let loadingSection = viewModel.numberOfSections
         let startIndex = viewModel.numberOfAlbums - countAdded
@@ -98,42 +116,23 @@ class ArtistDetailViewController: UICollectionViewController {
                collectionView.insertItems(at: indexPaths)
            }
             
-            if !viewModel.albumsLoadState.current.canLoadMore {
+            if !canLoadMore {
                 collectionView.deleteSections(IndexSet([loadingSection]))
             }
         } completion: { [weak self] completed in
             guard let self = self else {return}
-            if self.collectionView.indexPathsForVisibleItems.contains(self.loadingIndexPath){
-                if canLoadMore {
-                    self.viewModel.scrolledToBottom()
-                }
-            }
+            self.loadMoreAlbumsIfScrolledBottom()
         }
     }
     
-//    private func updateAlbumsFilterCells(){
-//        guard let section = viewModel.sectionIndexFor(type: .albumsFilters) else{
-//            return
-//        }
-//
-//        for i in 0..<viewModel.numberOfAlbumFilters{
-//
-//            guard let filter = viewModel.albumFilterType(at: i), let cell = collectionView.cellForItem(at: IndexPath(item: i, section: section)) else {
-//                continue
-//            }
-//
-//            switch filter {
-//            case .date(_, _):
-//                guard let datesCell = cell as? AlbumsDatesCollectionViewCell else {
-//                    fatalError()
-//                }
-//
-//                datesCell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
-//            }
-//
-//        }
-//
-//    }
+    private func onScrolledToBottom(dragDropCompleted: Bool? = nil){
+        
+        let dragDropCompleted = dragDropCompleted ?? !isDragDropActive
+        
+        guard dragDropCompleted else {return}
+        self.viewModel.scrolledToBottom()
+    }
+    
 }
 
 
@@ -193,7 +192,7 @@ extension ArtistDetailViewController{
             cell.preload()
         }
         else if indexPath.section == viewModel.numberOfSections {
-            viewModel.scrolledToBottom()
+            onScrolledToBottom()
         }
     }
     
@@ -210,8 +209,7 @@ extension ArtistDetailViewController{
 
 extension ArtistDetailViewController{
     func makeArtistInfoCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: ArtistDetailInfoCell.self), for: indexPath) as! ArtistDetailInfoCell
-        
+        let cell:ArtistDetailInfoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.setup(viewModel: viewModel.artistInfoViewModel())
         return cell
     }
@@ -224,8 +222,7 @@ extension ArtistDetailViewController{
     }
     
     func makeAlbumsFilterDatesCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumsDatesCollectionViewCell.self), for: indexPath) as! AlbumsDatesCollectionViewCell
-        
+        let cell: AlbumsDatesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.delegate = self
         cell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
         return cell
@@ -237,22 +234,20 @@ extension ArtistDetailViewController{
                 fatalError()
                 }
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumViewCell.self), for: indexPath) as! AlbumViewCell
+        let cell:AlbumViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
         cell.setup(viewModel: albumViewModel)
         return cell
     }
     
     func makeLoadingCell(state: ContentLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: LoadingCollectionViewCell.self), for: indexPath) as! LoadingCollectionViewCell
+        let cell: LoadingCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
         return cell
     }
     
     func makerAlbumsTitleCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: String(describing: AlbumsHeaderCollectionViewCell.self), for: indexPath) as! AlbumsHeaderCollectionViewCell
-        
+        let cell:AlbumsHeaderCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.setup(viewModel: viewModel.albumsHeaderViewModel())
         
         return cell
@@ -269,3 +264,5 @@ extension ArtistDetailViewController: AlbumsFilterDatesViewDelegate{
         viewModel?.updateAlbumsFilterEndDateChange(date)
     }
 }
+
+
