@@ -17,7 +17,6 @@
 		DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */; };
 		DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB2525EA3049000E9656 /* UIComposer.swift */; };
 		DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */; };
-		DA18FB4325EA4AEE000E9656 /* ArtistDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */; };
 		DA18FB4B25EA5940000E9656 /* ArtistDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB4A25EA5940000E9656 /* ArtistDetailViewModel.swift */; };
 		DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */; };
 		DA2DBBB925EEE44D005103BB /* ArtistInfoCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */; };
@@ -82,8 +81,6 @@
 		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
 		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
-		DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2918525ED342400B82B14 /* TestDetailViewController.swift */; };
-		DAA2918C25ED347700B82B14 /* TestCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,7 +146,6 @@
 		DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB2525EA3049000E9656 /* UIComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIComposer.swift; sourceTree = "<group>"; };
 		DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewController.swift; sourceTree = "<group>"; };
-		DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ArtistDetail.storyboard; sourceTree = "<group>"; };
 		DA18FB4A25EA5940000E9656 /* ArtistDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewModel.swift; sourceTree = "<group>"; };
 		DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewCell.swift; sourceTree = "<group>"; };
 		DA2DBBB825EEE44D005103BB /* ArtistInfoCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistInfoCellViewModel.swift; sourceTree = "<group>"; };
@@ -222,8 +218,6 @@
 		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
 		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
-		DAA2918525ED342400B82B14 /* TestDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestDetailViewController.swift; sourceTree = "<group>"; };
-		DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,11 +293,9 @@
 		DA18FB3625EA4A0F000E9656 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				DA98716025F3E0FD001CB581 /* Layout */,
+				DA98715B25F3E0E5001CB581 /* DragDrop */,
 				DA18FB3825EA4ACB000E9656 /* ArtistDetailViewController.swift */,
-				DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */,
-				DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */,
-				DAA2918525ED342400B82B14 /* TestDetailViewController.swift */,
-				DAA2918B25ED347700B82B14 /* TestCollectionViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -311,7 +303,6 @@
 		DA18FB3725EA4A17000E9656 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				DA18FB4225EA4AEE000E9656 /* ArtistDetail.storyboard */,
 				DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */,
 				DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */,
 				DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */,
@@ -595,6 +586,22 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		DA98715B25F3E0E5001CB581 /* DragDrop */ = {
+			isa = PBXGroup;
+			children = (
+				DA32CE4E25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift */,
+			);
+			path = DragDrop;
+			sourceTree = "<group>";
+		};
+		DA98716025F3E0FD001CB581 /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				DA32CE5425EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
 		DA9C398825EE9CE800076EBC /* Cache */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,7 +810,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA18FB4325EA4AEE000E9656 /* ArtistDetail.storyboard in Resources */,
 				DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */,
 				DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */,
 				DA43F16125E96BE800BC09DB /* ArtistBrowser.storyboard in Resources */,
@@ -889,13 +895,11 @@
 				DA32CE8B25EBE2D000A294CC /* TestCollectionCell.swift in Sources */,
 				DA32CE5525EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift in Sources */,
 				DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */,
-				DAA2918C25ED347700B82B14 /* TestCollectionViewCell.swift in Sources */,
 				DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */,
 				DA18FB6F25EAB3D0000E9656 /* AlbumViewCell.swift in Sources */,
 				DA0DD35825F18E5500CFB922 /* Dragable.swift in Sources */,
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
 				DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */,
-				DAA2918625ED342400B82B14 /* TestDetailViewController.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */,
 				DA0DD34825F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift in Sources */,

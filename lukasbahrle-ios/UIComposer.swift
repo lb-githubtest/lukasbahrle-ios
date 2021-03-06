@@ -95,15 +95,10 @@ class UIComposer{
     }
     
     static func makeArtistDetailViewController(artist: Artist, albumsLoader: AlbumsLoader) -> ArtistDetailViewController{
-        
-        let bundle = Bundle(for: ArtistDetailViewController.self)
-        let storyboard = UIStoryboard(name: "ArtistDetail", bundle: bundle)
-        let controller = storyboard.instantiateInitialViewController() as! ArtistDetailViewController
-        
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
         
         let viewModel = ArtistDetailViewModel(artist: artist, albumsLoader: albumsLoader, imageDataLoader: imageLoader)
-        controller.viewModel = viewModel
+        let controller = ArtistDetailViewController(viewModel: viewModel)
         
         return controller
     }
