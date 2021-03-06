@@ -24,41 +24,6 @@ public enum LoadState: Equatable{
 }
 
 
-public protocol SearchArtistViewModelObserver: NSObject {
-    func onLoadingStateChange(value: LoadState, previous: LoadState)
-    func onArtistListUpdated()
-//    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>)
-}
-
-
-protocol SearchArtistViewModelType {
-    associatedtype SearchResutlViewModel
-    
-    var observer: SearchArtistViewModelObserver? {get set}
-    
-    var numberOfArtists: Int {get}
-    func result(at index: Int) -> SearchResutlViewModel?
-    
-    var loadState: LoadState {get}
-    
-    var title: String {get}
-    var searchPlaceholder: String {get}
-    
-    func viewDidLoad()
-    
-    func inputTextChanged(input: String)
-    func scrolledToBottom()
-    
-//    func preloadItem(at index: Int)
-//    func cancelItem(at index: Int)
-    
-    func selectArtist(at index: Int)
-    func retryLoad()
-
-}
-
-
-
 public struct PresentableSearchArtistError: Equatable{
     public let info: String
     public let retry: String
@@ -69,7 +34,7 @@ public protocol SearchArtistNavigator: class{
     func didSelect(artist: Artist)
 }
 
-public class SearchArtistViewModel: SearchArtistViewModelType{
+public class SearchArtistViewModel{
 
     public var title:String {
         "Artist Browser"
@@ -79,23 +44,20 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         "Artist name"
     }
     
-    public var numberOfArtists: Int {
+    public var numberOfSearchResults: Int {
         return dataModel.count
     }
     
-    public func result(at index: Int) -> SearchArtistResultCellViewModel? {
+    public func searchResult(at index: Int) -> SearchArtistResultCellViewModel? {
         guard index < dataModel.count else {return nil}
         let artist = dataModel[index]
         return SearchArtistResultCellViewModel(artist: artist, imageLoader: imageDataLoader)
     }
    
-    public private(set) var loadState: LoadState = .none {
-        didSet{
-            observer?.onLoadingStateChange(value: loadState, previous: oldValue)
-        }
-    }
+    public var onSearchResultsCollectionUpdate: (() -> Void)?
     
-    public weak var observer: SearchArtistViewModelObserver?
+    public var searchLoadState: Observable<ContentLoadState> = Observable(ContentLoadState.loaded(canLoadMore: false, countAdded: 0))
+    
     
     private var dataModel = [Artist]()
 
@@ -116,9 +78,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         self.navigator = navigator
     }
 
-    func viewDidLoad() {
-        
-    }
+    func viewDidLoad() {}
 
     public func inputTextChanged(input: String) {
         guard !input.isEmpty else {return}
@@ -132,30 +92,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
         loadNextPage()
     }
     
-//    public func preloadItem(at index: Int) {
-//        guard itemLoadingTasks[index] == nil, index < dataModel.count else {
-//            return
-//        }
-//
-//        guard let imageURL = dataModel[index].thumbnail else {
-//            return
-//        }
-//
-//        itemLoadingTasks[index] = imageDataLoader.load(from: imageURL, completion: { [weak self] result in
-//            DispatchQueue.main.async {
-//                self?.observer?.onItemPreloadCompleted(index: index, result: result)
-//                self?.itemLoadingTasks[index] = nil
-//            }
-//        })
-//    }
-
-//    public func cancelItem(at index: Int) {
-//        itemLoadingTasks[index]?.cancel()
-//        itemLoadingTasks[index] = nil
-//    }
-    
     public func selectArtist(at index: Int) {
-        print("selectArtist: \(index)")
         navigator?.didSelect(artist: dataModel[index])
     }
     
@@ -164,7 +101,8 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     }
     
     private func loadNextPage() {
-        guard loadState != .loading, loadState != .none, dataModel.count > 0 else {return}
+        guard searchLoadState.value != .loading, searchLoadState.value.canLoadMore else {return}
+        
         search(input: input, loadedItems: dataModel.count)
     }
     
@@ -175,7 +113,7 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
             return
         }
         
-        loadState = .loading
+        searchLoadState.value = .loading
         currentTask?.cancel()
         
         print("Search: \(input)")
@@ -195,14 +133,13 @@ public class SearchArtistViewModel: SearchArtistViewModelType{
     private func onArtistListLoaded(artists: ArtistList){
         dataModel.append(contentsOf: artists.items)
         
-        loadState = artists.canLoadMore ? .waiting : .none
-        
-        observer?.onArtistListUpdated()
+        searchLoadState.value = .loaded(canLoadMore: artists.canLoadMore, countAdded: artists.items.count)
     }
     
     private func onArtistListLoadError(error: Error){
         print(error)
-        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
+        searchLoadState.value = .failed
+//        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
     }
     

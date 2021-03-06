@@ -21,7 +21,6 @@ class ArtistDetailViewController: UIViewController {
         }
     }
     
-    
     init(viewModel: ArtistDetailViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -30,7 +29,6 @@ class ArtistDetailViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private var loadingIndexPath: IndexPath {
         return IndexPath(row: 0, section: viewModel.numberOfSections)

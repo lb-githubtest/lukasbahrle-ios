@@ -12,8 +12,23 @@ class ArtistBrowserViewController: UITableViewController {
     
     var searchController: UISearchController?
 
-    var viewModel: SearchArtistViewModel? {
+    var viewModel: SearchArtistViewModel! {
         didSet { bind() }
+    }
+    
+    private var loadingIndexPath: IndexPath {
+        return IndexPath(row: 0, section: 1)
+    }
+    
+    private var canLoadMoreAlbums: Bool {
+        viewModel.searchLoadState.current.canLoadMore
+    }
+    
+    private var isLoadingCellIsVisible: Bool {
+        guard let visibleIndexPaths = self.tableView.indexPathsForVisibleRows else {
+            return false
+        }
+        return visibleIndexPaths.contains(self.loadingIndexPath)
     }
     
     override func viewDidLoad() {
@@ -26,7 +41,23 @@ class ArtistBrowserViewController: UITableViewController {
         guard let viewModel = viewModel else {
             fatalError("Set first the vc viewModel")
         }
-        viewModel.observer = self
+        
+        self.title = viewModel.title
+        
+        viewModel.searchLoadState.valueChanged = { [weak self] state in
+            switch state {
+            case .loading:
+                self?.tableView.reloadData()
+            case .loaded(canLoadMore:let canLoadMore, countAdded: let count):
+                self?.onSearchResultsLoaded(canLoadMore: canLoadMore, countAdded: count)
+            default:
+                break
+            }
+        }
+        
+        viewModel.onSearchResultsCollectionUpdate = { [weak self] in
+            self?.tableView.reloadData()
+        }
     }
  
     private func configure(){
@@ -45,6 +76,39 @@ class ArtistBrowserViewController: UITableViewController {
         searchController?.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
     }
+    
+    
+    private func onSearchResultsLoaded(canLoadMore: Bool, countAdded: Int){
+        
+        let resultsSection = 0
+        let loadingSection = 1
+        let startIndex = viewModel.numberOfSearchResults - countAdded
+        let endIndex = viewModel.numberOfSearchResults - 1
+        var indexPaths: [IndexPath] = []
+        
+        tableView.performBatchUpdates {
+            if endIndex >= startIndex, endIndex >= 0, startIndex >= 0 {
+               for index in startIndex...endIndex{
+                   indexPaths.append(IndexPath(row: index, section: resultsSection))
+               }
+                tableView.insertRows(at: indexPaths, with: .automatic)
+           }
+            
+            if !canLoadMore {
+                tableView.deleteSections(IndexSet([loadingSection]), with: .automatic)
+
+            }
+        } completion: { [weak self] completed in
+            guard let self = self else {return}
+            self.loadMoreAlbumsIfScrolledBottom()
+        }
+    }
+    
+    private func loadMoreAlbumsIfScrolledBottom(){
+        if canLoadMoreAlbums &&  isLoadingCellIsVisible{
+            viewModel.scrolledToBottom()
+        }
+    }
 }
 
 
@@ -54,35 +118,31 @@ class ArtistBrowserViewController: UITableViewController {
 extension ArtistBrowserViewController{
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        let loadingOrErrorSection = viewModel.searchLoadState.current.canLoadMore ? 1 : 0
+        return 1 + loadingOrErrorSection
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let viewModel = viewModel else {return 0}
-        let extraLoadingCell = viewModel.loadState != .none ? 1 : 0
-        return viewModel.numberOfArtists + extraLoadingCell
+        if section == loadingIndexPath.section {
+            return 1
+        }
+        
+        return viewModel.numberOfSearchResults
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let viewModel = viewModel else {fatalError()}
         
-        if indexPath.row == viewModel.numberOfArtists {
-            switch viewModel.loadState {
-            case .error(let error):
-                let errorCell = tableView.dequeueReusableCell(withIdentifier: "ErrorTableViewCell", for: indexPath) as! ErrorTableViewCell
-                errorCell.set(model: error)
-                return errorCell
-            default:
-                let loadingCell = tableView.dequeueReusableCell(withIdentifier: "LoadingTableViewCell", for: indexPath) as! LoadingTableViewCell
-                return loadingCell
-            }
+        if indexPath == loadingIndexPath {
+            let loadingCell: LoadingTableViewCell = tableView.dequeueReusableCell()
+            return loadingCell
         }
         
-        guard let item = viewModel.result(at: indexPath.row) else {
+        guard let item = viewModel.searchResult(at: indexPath.row) else {
             fatalError()
         }
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ArtistSearchResultCell", for: indexPath) as! ArtistSearchResultCell
+        let cell: ArtistSearchResultCell = tableView.dequeueReusableCell()
         cell.setup(viewModel: item)
         return cell
     }
@@ -95,8 +155,7 @@ extension ArtistBrowserViewController{
             cell.preload()
         }
         
-        if indexPath.row == viewModel.numberOfArtists {
-            // loading cell
+        if indexPath == loadingIndexPath {
             viewModel.scrolledToBottom()
         }
     }
@@ -112,11 +171,11 @@ extension ArtistBrowserViewController{
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {fatalError()}
         
-        guard indexPath.row < viewModel.numberOfArtists else {
-            //is not an artist row
-            if viewModel.loadState.isError {
-                viewModel.retryLoad()
-            }
+        guard indexPath.row < viewModel.numberOfSearchResults else {
+//            //is not an artist row
+//            if viewModel.loadState.isError {
+//                viewModel.retryLoad()
+//            }
             return
         }
         viewModel.selectArtist(at: indexPath.row)
@@ -136,30 +195,15 @@ extension ArtistBrowserViewController: UISearchResultsUpdating{
 
 // MARK: - ViewModel Observer
 
-extension ArtistBrowserViewController: SearchArtistViewModelObserver{
+extension ArtistBrowserViewController {
     
-    func onLoadingStateChange(value: LoadState, previous: LoadState) {
-        print("onLoadingStateChange: \(viewModel?.loadState)")
-        
-//        guard let viewModel = viewModel, viewModel.loadState != .none else {
-//            return
-//        }
-        
-//        let loadingCellStateChanged = (value.isError && !previous.isError) || (!value.isError && previous.isError)
 //
 //
-//        if loadingCellStateChanged, tableView.numberOfRows(inSection: 0) > 0{
+//    func onArtistListUpdated() {
+//        tableView.reloadData()
 //
-//            let indexPath = IndexPath(item: tableView.numberOfRows(inSection: 0) - 1, section: 0)
-//            tableView.reloadRows(at: [indexPath], with: .fade)
-//        }
-    }
-    
-    func onArtistListUpdated() {
-        tableView.reloadData()
-        
-        print("onArtistListUpdated")
-    }
+//        print("onArtistListUpdated")
+//    }
     
 //    func onItemPreloadCompleted(index: Int, result: Result<Data, Error>) {
 //        print("Image load completed \(index)")
