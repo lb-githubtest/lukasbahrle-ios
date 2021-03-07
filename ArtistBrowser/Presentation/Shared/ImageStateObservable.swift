@@ -38,7 +38,6 @@ public class ImageStateObservable{
     }
     
     public func preload(){
-        
         guard !state.value.loaded, imageLoaderTask == nil, let url = imageURL else {return}
         
         state.value = .loading

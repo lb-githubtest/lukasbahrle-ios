@@ -87,9 +87,14 @@ class ArtistDetailViewController: UIViewController {
         self.title = viewModel.title
         
         viewModel.albumsLoadState.valueChanged = { [weak self] state in
+            guard let self = self else {return}
             switch state {
             case .loaded(canLoadMore:let canLoadMore, countAdded: let count):
-                self?.onAlbumsLoaded(canLoadMore: canLoadMore, countAdded: count)
+                self.onAlbumsLoaded(canLoadMore: canLoadMore, countAdded: count)
+            case .failed:
+                self.collectionView.reloadItems(at: [self.loadingIndexPath])
+            case .loading:
+                self.collectionView.reloadItems(at: [self.loadingIndexPath])
             default:
                 break
             }
@@ -103,6 +108,7 @@ class ArtistDetailViewController: UIViewController {
     private func registerCells(){
         collectionView.register(AlbumViewCell.self)
         collectionView.register(LoadingCollectionViewCell.self)
+        collectionView.register(ErrorCollectionViewCell.self)
         collectionView.register(ArtistDetailInfoCell.self)
         collectionView.register(AlbumsDatesCollectionViewCell.self)
         collectionView.register(AlbumsHeaderCollectionViewCell.self)
@@ -222,6 +228,12 @@ extension ArtistDetailViewController: UICollectionViewDataSource, UICollectionVi
             cell.cancelLoad()
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath == loadingIndexPath {
+            viewModel.loadingCellTap()
+        }
+    }
 }
 
 
@@ -231,7 +243,7 @@ extension ArtistDetailViewController: UICollectionViewDataSource, UICollectionVi
 extension ArtistDetailViewController{
     func makeArtistInfoCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell:ArtistDetailInfoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setup(viewModel: viewModel.artistInfoViewModel(), width: collectionView.maxCellWidth)
+        cell.setup(viewModel: viewModel.artistInfoViewModel, width: collectionView.maxCellWidth)
         return cell
     }
     
@@ -245,7 +257,7 @@ extension ArtistDetailViewController{
     func makeAlbumsFilterDatesCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell: AlbumsDatesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.delegate = self
-        cell.setup(viewModel: viewModel.albumsDatesFilterViewModel(), width: collectionView.maxCellWidth)
+        cell.setup(viewModel: viewModel.albumsDatesFilterViewModel, width: collectionView.maxCellWidth)
         return cell
     }
     
@@ -262,14 +274,21 @@ extension ArtistDetailViewController{
     }
     
     func makeLoadingCell(state: ContentLoadState, collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
-        let cell: LoadingCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
-        return cell
+        if viewModel.albumsLoadState.current == .failed {
+            let cell: ErrorCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            cell.setup(viewModel: viewModel.errorViewModel)
+            return cell
+        }
+        else{
+            let cell: LoadingCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
+            return cell
+        }
     }
     
     func makerAlbumsTitleCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell:AlbumsHeaderCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setup(viewModel: viewModel.albumsHeaderViewModel(), width: collectionView.maxCellWidth)
+        cell.setup(viewModel: viewModel.albumsHeaderViewModel, width: collectionView.maxCellWidth)
         
         return cell
     }

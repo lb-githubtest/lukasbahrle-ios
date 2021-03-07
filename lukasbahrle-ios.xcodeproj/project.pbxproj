@@ -31,7 +31,6 @@
 		DA32CE5C25EBA8F200A294CC /* RemoteAlbumsMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE5B25EBA8F200A294CC /* RemoteAlbumsMapper.swift */; };
 		DA32CE7025EBBC0600A294CC /* AlbumsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE6F25EBBC0600A294CC /* AlbumsLoader.swift */; };
 		DA32CE7625EBBC4400A294CC /* RemoteAlbumsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE7525EBBC4400A294CC /* RemoteAlbumsLoader.swift */; };
-		DA32CE8B25EBE2D000A294CC /* TestCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */; };
 		DA32CE9125EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */; };
 		DA32CE9725EC0BC100A294CC /* DateFormatter+yyyyMMdd.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA32CE9625EC0BC100A294CC /* DateFormatter+yyyyMMdd.swift */; };
 		DA419AA325E685DA002B1782 /* ArtistBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */; };
@@ -81,6 +80,8 @@
 		DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */; };
 		DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */; };
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
+		DAC425CF25F5810D00984476 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC425CE25F5810D00984476 /* ErrorView.swift */; };
+		DAC425D525F582B500984476 /* ErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC425D425F582B500984476 /* ErrorCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,7 +161,6 @@
 		DA32CE5B25EBA8F200A294CC /* RemoteAlbumsMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAlbumsMapper.swift; sourceTree = "<group>"; };
 		DA32CE6F25EBBC0600A294CC /* AlbumsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsLoader.swift; sourceTree = "<group>"; };
 		DA32CE7525EBBC4400A294CC /* RemoteAlbumsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteAlbumsLoader.swift; sourceTree = "<group>"; };
-		DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCollectionCell.swift; sourceTree = "<group>"; };
 		DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsDatesCollectionViewCell.swift; sourceTree = "<group>"; };
 		DA32CE9625EC0BC100A294CC /* DateFormatter+yyyyMMdd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+yyyyMMdd.swift"; sourceTree = "<group>"; };
 		DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArtistBrowser.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +218,8 @@
 		DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailInfoCell.swift; sourceTree = "<group>"; };
 		DAA2917125ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+NSLayoutConstraint.swift"; sourceTree = "<group>"; };
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
+		DAC425CE25F5810D00984476 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		DAC425D425F582B500984476 /* ErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -308,7 +310,7 @@
 				DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */,
 				DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */,
 				DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */,
-				DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */,
+				DAC425D425F582B500984476 /* ErrorCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -354,6 +356,7 @@
 			isa = PBXGroup;
 			children = (
 				DA32CE3E25EB766D00A294CC /* LoadingView.swift */,
+				DAC425CE25F5810D00984476 /* ErrorView.swift */,
 				DA0DD35725F18E5500CFB922 /* Dragable.swift */,
 			);
 			path = Shared;
@@ -891,7 +894,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA32CE8B25EBE2D000A294CC /* TestCollectionCell.swift in Sources */,
 				DA32CE5525EBA4EA00A294CC /* ArtistDetailViewController+Layout.swift in Sources */,
 				DA18FB3925EA4ACB000E9656 /* ArtistDetailViewController.swift in Sources */,
 				DA32CE4F25EBA3B400A294CC /* ArtistDetailViewController+DragDrop.swift in Sources */,
@@ -899,6 +901,8 @@
 				DA0DD35825F18E5500CFB922 /* Dragable.swift in Sources */,
 				DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */,
 				DAA2916B25ED1EF100B82B14 /* ArtistDetailInfoCell.swift in Sources */,
+				DAC425CF25F5810D00984476 /* ErrorView.swift in Sources */,
+				DAC425D525F582B500984476 /* ErrorCollectionViewCell.swift in Sources */,
 				DA18FB2625EA3049000E9656 /* UIComposer.swift in Sources */,
 				DA32CE3F25EB766D00A294CC /* LoadingView.swift in Sources */,
 				DA0DD34825F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift in Sources */,

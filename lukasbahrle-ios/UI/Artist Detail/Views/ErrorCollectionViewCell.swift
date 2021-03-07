@@ -1,33 +1,31 @@
 //
-//  ErrorTableViewCell.swift
+//  ErrorCollectionViewCell.swift
 //  lukasbahrle-ios
 //
-//  Created by Lukas Bahrle Santana on 27/02/2021.
+//  Created by Lukas Bahrle Santana on 07/03/2021.
 //
 
 import UIKit
 import ArtistBrowser
 
-class ErrorTableViewCell: UITableViewCell {
+class ErrorCollectionViewCell: UICollectionViewCell {
     
     private var errorView = ErrorView(frame: .zero)
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         configure()
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: coder)
+        configure()
     }
-
     func setup(viewModel: ErrorViewModel) {
         errorView.setup(viewModel: viewModel)
     }
     
     private func configure(){
-        selectionStyle = .none
-        
         contentView.addSubview(errorView)
         
         errorView.translatesAutoresizingMaskIntoConstraints = false

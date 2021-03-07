@@ -7,24 +7,24 @@
 
 import Foundation
 
-public enum LoadState: Equatable{
-    case none
-    case waiting
-    case loading
-    case error(PresentableSearchArtistError)
-    
-    public var isError: Bool {
-        switch self {
-        case .error(_):
-            return true
-        default:
-            return false
-        }
-    }
-}
+//public enum LoadState: Equatable{
+//    case none
+//    case waiting
+//    case loading
+//    case error(PresentableSearchArtistError)
+//
+//    public var isError: Bool {
+//        switch self {
+//        case .error(_):
+//            return true
+//        default:
+//            return false
+//        }
+//    }
+//}
 
 
-public struct PresentableSearchArtistError: Equatable{
+public struct ErrorViewModel{
     public let info: String
     public let retry: String
 }
@@ -65,6 +65,9 @@ public class SearchArtistViewModel{
     
     public var searchLoadState: Observable<ContentLoadState> = Observable(ContentLoadState.loaded(canLoadMore: false, countAdded: 0))
     
+    public var errorViewModel: ErrorViewModel{
+        ErrorViewModel(info: "Couldn't connect to server", retry: "Tap to retry")
+    }
     
     private var dataModel = [Artist]()
     private var cellViewModels = [String: SearchArtistResultCellViewModel]()
@@ -97,6 +100,12 @@ public class SearchArtistViewModel{
     }
     
     public func scrolledToBottom(){
+        guard searchLoadState.current != .failed else {return}
+        loadNextPage()
+    }
+    
+    public func loadingCellTap(){
+        guard searchLoadState.current == .failed else {return}
         loadNextPage()
     }
     
@@ -147,6 +156,7 @@ public class SearchArtistViewModel{
     private func onArtistListLoadError(error: Error){
         print(error)
         searchLoadState.value = .failed
+        
 //        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
         
     }

@@ -18,16 +18,20 @@ public class ArtistDetailViewModel{
     
     // MARK: ViewModels
     
-    public func artistInfoViewModel() -> ArtistInfoCellViewModel {
+    public var artistInfoViewModel: ArtistInfoCellViewModel{
         ArtistInfoCellViewModel(artist: artist, imageLoader: imageDataLoader)
     }
     
-    public func albumsHeaderViewModel() -> AlbumsHeaderCellViewModel {
+    public var albumsHeaderViewModel: AlbumsHeaderCellViewModel{
         AlbumsHeaderCellViewModel(title: "Albums")
     }
     
-    public func albumsDatesFilterViewModel() -> AlbumsDatesFilterCellViewModel {
+    public var albumsDatesFilterViewModel: AlbumsDatesFilterCellViewModel{
         AlbumsDatesFilterCellViewModel(startDate: albumsFilterStartDate, endDate: albumsFilterEndDate)
+    }
+    
+    public var errorViewModel: ErrorViewModel{
+        ErrorViewModel(info: "Couldn't connect to server", retry: "Tap to retry")
     }
     
     public func album(at index: Int) -> AlbumCellViewModel? {
@@ -63,9 +67,14 @@ public class ArtistDetailViewModel{
     }
    
     public func scrolledToBottom() {
+        guard albumsLoadState.current != .failed else {return}
         loadNextPage()
     }
     
+    public func loadingCellTap(){
+        guard albumsLoadState.current == .failed else {return}
+        loadNextPage()
+    }
     
     // MARK: Reorder
     

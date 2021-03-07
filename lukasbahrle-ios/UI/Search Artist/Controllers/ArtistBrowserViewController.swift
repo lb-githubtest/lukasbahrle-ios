@@ -15,8 +15,13 @@ class ArtistBrowserViewController: UIViewController {
 
     var viewModel: SearchArtistViewModel
     
+    private enum Section: Int{
+        case results = 0
+        case loading
+    }
+    
     private var loadingIndexPath: IndexPath {
-        return IndexPath(row: 0, section: 1)
+        return IndexPath(row: 0, section: Section.loading.rawValue)
     }
     
     private var canLoadMoreAlbums: Bool {
@@ -50,11 +55,14 @@ class ArtistBrowserViewController: UIViewController {
         self.title = viewModel.title
         
         viewModel.searchLoadState.valueChanged = { [weak self] state in
+            guard let self = self else {return}
             switch state {
             case .loading:
-                self?.tableView.reloadData()
+                self.tableView.reloadData()
             case .loaded(canLoadMore:let canLoadMore, countAdded: let count):
-                self?.onSearchResultsLoaded(canLoadMore: canLoadMore, countAdded: count)
+                self.onSearchResultsLoaded(canLoadMore: canLoadMore, countAdded: count)
+            case .failed:
+                self.tableView.reloadRows(at: [self.loadingIndexPath], with: .automatic)
             default:
                 break
             }
@@ -67,7 +75,6 @@ class ArtistBrowserViewController: UIViewController {
  
     private func configure(){
         view.backgroundColor = .white
-        
         
         // tableView
         view.addSubview(tableView)
@@ -104,16 +111,13 @@ class ArtistBrowserViewController: UIViewController {
     }
     
     private func registerCells(){
-        
         tableView.register(ArtistSearchResultCell.self)
         tableView.register(LoadingTableViewCell.self)
+        tableView.register(ErrorTableViewCell.self)
     }
-    
     
     private func onSearchResultsLoaded(canLoadMore: Bool, countAdded: Int){
         
-        let resultsSection = 0
-        let loadingSection = 1
         let startIndex = viewModel.numberOfSearchResults - countAdded
         let endIndex = viewModel.numberOfSearchResults - 1
         var indexPaths: [IndexPath] = []
@@ -121,13 +125,13 @@ class ArtistBrowserViewController: UIViewController {
         tableView.performBatchUpdates {
             if endIndex >= startIndex, endIndex >= 0, startIndex >= 0 {
                for index in startIndex...endIndex{
-                   indexPaths.append(IndexPath(row: index, section: resultsSection))
+                   indexPaths.append(IndexPath(row: index, section: Section.results.rawValue))
                }
                 tableView.insertRows(at: indexPaths, with: .automatic)
            }
             
             if !canLoadMore {
-                tableView.deleteSections(IndexSet([loadingSection]), with: .automatic)
+                tableView.deleteSections(IndexSet([Section.loading.rawValue]), with: .automatic)
 
             }
         } completion: { [weak self] completed in
@@ -164,8 +168,7 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath == loadingIndexPath {
-            let loadingCell: LoadingTableViewCell = tableView.dequeueReusableCell()
-            return loadingCell
+            return getLoadingCell()
         }
         
         guard let item = viewModel.searchResult(at: indexPath.row) else {
@@ -177,6 +180,17 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
         return cell
     }
     
+    private func getLoadingCell() -> UITableViewCell{
+        if viewModel.searchLoadState.current == .failed {
+            let errorCell: ErrorTableViewCell = tableView.dequeueReusableCell()
+            errorCell.setup(viewModel: viewModel.errorViewModel)
+            return errorCell
+        }
+        else{
+            let loadingCell: LoadingTableViewCell = tableView.dequeueReusableCell()
+            return loadingCell
+        }
+    }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if let cell = cell as? CellPreloadable{
@@ -197,11 +211,14 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard indexPath.row < viewModel.numberOfSearchResults else {
-            return
+        
+        if indexPath == loadingIndexPath {
+            viewModel.loadingCellTap()
         }
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewModel.selectArtist(at: indexPath.row)
+        else if indexPath.section == Section.results.rawValue {
+            tableView.deselectRow(at: indexPath, animated: true)
+            viewModel.selectArtist(at: indexPath.row)
+        }
     }
 }
 
