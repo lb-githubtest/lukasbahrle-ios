@@ -68,6 +68,7 @@ class ArtistBrowserViewController: UIViewController {
     private func configure(){
         view.backgroundColor = .white
         
+        
         // tableView
         view.addSubview(tableView)
         
@@ -199,6 +200,7 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
         guard indexPath.row < viewModel.numberOfSearchResults else {
             return
         }
+        tableView.deselectRow(at: indexPath, animated: true)
         viewModel.selectArtist(at: indexPath.row)
     }
 }

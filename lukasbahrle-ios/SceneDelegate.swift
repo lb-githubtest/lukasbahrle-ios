@@ -96,7 +96,7 @@ struct SearchArtistRequestBuilder: RequestBuilder {
     
     var params: [URLQueryItem]? = [
         URLQueryItem(name: "type", value: "artist"),
-        URLQueryItem(name: "limit", value: "7")
+        URLQueryItem(name: "limit", value: "20")
     ]
     
     var headers: [String : String]?
@@ -123,7 +123,7 @@ struct AlbumsRequestBuilder: RequestBuilder {
     var httpMethod: HTTPMethod = .GET
     
     var params: [URLQueryItem]? = [
-        URLQueryItem(name: "limit", value: "5")
+        URLQueryItem(name: "limit", value: "20")
     ]
     
     var headers: [String : String]?

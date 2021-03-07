@@ -41,11 +41,15 @@ class ArtistSearchResultCell: UITableViewCell {
         self.viewModel = viewModel
         
         nameLabel.text = viewModel.artistName
-    
-        viewModel.image.state.valueChanged = { [weak self] state in
-            self?.onThumbnailStateChanged(state)
+        
+        switch viewModel.image.state.current {
+        case .loaded(let data):
+            thumbnailView.image = UIImage(data: data)
+        default:
+            viewModel.image.state.valueChanged = { [weak self] state in
+                self?.onThumbnailStateChanged(state)
+            }
         }
-
     }
     
     private func configure(){

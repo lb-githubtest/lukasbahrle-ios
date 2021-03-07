@@ -78,8 +78,6 @@ extension AppCoordinator: SearchArtistNavigator{
 }
 
 
-
-
 class UIComposer{
     static func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader) -> ArtistBrowserViewController{
         let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))

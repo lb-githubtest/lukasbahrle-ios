@@ -13,6 +13,15 @@ public enum ImageState{
     case loading
     case failed
     case loaded(data:Data)
+    
+    var loaded: Bool {
+        switch self {
+        case .loaded(data: _):
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 public class ImageStateObservable{
@@ -29,7 +38,8 @@ public class ImageStateObservable{
     }
     
     public func preload(){
-        guard imageLoaderTask == nil, let url = imageURL else {return}
+        
+        guard !state.value.loaded, imageLoaderTask == nil, let url = imageURL else {return}
         
         state.value = .loading
         
@@ -46,5 +56,6 @@ public class ImageStateObservable{
     public func cancel(){
         state.valueChanged = nil
         imageLoaderTask?.cancel()
+        imageLoaderTask = nil
     }
 }

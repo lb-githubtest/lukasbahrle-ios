@@ -303,12 +303,12 @@
 		DA18FB3725EA4A17000E9656 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */,
+				DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */,
+				DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */,
 				DA18FB6E25EAB3D0000E9656 /* AlbumViewCell.swift */,
 				DA32CE4425EB785400A294CC /* LoadingCollectionViewCell.swift */,
 				DA32CE8A25EBE2D000A294CC /* TestCollectionCell.swift */,
-				DA32CE9025EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift */,
-				DAA2916A25ED1EF100B82B14 /* ArtistDetailInfoCell.swift */,
-				DA0DD34725F139E900CFB922 /* AlbumsHeaderCollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

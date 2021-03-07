@@ -67,12 +67,9 @@ class ArtistDetailViewController: UIViewController {
         ])
         
         
-//        let layout = collectionView.collectionViewLayout
-//            if let flowLayout = layout as? UICollectionViewFlowLayout {
-//                flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-//                //flowLayout.estimatedItemSize = CGSize(width: UIScreen.main.bounds.size.width, height: 100)
-//            }
-//
+        if let flowLayout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+        }
         
         registerCells()
         enableDragDrop()
@@ -84,6 +81,7 @@ class ArtistDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         self.navigationItem.largeTitleDisplayMode = .never
     }
+    
     
     private func bind(){
         self.title = viewModel.title
@@ -233,7 +231,7 @@ extension ArtistDetailViewController: UICollectionViewDataSource, UICollectionVi
 extension ArtistDetailViewController{
     func makeArtistInfoCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell:ArtistDetailInfoCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setup(viewModel: viewModel.artistInfoViewModel())
+        cell.setup(viewModel: viewModel.artistInfoViewModel(), width: collectionView.maxCellWidth)
         return cell
     }
     
@@ -247,7 +245,7 @@ extension ArtistDetailViewController{
     func makeAlbumsFilterDatesCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell: AlbumsDatesCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         cell.delegate = self
-        cell.setup(viewModel: viewModel.albumsDatesFilterViewModel())
+        cell.setup(viewModel: viewModel.albumsDatesFilterViewModel(), width: collectionView.maxCellWidth)
         return cell
     }
     
@@ -259,7 +257,7 @@ extension ArtistDetailViewController{
         
         let cell:AlbumViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
-        cell.setup(viewModel: albumViewModel)
+        cell.setup(viewModel: albumViewModel, width: collectionView.maxCellWidth * 0.5)
         return cell
     }
     
@@ -271,7 +269,7 @@ extension ArtistDetailViewController{
     
     func makerAlbumsTitleCell(collectionView: UICollectionView, indexPath: IndexPath) -> UICollectionViewCell{
         let cell:AlbumsHeaderCollectionViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
-        cell.setup(viewModel: viewModel.albumsHeaderViewModel())
+        cell.setup(viewModel: viewModel.albumsHeaderViewModel(), width: collectionView.maxCellWidth)
         
         return cell
     }

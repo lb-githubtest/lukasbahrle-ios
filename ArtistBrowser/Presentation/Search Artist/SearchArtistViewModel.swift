@@ -51,7 +51,14 @@ public class SearchArtistViewModel{
     public func searchResult(at index: Int) -> SearchArtistResultCellViewModel? {
         guard index < dataModel.count else {return nil}
         let artist = dataModel[index]
-        return SearchArtistResultCellViewModel(artist: artist, imageLoader: imageDataLoader)
+        
+        if let viewModel = cellViewModels[artist.id] {
+            return viewModel
+        }
+        
+        let cellViewModel = SearchArtistResultCellViewModel(artist: artist, imageLoader: imageDataLoader)
+        cellViewModels[artist.id] = cellViewModel
+        return cellViewModel
     }
    
     public var onSearchResultsCollectionUpdate: (() -> Void)?
@@ -60,6 +67,7 @@ public class SearchArtistViewModel{
     
     
     private var dataModel = [Artist]()
+    private var cellViewModels = [String: SearchArtistResultCellViewModel]()
 
     private let searchArtistLoader: SearchArtistLoader
     private let imageDataLoader: ImageDataLoader
@@ -81,7 +89,7 @@ public class SearchArtistViewModel{
     func viewDidLoad() {}
 
     public func inputTextChanged(input: String) {
-        guard !input.isEmpty else {return}
+        guard !input.isEmpty, input != self.input else {return}
         self.input = input
         dataModel = []
 

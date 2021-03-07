@@ -14,6 +14,8 @@ class AlbumViewCell: UICollectionViewCell {
     private var nameLabel: UILabel = UILabel()
     
     private var viewModel: AlbumCellViewModel?
+    
+    private var widthConstraint: NSLayoutConstraint!
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -45,6 +47,16 @@ class AlbumViewCell: UICollectionViewCell {
         
         let margins = contentView.layoutMarginsGuide
         
+        widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 200)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                contentView.topAnchor.constraint(equalTo: topAnchor),
+                contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            widthConstraint
+            ])
+        
         NSLayoutConstraint.activate([
             thumbnailView.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             thumbnailView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
@@ -61,7 +73,7 @@ class AlbumViewCell: UICollectionViewCell {
         ])
     }
     
-    func setup(viewModel: AlbumCellViewModel){
+    func setup(viewModel: AlbumCellViewModel, width: CGFloat){
         self.viewModel = viewModel
         nameLabel.text = viewModel.name
         dateLabel.text = viewModel.date
@@ -69,6 +81,8 @@ class AlbumViewCell: UICollectionViewCell {
         viewModel.image.state.valueChanged = { [weak self] state in
             self?.onThumbnailStateChanged(state)
         }
+        
+        widthConstraint.constant = width
     }
     
     private func onThumbnailStateChanged(_ state: ImageState){

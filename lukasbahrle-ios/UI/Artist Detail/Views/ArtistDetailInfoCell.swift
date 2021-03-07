@@ -15,6 +15,8 @@ class ArtistDetailInfoCell: UICollectionViewCell {
     
     private var viewModel: ArtistInfoCellViewModel?
     
+    private var widthConstraint: NSLayoutConstraint!
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -25,7 +27,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         configure()
     }
     
-    public func setup(viewModel: ArtistInfoCellViewModel){
+    public func setup(viewModel: ArtistInfoCellViewModel, width: CGFloat){
         self.viewModel = viewModel
         
         nameLabel.text = viewModel.artistName
@@ -34,6 +36,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         viewModel.image.state.valueChanged = { [weak self] state in
             self?.onImageStateChanged(state)
         }
+        widthConstraint.constant = width
     }
     
     
@@ -56,13 +59,13 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         viewModel = nil
     }
     
-    
     private func configure(){
         contentView.addSubview(imageView)
         contentView.addSubview(nameLabel)
         contentView.addSubview(infoLabel)
         
         imageView.backgroundColor = .lightGray
+        imageView.contentMode = .scaleAspectFill
         
         nameLabel.set(style: .largeTitle)
         infoLabel.set(style: .subheadline)
@@ -74,6 +77,18 @@ class ArtistDetailInfoCell: UICollectionViewCell {
     }
     
     private func configureConstraints(){
+        
+        widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 200)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                contentView.topAnchor.constraint(equalTo: topAnchor),
+                contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            widthConstraint
+            ])
+        
+        
         imageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -86,7 +101,6 @@ class ArtistDetailInfoCell: UICollectionViewCell {
             //imageView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 300),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
             
-            
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 0),
             nameLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
@@ -94,11 +108,10 @@ class ArtistDetailInfoCell: UICollectionViewCell {
             infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0),
             infoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             infoLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
         ])
     }
 }
-
 
 
 extension ArtistDetailInfoCell: CellPreloadable{
@@ -112,10 +125,16 @@ extension ArtistDetailInfoCell: CellPreloadable{
     }
 }
 
-
 extension UILabel {
     func set(style: UIFont.TextStyle, numberOfLines: Int = 0, dynamicType: Bool = true){
         self.numberOfLines = numberOfLines
+        self.font = UIFont.preferredFont(forTextStyle: style)
+        self.adjustsFontForContentSizeCategory = dynamicType
+    }
+}
+
+extension UITextField {
+    func set(style: UIFont.TextStyle,dynamicType: Bool = true){
         self.font = UIFont.preferredFont(forTextStyle: style)
         self.adjustsFontForContentSizeCategory = dynamicType
     }

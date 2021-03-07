@@ -25,12 +25,15 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     private var startDate: Date?
     private var endDate: Date?
     
+    private var widthConstraint: NSLayoutConstraint!
+    
     private lazy var inputToolbar: UIToolbar = {
         let toolbar = UIToolbar()
         toolbar.sizeToFit()
         
+        let space = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneEditing))
-        toolbar.setItems([doneBtn], animated: true)
+        toolbar.setItems([space, doneBtn], animated: true)
         return toolbar
     }()
     
@@ -49,7 +52,7 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         delegate = nil
     }
     
-    public func setup(viewModel: AlbumsDatesFilterCellViewModel){
+    public func setup(viewModel: AlbumsDatesFilterCellViewModel, width: CGFloat){
         self.viewModel = viewModel
         
         startDate = viewModel.startDate?.date
@@ -57,6 +60,8 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         
         endDate = viewModel.endDate?.date
         endDateView.text = viewModel.endDate?.text
+        
+        widthConstraint.constant = width
     }
     
     private func configure(){
@@ -70,6 +75,12 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         endDateView.inputAccessoryView = inputToolbar
         endDateView.inputView = datePicker
         endDateView.borderStyle = .roundedRect
+        startDateView.set(style: .footnote)
+        endDateView.set(style: .footnote)
+        
+        if #available(iOS 13.4, *){
+            datePicker.preferredDatePickerStyle = .wheels
+        }
         
         configureConstraints()
         
@@ -84,6 +95,16 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
     private func configureConstraints(){
         startDateView.translatesAutoresizingMaskIntoConstraints = false
         endDateView.translatesAutoresizingMaskIntoConstraints = false
+        
+        widthConstraint = contentView.widthAnchor.constraint(equalToConstant: 200)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+                contentView.topAnchor.constraint(equalTo: topAnchor),
+                contentView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                contentView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                contentView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            widthConstraint
+            ])
         
         let margins = contentView.layoutMarginsGuide
         NSLayoutConstraint.activate([
