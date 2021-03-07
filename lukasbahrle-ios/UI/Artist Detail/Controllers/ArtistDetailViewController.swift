@@ -51,10 +51,10 @@ class ArtistDetailViewController: UIViewController {
         
         bind()
         
-        view.backgroundColor = .white
+        view.backgroundColor = Appearance.backgroundColor
         view.addSubview(collectionView)
         
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = Appearance.backgroundColor
         collectionView.delegate = self
         collectionView.dataSource = self
         

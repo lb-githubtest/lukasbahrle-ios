@@ -74,7 +74,7 @@ class ArtistBrowserViewController: UIViewController {
     }
  
     private func configure(){
-        view.backgroundColor = .white
+        view.backgroundColor = Appearance.backgroundColor
         
         // tableView
         view.addSubview(tableView)

@@ -82,6 +82,7 @@
 		DAA2918025ED267300B82B14 /* UICollectionView+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */; };
 		DAC425CF25F5810D00984476 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC425CE25F5810D00984476 /* ErrorView.swift */; };
 		DAC425D525F582B500984476 /* ErrorCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC425D425F582B500984476 /* ErrorCollectionViewCell.swift */; };
+		DAC425EA25F58E5D00984476 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC425E925F58E5D00984476 /* Appearance.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +221,7 @@
 		DAA2917F25ED267300B82B14 /* UICollectionView+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Size.swift"; sourceTree = "<group>"; };
 		DAC425CE25F5810D00984476 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		DAC425D425F582B500984476 /* ErrorCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCollectionViewCell.swift; sourceTree = "<group>"; };
+		DAC425E925F58E5D00984476 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -438,6 +440,7 @@
 		DA43F15F25E96BA100BC09DB /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				DAC425E825F58E4900984476 /* Appearance */,
 				DAA2917025ED1F9700B82B14 /* Helpers */,
 				DA32CE3D25EB75B800A294CC /* Shared */,
 				DA18FB3025EA3EFF000E9656 /* Search Artist */,
@@ -630,6 +633,14 @@
 				DA98716D25F3EB54001CB581 /* UITableView+Cells.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		DAC425E825F58E4900984476 /* Appearance */ = {
+			isa = PBXGroup;
+			children = (
+				DAC425E925F58E5D00984476 /* Appearance.swift */,
+			);
+			path = Appearance;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -913,6 +924,7 @@
 				DA32CE9125EBEBFC00A294CC /* AlbumsDatesCollectionViewCell.swift in Sources */,
 				DAA2917225ED1FA500B82B14 /* UIView+NSLayoutConstraint.swift in Sources */,
 				DA98716E25F3EB54001CB581 /* UITableView+Cells.swift in Sources */,
+				DAC425EA25F58E5D00984476 /* Appearance.swift in Sources */,
 				DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */,
 				DA43F16925E96C4200BC09DB /* ArtistBrowserViewController.swift in Sources */,
 				DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */,

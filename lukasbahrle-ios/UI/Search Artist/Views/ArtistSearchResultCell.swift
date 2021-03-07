@@ -57,7 +57,7 @@ class ArtistSearchResultCell: UITableViewCell {
         contentView.addSubview(nameLabel)
         
         thumbnailView.translatesAutoresizingMaskIntoConstraints = false
-        thumbnailView.backgroundColor = .lightGray
+        thumbnailView.backgroundColor = Appearance.imageBackground
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.set(style: .body, numberOfLines: 0)
         

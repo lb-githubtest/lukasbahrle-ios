@@ -8,31 +8,39 @@
 import UIKit
 
 class LoadingTableViewCell: UITableViewCell {
-    private var indicator:UIActivityIndicatorView = UIActivityIndicatorView(style: .gray)
+    private var loadingView: LoadingView = LoadingView()
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
         configure()
-
     }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        indicator.startAnimating()
+        loadingView.start()
     }
     
     private func configure(){
         selectionStyle = .none
         
-        contentView.addSubview(indicator)
+        self.contentView.addSubview(loadingView)
         
-        indicator.translatesAutoresizingMaskIntoConstraints = false
+        let container = UIView(frame: .zero)
+        self.contentView.addSubview(container)
+        container.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            indicator.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            indicator.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            container.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            container.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            container.topAnchor.constraint(equalTo: contentView.topAnchor),
+            container.heightAnchor.constraint(equalToConstant: 130)
         ])
+        
+        container.addSubview(loadingView)
     }
     
     

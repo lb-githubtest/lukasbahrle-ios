@@ -64,7 +64,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         contentView.addSubview(nameLabel)
         contentView.addSubview(infoLabel)
         
-        imageView.backgroundColor = .lightGray
+        imageView.backgroundColor = Appearance.imageBackground
         imageView.contentMode = .scaleAspectFill
         
         nameLabel.set(style: .largeTitle)
