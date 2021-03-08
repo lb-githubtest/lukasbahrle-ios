@@ -66,6 +66,7 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         
         imageView.backgroundColor = Appearance.imageBackground
         imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         
         nameLabel.set(style: .largeTitle)
         infoLabel.set(style: .subheadline)

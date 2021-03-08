@@ -13,9 +13,8 @@ import ArtistBrowser
 class AppCoordinator{
     private let navigationController: UINavigationController
 
-    
     private lazy var client: HTTPClient = {
-        URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
+        URLSessionHTTPClient(session: URLSession(configuration: .default))
     }()
     
     private lazy var remoteTokenLoader: TokenLoader = {
@@ -39,6 +38,10 @@ class AppCoordinator{
         return AuthorizedHTTPClient(client: client, tokenLoader: tokenLoader, tokenRefreshLoader: remoteTokenLoader)
     }()
     
+    private lazy var imageLoader: RemoteImageDataLoader = {
+        RemoteImageDataLoader(client: client)
+    }()
+    
     init(){
         navigationController = UINavigationController()
     }
@@ -53,7 +56,7 @@ class AppCoordinator{
                     return request.get()
                 }, client: authClient)
 
-        let vc = UIComposer.makeArtistBrowserViewController(navigator: self, searchArtistLoader: searchArtistLoader)
+        let vc = UIComposer.makeArtistBrowserViewController(navigator: self, searchArtistLoader: searchArtistLoader, imageLoader: imageLoader)
         navigationController.setViewControllers([vc], animated: false)
         return navigationController
     }
@@ -72,15 +75,14 @@ extension AppCoordinator: SearchArtistNavigator{
        
         
         
-        let vc = UIComposer.makeArtistDetailViewController(artist: artist, albumsLoader: albumsLoader)
+        let vc = UIComposer.makeArtistDetailViewController(artist: artist, albumsLoader: albumsLoader, imageLoader: imageLoader)
         navigationController.pushViewController(vc, animated: true)
     }
 }
 
 
 class UIComposer{
-    static func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader) -> ArtistBrowserViewController{
-        let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+    static func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader, imageLoader: ImageDataLoader) -> ArtistBrowserViewController{
         
         let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)
         let controller = ArtistBrowserViewController(viewModel: viewModel)
@@ -88,8 +90,7 @@ class UIComposer{
         return controller
     }
     
-    static func makeArtistDetailViewController(artist: Artist, albumsLoader: AlbumsLoader) -> ArtistDetailViewController{
-        let imageLoader = RemoteImageDataLoader(client: URLSessionHTTPClient(session: URLSession(configuration: .ephemeral)))
+    static func makeArtistDetailViewController(artist: Artist, albumsLoader: AlbumsLoader, imageLoader: ImageDataLoader) -> ArtistDetailViewController{
         
         let viewModel = ArtistDetailViewModel(artist: artist, albumsLoader: albumsLoader, imageDataLoader: imageLoader)
         let controller = ArtistDetailViewController(viewModel: viewModel)
