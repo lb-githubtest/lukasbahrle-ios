@@ -67,8 +67,13 @@ class AlbumViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         nameLabel.text = viewModel.name
         
-        viewModel.image.state.valueChanged = { [weak self] state in
-            self?.onThumbnailStateChanged(state)
+        switch viewModel.image.state.current {
+        case .loaded(let data):
+            onThumbnailDateLoaded(data)
+        default:
+            viewModel.image.state.valueChanged = { [weak self] state in
+                self?.onThumbnailStateChanged(state)
+            }
         }
         
         widthConstraint.constant = width
@@ -77,13 +82,13 @@ class AlbumViewCell: UICollectionViewCell {
     private func onThumbnailStateChanged(_ state: ImageState){
         switch state {
         case .loaded(data: let data):
-            onArtistThumbnailDateLoaded(data)
+            onThumbnailDateLoaded(data)
         default:
             break
         }
     }
     
-    private func onArtistThumbnailDateLoaded(_ data: Data){
+    private func onThumbnailDateLoaded(_ data: Data){
         thumbnailView.image = UIImage(data: data)
     }
     

@@ -36,7 +36,16 @@ public class ArtistDetailViewModel{
     
     public func album(at index: Int) -> AlbumCellViewModel? {
         let pos = filteredAlbumsDataModel?[index] ?? index
-        return AlbumCellViewModel(album: albumsDataModel[pos], imageLoader: imageDataLoader)
+        
+        let album = albumsDataModel[pos]
+        
+        if let viewModel = albumsCellViewModels[album.id] {
+            return viewModel
+        }
+        
+        let cellViewModel = AlbumCellViewModel(album: album, imageLoader: imageDataLoader)
+        albumsCellViewModels[album.id] = cellViewModel
+        return cellViewModel
     }
     
     
@@ -119,6 +128,7 @@ public class ArtistDetailViewModel{
     private let artist: Artist
     private var albumsDataModel = [Album]()
     private var filteredAlbumsDataModel: [Int]?
+    private var albumsCellViewModels = [String: AlbumCellViewModel]()
     
     private let albumsLoader: AlbumsLoader
     private let imageDataLoader: ImageDataLoader
