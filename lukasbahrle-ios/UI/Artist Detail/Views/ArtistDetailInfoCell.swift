@@ -101,14 +101,14 @@ class ArtistDetailInfoCell: UICollectionViewCell {
             //imageView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: 300),
             imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
             
-            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 0),
+            nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
             
-            infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 0),
+            infoLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 4),
             infoLabel.leadingAnchor.constraint(equalTo: nameLabel.leadingAnchor),
             infoLabel.trailingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
+            infoLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -8)
         ])
     }
 }

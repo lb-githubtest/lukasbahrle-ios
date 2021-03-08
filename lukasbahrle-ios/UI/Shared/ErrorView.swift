@@ -35,10 +35,10 @@ class ErrorView: UIView {
         self.addSubview(retryLabel)
         
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.set(style: .body)
+        infoLabel.set(style: .subheadline)
         infoLabel.textAlignment = .center
         retryLabel.translatesAutoresizingMaskIntoConstraints = false
-        retryLabel.set(style: .body)
+        retryLabel.set(style: .subheadline)
         retryLabel.textAlignment = .center
         
         let margins = self.layoutMarginsGuide

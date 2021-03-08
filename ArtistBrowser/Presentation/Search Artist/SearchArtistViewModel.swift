@@ -95,6 +95,7 @@ public class SearchArtistViewModel{
         guard !input.isEmpty, input != self.input else {return}
         self.input = input
         dataModel = []
+        cellViewModels = [:]
 
         search(input: input, loadedItems: 0)
     }
@@ -148,6 +149,9 @@ public class SearchArtistViewModel{
     }
     
     private func onArtistListLoaded(artists: ArtistList){
+        
+        
+        
         dataModel.append(contentsOf: artists.items)
         
         searchLoadState.value = .loaded(canLoadMore: artists.canLoadMore, countAdded: artists.items.count)
