@@ -28,7 +28,7 @@ class ArtistDetailViewModelTests: XCTestCase {
     }
     
     func test_successAlbumLoad_updatesStateChange(){
-        let (sut, albumsLoader, imageLoader) = makeSUT()
+        let (sut, albumsLoader, _) = makeSUT()
         
         sut.viewDidLoad()
         
@@ -44,6 +44,34 @@ class ArtistDetailViewModelTests: XCTestCase {
         
         XCTAssertEqual(sut.albumsLoadState.current, ContentLoadState.loaded(canLoadMore: true, countAdded: 3))
         XCTAssertEqual(sut.numberOfAlbums, 3)
+    }
+    
+    func test_dateFilterChange_updatesNumberOfVisibleAlbums(){
+        let (sut, albumsLoader, _) = makeSUT()
+        
+        sut.viewDidLoad()
+        
+        let today = Date()
+        
+        let albums: [Album] = [
+            makeAlbum(id: "1", name: "name 1", releaseDate: today.adding(days: -5)),
+            makeAlbum(id: "2", name: "name 2", releaseDate: today.adding(days: -3)),
+            makeAlbum(id: "3", name: "name 3", releaseDate: today.adding(days: -1))
+        ]
+        
+        let albumList = AlbumList(items: albums, canLoadMore: true)
+        
+        albumsLoader.complete(result: albumList)
+        
+        XCTAssertEqual(sut.numberOfAlbums, 3)
+        
+        sut.updateAlbumsFilterEndDateChange(today.adding(days: -2))
+        
+        XCTAssertEqual(sut.numberOfAlbums, 2)
+        
+        sut.updateAlbumsFilterStartDateChange(today.adding(days: -4))
+        
+        XCTAssertEqual(sut.numberOfAlbums, 1)
     }
     
     // MARK: Helpers
@@ -113,5 +141,12 @@ private class ImageDataLoaderSpy: ImageDataLoader {
     func load(from url: URL, completion: @escaping (Result<Data, Error>) -> Void) -> CancellableTask {
         messages.append((url, completion))
         return Task()
+    }
+}
+
+
+extension Date {
+    func adding(days: Int) -> Date {
+        return Calendar(identifier: .gregorian).date(byAdding: .day, value: days, to: self)!
     }
 }
