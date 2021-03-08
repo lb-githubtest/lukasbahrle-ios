@@ -10,7 +10,6 @@ import ArtistBrowser
 
 class AlbumViewCell: UICollectionViewCell {
     private var thumbnailView: UIImageView = UIImageView()
-    private var dateLabel: UILabel = UILabel()
     private var nameLabel: UILabel = UILabel()
     
     private var viewModel: AlbumCellViewModel?
@@ -34,14 +33,9 @@ class AlbumViewCell: UICollectionViewCell {
     
     private func configure(){
         contentView.addSubview(thumbnailView)
-        contentView.addSubview(dateLabel)
         contentView.addSubview(nameLabel)
         
         thumbnailView.translatesAutoresizingMaskIntoConstraints = false
-        
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.set(style: .footnote, numberOfLines: 1)
-        
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.set(style: .footnote, numberOfLines: 2)
         
@@ -63,20 +57,15 @@ class AlbumViewCell: UICollectionViewCell {
             thumbnailView.topAnchor.constraint(equalTo: margins.topAnchor),
             thumbnailView.heightAnchor.constraint(equalTo: thumbnailView.widthAnchor),
             
-            dateLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
-            dateLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            dateLabel.topAnchor.constraint(equalTo: thumbnailView.bottomAnchor, constant: 8),
-            
             nameLabel.leadingAnchor.constraint(equalTo: margins.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
-            nameLabel.topAnchor.constraint(equalTo: dateLabel.bottomAnchor, constant: 3),
+            nameLabel.topAnchor.constraint(equalTo: thumbnailView.bottomAnchor, constant: 8),
         ])
     }
     
     func setup(viewModel: AlbumCellViewModel, width: CGFloat){
         self.viewModel = viewModel
         nameLabel.text = viewModel.name
-        dateLabel.text = viewModel.date
         
         viewModel.image.state.valueChanged = { [weak self] state in
             self?.onThumbnailStateChanged(state)

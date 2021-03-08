@@ -117,7 +117,6 @@ class ArtistDetailInfoCell: UICollectionViewCell {
 
 extension ArtistDetailInfoCell: CellPreloadable{
     func preload() {
-        
         viewModel?.preload()
     }
     

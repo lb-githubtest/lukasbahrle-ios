@@ -44,7 +44,7 @@ class ArtistSearchResultCell: UITableViewCell {
         
         switch viewModel.image.state.current {
         case .loaded(let data):
-            thumbnailView.image = UIImage(data: data)
+            onArtistThumbnailDateLoaded(data)
         default:
             viewModel.image.state.valueChanged = { [weak self] state in
                 self?.onThumbnailStateChanged(state)

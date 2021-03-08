@@ -269,7 +269,7 @@ extension ArtistDetailViewController{
         
         let cell:AlbumViewCell = collectionView.dequeueReusableCell(indexPath: indexPath)
         
-        cell.setup(viewModel: albumViewModel, width: collectionView.maxCellWidth * 0.5)
+        cell.setup(viewModel: albumViewModel, width: collectionView.maxCellWidth * 0.5 - 1)
         return cell
     }
     
