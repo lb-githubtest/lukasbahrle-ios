@@ -65,23 +65,23 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
     func test_load_deliversArtistListOn200HTTPResponseWithValidArtistListData() {
         let (sut, client) = makeSUT()
         
-        let artistData_1: (id: String, name: String, thumbnail:String) = ("1", "artist 1", "https://image_1.png")
-        let artistData_2: (id: String, name: String, thumbnail:String) = ("2", "artist 2", "https://image_2.png")
-        let artistData_3: (id: String, name: String, thumbnail:String) = ("3", "artist 3", "https://image_3.png")
+        let artistData_1: (id: String, name: String, thumbnail:String, genres: [String]) = ("1", "artist 1", "https://image_1.png", ["1", "2"])
+        let artistData_2: (id: String, name: String, thumbnail:String, genres: [String]) = ("2", "artist 2", "https://image_2.png", ["3", "4"])
+        let artistData_3: (id: String, name: String, thumbnail:String, genres: [String]) = ("3", "artist 3", "https://image_3.png", ["5", "6"])
         
         
         let artistList = ArtistList(items: [
-            Artist(id: artistData_1.id, name: artistData_1.name, thumbnail: URL(string: artistData_1.thumbnail)),
-            Artist(id: artistData_2.id, name: artistData_2.name, thumbnail: URL(string: artistData_2.thumbnail)),
-            Artist(id: artistData_3.id, name: artistData_3.name, thumbnail: URL(string: artistData_3.thumbnail))
+            Artist(id: artistData_1.id, name: artistData_1.name, thumbnail: URL(string: artistData_1.thumbnail), genres: artistData_1.genres),
+            Artist(id: artistData_2.id, name: artistData_2.name, thumbnail: URL(string: artistData_2.thumbnail), genres: artistData_2.genres),
+            Artist(id: artistData_3.id, name: artistData_3.name, thumbnail: URL(string: artistData_3.thumbnail), genres: artistData_3.genres)
         ], canLoadMore: true)
         
         let json: [String: Any] = [
             "href": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=0&limit=20",
             "items": [
-                makeArtistJson(id: artistData_1.id, name: artistData_1.name, thumbnail: artistData_1.thumbnail),
-                makeArtistJson(id: artistData_2.id,name: artistData_2.name, thumbnail: artistData_2.thumbnail),
-                makeArtistJson(id: artistData_3.id,name: artistData_3.name, thumbnail: artistData_3.thumbnail)
+                makeArtistJson(id: artistData_1.id, name: artistData_1.name, thumbnail: artistData_1.thumbnail, genres: artistData_1.genres),
+                makeArtistJson(id: artistData_2.id,name: artistData_2.name, thumbnail: artistData_2.thumbnail, genres: artistData_2.genres),
+                makeArtistJson(id: artistData_3.id,name: artistData_3.name, thumbnail: artistData_3.thumbnail, genres: artistData_3.genres)
             ],
             "limit": 10,
             "next": "https://api.spotify.com/v1/search?query=Ja&type=artist&offset=20&limit=20",
@@ -129,7 +129,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
         return .failure(error)
     }
     
-    private func makeArtistJson(id: String, name: String = "Jack Harlow", thumbnail: String = "https://image.png") -> [String: Any]{
+    private func makeArtistJson(id: String, name: String = "Jack Harlow", thumbnail: String = "https://image.png", genres: [String] = []) -> [String: Any]{
         
         return [
             "external_urls": [
@@ -138,12 +138,7 @@ class RemoteSearchArtistLoaderTests: XCTestCase {
             "followers": [
                 "total": 715334
             ],
-            "genres": [
-                "deep underground hip hop",
-                "kentucky hip hop",
-                "pop rap",
-                "rap"
-            ],
+            "genres": genres,
             "href": "https://api.spotify.com/v1/artists/2LIk90788K0zvyj2JJVwkJ",
             "id": "\(id)",
             "images": [

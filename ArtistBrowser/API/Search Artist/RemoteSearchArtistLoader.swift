@@ -50,8 +50,8 @@ public class RemoteSearchArtistLoader: SearchArtistLoader {
     public func load(text: String, loadedItems: Int = 0, completion: @escaping (SearchArtistLoader.Result) -> Void) -> CancellableTask {
         client.get(request: request(text, loadedItems)) { result in
             switch result{
-            case .failure(let error):
-                completion(.failure(error))
+            case .failure(_):
+                completion(.failure(Error.connectivity))
             case let .success((data, httpResponse)):
                 completion(self.map(data, from: httpResponse))
             }
