@@ -86,9 +86,7 @@ extension ArtistDetailViewController: UICollectionViewDropDelegate{
                 collectionView.insertItems(at: [destinationIndexPath])
                 self.viewModel.reorderAlbum(from: sourceIndexPath.item, to: destinationIndexPath.item)
                 
-            }, completion: { [weak self] _ in
-                
-            })
+            }, completion: nil)
             coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
         }
     }
