@@ -170,13 +170,12 @@ extension ArtistDetailViewModel{
         currentAlbumsTask?.cancel()
 
         currentAlbumsTask = albumsLoader.load(loadedItems: loadedItems) { [weak self] (result) in
-            DispatchQueue.main.async {
-                switch result{
-                    case .success(let albumsList):
-                        self?.onAlbumListLoaded(albums: albumsList)
-                    case .failure(let error):
-                        self?.onAlbumListLoadError(error: error)
-                }
+            
+            switch result{
+                case .success(let albumsList):
+                    self?.onAlbumListLoaded(albums: albumsList)
+                case .failure(let error):
+                    self?.onAlbumListLoadError(error: error)
             }
         }
     }

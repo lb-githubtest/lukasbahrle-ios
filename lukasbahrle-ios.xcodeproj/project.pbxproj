@@ -13,6 +13,7 @@
 		DA0DD35825F18E5500CFB922 /* Draggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0DD35725F18E5500CFB922 /* Draggable.swift */; };
 		DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */; };
 		DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0E25E92C2600968460 /* CancellableTask.swift */; };
+		DA14DF6725F6DBF500DC5854 /* MainQueueAlbumsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA14DF6625F6DBF500DC5854 /* MainQueueAlbumsLoader.swift */; };
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
 		DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */; };
 		DA18FB2625EA3049000E9656 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB2525EA3049000E9656 /* AppCoordinator.swift */; };
@@ -52,6 +53,7 @@
 		DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */; };
 		DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */; };
 		DA4536E725E2467C0051B93E /* lukasbahrle_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */; };
+		DA462C6C25F693DC00F23353 /* ArtistDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */; };
 		DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */; };
 		DA4717DB25E70DFC00A02AF5 /* SearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */; };
 		DA4717E125E70E1900A02AF5 /* RemoteSearchArtistMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717E025E70E1900A02AF5 /* RemoteSearchArtistMapper.swift */; };
@@ -149,6 +151,7 @@
 		DA0DD35725F18E5500CFB922 /* Draggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Draggable.swift; sourceTree = "<group>"; };
 		DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModel.swift; sourceTree = "<group>"; };
 		DA11AA0E25E92C2600968460 /* CancellableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTask.swift; sourceTree = "<group>"; };
+		DA14DF6625F6DBF500DC5854 /* MainQueueAlbumsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueAlbumsLoader.swift; sourceTree = "<group>"; };
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB2525EA3049000E9656 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -196,6 +199,7 @@
 		DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lukasbahrle-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosUITests.swift; sourceTree = "<group>"; };
 		DA4536E825E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewModelTests.swift; sourceTree = "<group>"; };
 		DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoader.swift; sourceTree = "<group>"; };
 		DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistLoader.swift; sourceTree = "<group>"; };
 		DA4717E025E70E1900A02AF5 /* RemoteSearchArtistMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistMapper.swift; sourceTree = "<group>"; };
@@ -406,6 +410,7 @@
 				DA0D428925E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift */,
 				DA419AD225E688A9002B1782 /* ArtistBrowserTests-Bridging-Header.h */,
 				DA0D428325E6F41500C90705 /* TokenRequestTests.swift */,
+				DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */,
 			);
 			path = ArtistBrowserTests;
 			sourceTree = "<group>";
@@ -596,6 +601,7 @@
 			children = (
 				DA7A9D8825F6873200B623CE /* Requests */,
 				DA7A9D8925F6874E00B623CE /* RemoteTokenLoaderWithCachingBehaviour.swift */,
+				DA14DF6625F6DBF500DC5854 /* MainQueueAlbumsLoader.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -940,6 +946,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA462C6C25F693DC00F23353 /* ArtistDetailViewModelTests.swift in Sources */,
 				DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */,
 				DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */,
 				DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */,
@@ -981,6 +988,7 @@
 				DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */,
 				DA7A9D7725F6857800B623CE /* TokenRequestBuilder.swift in Sources */,
 				DA32CE4525EB785400A294CC /* LoadingCollectionViewCell.swift in Sources */,
+				DA14DF6725F6DBF500DC5854 /* MainQueueAlbumsLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

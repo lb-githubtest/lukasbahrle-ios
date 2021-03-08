@@ -72,14 +72,11 @@ extension AppCoordinator: SearchArtistNavigator{
             return request.get()
         }, client: authClient)
        
+        let mainQueueAlbumsLoader = MainQueueAlbumsLoader(albumsLoader: albumsLoader)
         
-        let vc = factory.makeArtistDetailViewController(artist: artist, albumsLoader: albumsLoader, imageLoader: imageLoader)
+        let vc = factory.makeArtistDetailViewController(artist: artist, albumsLoader: mainQueueAlbumsLoader, imageLoader: imageLoader)
         navigationController.pushViewController(vc, animated: true)
     }
 }
-
-
-
-
 
 
