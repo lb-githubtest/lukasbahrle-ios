@@ -11,6 +11,9 @@ public struct AlbumsDatesFilterCellViewModel{
     public let startDate: (text: String, date:Date)?
     public let endDate: (text: String, date: Date)?
     
+    public let startDatePlaceholder = "Start date"
+    public let endDatePlaceholder = "End date"
+    
     init(startDate: Date?, endDate: Date?) {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"

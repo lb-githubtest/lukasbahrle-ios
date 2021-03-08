@@ -31,7 +31,7 @@ public class ArtistDetailViewModel{
     }
     
     public var errorViewModel: ErrorViewModel{
-        ErrorViewModel(info: "Couldn't connect to server", retry: "Tap to retry")
+        ErrorViewModel(info: "Couldn't connect to the server", retry: "Tap to retry")
     }
     
     public func album(at index: Int) -> AlbumCellViewModel? {
@@ -198,8 +198,6 @@ extension ArtistDetailViewModel{
     
     private func onAlbumListLoadError(error: Error){
         albumsLoadState.value = .failed
-        //loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
-        print("onAlbumListLoadError: \(error)")
     }
     
    

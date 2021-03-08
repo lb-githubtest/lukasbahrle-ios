@@ -56,39 +56,22 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         self.viewModel = viewModel
         
         startDate = viewModel.startDate?.date
+        startDateView.placeholder = viewModel.startDatePlaceholder
         startDateView.text = viewModel.startDate?.text
         
         endDate = viewModel.endDate?.date
+        endDateView.placeholder = viewModel.endDatePlaceholder
         endDateView.text = viewModel.endDate?.text
         
         widthConstraint.constant = width
     }
     
     private func configure(){
-        contentView.addSubview(startDateView)
-        contentView.addSubview(endDateView)
+        configure(textfield: startDateView)
+        configure(textfield: endDateView)
         
-        datePicker.datePickerMode = .date
-        startDateView.inputAccessoryView = inputToolbar
-        startDateView.inputView = datePicker
-        startDateView.borderStyle = .roundedRect
-        endDateView.inputAccessoryView = inputToolbar
-        endDateView.inputView = datePicker
-        endDateView.borderStyle = .roundedRect
-        startDateView.set(style: .footnote)
-        endDateView.set(style: .footnote)
-        
-        if #available(iOS 13.4, *){
-            datePicker.preferredDatePickerStyle = .wheels
-        }
-        
+        configure(datePicker: datePicker)
         configureConstraints()
-        
-        startDateView.placeholder = "Start date"
-        endDateView.placeholder = "End date"
-        
-        startDateView.adjustsFontForContentSizeCategory = true
-        endDateView.adjustsFontForContentSizeCategory = true
     }
     
     
@@ -116,6 +99,22 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
             endDateView.topAnchor.constraint(equalTo: startDateView.topAnchor, constant: 0),
             endDateView.trailingAnchor.constraint(equalTo: margins.trailingAnchor),
         ])
+    }
+    
+    private func configure(datePicker: UIDatePicker){
+        datePicker.datePickerMode = .date
+        if #available(iOS 13.4, *){
+            datePicker.preferredDatePickerStyle = .wheels
+        }
+    }
+    
+    private func configure(textfield: UITextField){
+        contentView.addSubview(textfield)
+        textfield.inputAccessoryView = inputToolbar
+        textfield.inputView = datePicker
+        textfield.borderStyle = .roundedRect
+        textfield.set(style: .footnote)
+        textfield.adjustsFontForContentSizeCategory = true
     }
     
     

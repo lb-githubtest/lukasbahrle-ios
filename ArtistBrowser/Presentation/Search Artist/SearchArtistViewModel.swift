@@ -66,7 +66,7 @@ public class SearchArtistViewModel{
     public var searchLoadState: Observable<ContentLoadState> = Observable(ContentLoadState.loaded(canLoadMore: false, countAdded: 0))
     
     public var errorViewModel: ErrorViewModel{
-        ErrorViewModel(info: "Couldn't connect to server", retry: "Tap to retry")
+        ErrorViewModel(info: "Couldn't connect to the server", retry: "Tap to retry")
     }
     
     private var dataModel = [Artist]()
@@ -149,20 +149,12 @@ public class SearchArtistViewModel{
     }
     
     private func onArtistListLoaded(artists: ArtistList){
-        
-        
-        
         dataModel.append(contentsOf: artists.items)
-        
         searchLoadState.value = .loaded(canLoadMore: artists.canLoadMore, countAdded: artists.items.count)
     }
     
     private func onArtistListLoadError(error: Error){
-        print(error)
         searchLoadState.value = .failed
-        
-//        loadState = .error(PresentableSearchArtistError(info: "Couldn't connect to the server", retry: "Tap to retry"))
-        
     }
     
 
