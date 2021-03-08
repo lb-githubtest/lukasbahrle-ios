@@ -1,5 +1,11 @@
+//
+//  ArtistInfoCellViewModel.swift
+//  ArtistBrowser
+//
+//  Created by Lukas Bahrle Santana on 04/03/2021.
+//
+
 public class ArtistInfoCellViewModel{
-    
     public let artistName:String
     public let artistInfo:String
     public var image: ImageStateObservable

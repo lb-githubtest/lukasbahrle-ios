@@ -115,6 +115,7 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         textfield.borderStyle = .roundedRect
         textfield.set(style: .footnote)
         textfield.adjustsFontForContentSizeCategory = true
+        textfield.delegate = self
     }
     
     
@@ -127,5 +128,13 @@ class AlbumsDatesCollectionViewCell: UICollectionViewCell {
         }
         
         self.endEditing(true)
+    }
+}
+
+
+extension AlbumsDatesCollectionViewCell: UITextFieldDelegate{
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        // only allow editing through the date picker
+        return false
     }
 }
