@@ -127,14 +127,11 @@ public class SearchArtistViewModel{
     private func search(input: String, loadedItems: Int){
         
         guard !input.isEmpty else {
-            print("input is empty")
             return
         }
         
         searchLoadState.value = .loading
         currentTask?.cancel()
-        
-        print("Search: \(input)")
         
         currentTask = searchArtistLoader.load(text: input, loadedItems: loadedItems) { [weak self] (result) in
             DispatchQueue.main.async {

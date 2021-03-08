@@ -180,7 +180,6 @@ extension ArtistDetailViewModel{
     
     private func onAlbumListLoaded(albums: AlbumList){
         var countAdded = albums.items.count
-        print("onAlbumListLoaded: \(albums)")
         if let _ = filteredAlbumsDataModel {
             
             let numberOfAlbums = albumsDataModel.count

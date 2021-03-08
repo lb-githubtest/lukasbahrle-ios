@@ -130,13 +130,8 @@ class ArtistDetailViewController: UIViewController {
         let endIndex = viewModel.numberOfAlbums - 1
         var indexPaths: [IndexPath] = []
         
-        print("onAlbumsLoaded:: \(countAdded) \(startIndex) \(endIndex)")
-        print("viewModel.numberOfAlbums: \(viewModel.numberOfAlbums)")
-        
         collectionView.performBatchUpdates {
             if endIndex >= startIndex, endIndex >= 0, startIndex >= 0 {
-                
-                print("startIndex: \(startIndex) \(endIndex)")
                for index in startIndex...endIndex{
                    indexPaths.append(IndexPath(row: index, section: albumsSection))
                }

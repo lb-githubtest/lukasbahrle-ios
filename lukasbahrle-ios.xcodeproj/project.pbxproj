@@ -14,6 +14,7 @@
 		DA11A9F525E7DF0200968460 /* SearchArtistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */; };
 		DA11AA0F25E92C2600968460 /* CancellableTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA11AA0E25E92C2600968460 /* CancellableTask.swift */; };
 		DA14DF6725F6DBF500DC5854 /* MainQueueAlbumsLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA14DF6625F6DBF500DC5854 /* MainQueueAlbumsLoader.swift */; };
+		DA14DF6D25F6DEFB00DC5854 /* Date+days.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA14DF6C25F6DEFB00DC5854 /* Date+days.swift */; };
 		DA18FB1625E9AD9E000E9656 /* LoadingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */; };
 		DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */; };
 		DA18FB2625EA3049000E9656 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA18FB2525EA3049000E9656 /* AppCoordinator.swift */; };
@@ -152,6 +153,7 @@
 		DA11A9F425E7DF0200968460 /* SearchArtistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewModel.swift; sourceTree = "<group>"; };
 		DA11AA0E25E92C2600968460 /* CancellableTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancellableTask.swift; sourceTree = "<group>"; };
 		DA14DF6625F6DBF500DC5854 /* MainQueueAlbumsLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainQueueAlbumsLoader.swift; sourceTree = "<group>"; };
+		DA14DF6C25F6DEFB00DC5854 /* Date+days.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+days.swift"; sourceTree = "<group>"; };
 		DA18FB1525E9AD9E000E9656 /* LoadingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB1B25EA235B000E9656 /* ErrorTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTableViewCell.swift; sourceTree = "<group>"; };
 		DA18FB2525EA3049000E9656 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 			children = (
 				DA563EB425E6C2C900A2FE44 /* HTTPClientSpy.swift */,
 				DA563EC425E6C34B00A2FE44 /* XCTestCase+Helpers.swift */,
+				DA14DF6C25F6DEFB00DC5854 /* Date+days.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -948,6 +951,7 @@
 			files = (
 				DA462C6C25F693DC00F23353 /* ArtistDetailViewModelTests.swift in Sources */,
 				DA0D428A25E6F61600C90705 /* RemoteSearchArtistLoaderTests.swift in Sources */,
+				DA14DF6D25F6DEFB00DC5854 /* Date+days.swift in Sources */,
 				DA563EC525E6C34B00A2FE44 /* XCTestCase+Helpers.swift in Sources */,
 				DA419AD425E688A9002B1782 /* LoadTokenFromRemoteTests.swift in Sources */,
 				DA0D428425E6F41500C90705 /* TokenRequestTests.swift in Sources */,
