@@ -9,9 +9,8 @@ import UIKit
 import ArtistBrowser
 
 class ArtistBrowserViewController: UIViewController {
-    
-    let tableView = UITableView(frame: .zero)
-    var searchController: UISearchController?
+    private let tableView = UITableView(frame: .zero)
+    private var searchController: UISearchController?
 
     var viewModel: SearchArtistViewModel
     
@@ -74,9 +73,18 @@ class ArtistBrowserViewController: UIViewController {
     }
  
     private func configure(){
-        view.backgroundColor = Appearance.backgroundColor
+        self.view.backgroundColor = Appearance.backgroundColor
+        self.title = viewModel.title
+        self.definesPresentationContext = true
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationItem.largeTitleDisplayMode = .always
         
-        // tableView
+        configureTableView()
+        configureSearchView()
+    }
+    
+    private func configureTableView(){
         view.addSubview(tableView)
         
         tableView.backgroundColor = .clear
@@ -93,13 +101,6 @@ class ArtistBrowserViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
         registerCells()
-        
-        self.definesPresentationContext = true
-        navigationItem.hidesSearchBarWhenScrolling = false
-        self.title = viewModel.title
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationItem.largeTitleDisplayMode = .always
-        configureSearchView()
     }
     
     private func configureSearchView(){
@@ -117,7 +118,6 @@ class ArtistBrowserViewController: UIViewController {
     }
     
     private func onSearchResultsLoaded(canLoadMore: Bool, countAdded: Int){
-        
         let startIndex = viewModel.numberOfSearchResults - countAdded
         let endIndex = viewModel.numberOfSearchResults - 1
         var indexPaths: [IndexPath] = []
@@ -162,7 +162,6 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
         if section == loadingIndexPath.section {
             return 1
         }
-        
         return viewModel.numberOfSearchResults
     }
 
@@ -203,7 +202,6 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-    
         if let cell = cell as? CellPreloadable{
             cell.cancelLoad()
         }
@@ -211,7 +209,6 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
         if indexPath == loadingIndexPath {
             viewModel.loadingCellTap()
         }

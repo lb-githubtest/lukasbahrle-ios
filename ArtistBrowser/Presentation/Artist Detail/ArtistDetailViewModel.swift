@@ -154,6 +154,8 @@ public class ArtistDetailViewModel{
 
 
 
+
+
 // MARK: Load Albums
 
 extension ArtistDetailViewModel{

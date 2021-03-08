@@ -27,6 +27,13 @@ class ArtistDetailInfoCell: UICollectionViewCell {
         configure()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageView.image = nil
+        viewModel?.cancel()
+        viewModel = nil
+    }
+    
     public func setup(viewModel: ArtistInfoCellViewModel, width: CGFloat){
         self.viewModel = viewModel
         

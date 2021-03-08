@@ -14,7 +14,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     var appCoordinator: AppCoordinator?
 
-
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
@@ -54,90 +53,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-    
-    
-
-}
-
-
-
-struct SearchArtisRequest: Request{
-    var builder: RequestBuilder
-    
-    
-}
-
-
-
-struct TokenRequestBuilder: RequestBuilder {
-    var baseURL: URL = URL(string: "https://accounts.spotify.com/")!
-    
-    var path: String =  "api/token"
-    
-    var httpMethod: HTTPMethod = .POST
-    
-    var params: [URLQueryItem]?
-    
-    var headers: [String : String]? =  ["Content-Type": "application/x-www-form-urlencoded"]
-    
-    var body: Data? = "grant_type=client_credentials".data(using: .utf8)
-}
-
-
-
-
-struct SearchArtistRequestBuilder: RequestBuilder {
-    var baseURL: URL = URL(string: "https://api.spotify.com/v1/")!
-    
-    var path: String =  "search"
-    
-    var httpMethod: HTTPMethod = .GET
-    
-    var params: [URLQueryItem]? = [
-        URLQueryItem(name: "type", value: "artist"),
-        URLQueryItem(name: "limit", value: "20")
-    ]
-    
-    var headers: [String : String]?
-    
-    var body: Data?
-    
-    mutating func set(input: String, loadedItems: Int){
-        var queryParams = params!
-        queryParams.append(URLQueryItem(name: "q", value: input))
-        queryParams.append(URLQueryItem(name: "offset", value: "\(loadedItems)"))
-        
-        params = queryParams
-    }
-}
-
-
-
-
-struct AlbumsRequestBuilder: RequestBuilder {
-    var baseURL: URL = URL(string: "https://api.spotify.com/v1/")!
-    
-    var path: String =  ""
-    
-    var httpMethod: HTTPMethod = .GET
-    
-    var params: [URLQueryItem]? = [
-        URLQueryItem(name: "limit", value: "20")
-    ]
-    
-    var headers: [String : String]?
-    
-    var body: Data?
-    
-    mutating func set(artistId: String, loadedItems: Int){
-        
-        path = "artists/\(artistId)/albums"
-        
-        var queryParams = params!
-        queryParams.append(URLQueryItem(name: "offset", value: "\(loadedItems)"))
-        
-        params = queryParams
-    }
-    
 }

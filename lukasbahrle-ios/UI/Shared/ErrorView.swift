@@ -18,7 +18,6 @@ class ErrorView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
     }
     
     override func didMoveToSuperview() {
@@ -53,7 +52,6 @@ class ErrorView: UIView {
             retryLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
     }
-
 
 }
 

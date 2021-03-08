@@ -9,7 +9,6 @@ import UIKit
 import ArtistBrowser
 
 class ErrorTableViewCell: UITableViewCell {
-    
     private var errorView = ErrorView(frame: .zero)
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -39,5 +38,4 @@ class ErrorTableViewCell: UITableViewCell {
             errorView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
         ])
     }
-
 }

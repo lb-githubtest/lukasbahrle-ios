@@ -23,7 +23,6 @@ class AlbumsHeaderCollectionViewCell: UICollectionViewCell {
         configure()
     }
     
-    
     func setup(viewModel:AlbumsHeaderCellViewModel, width: CGFloat){
         titleLabel.text = viewModel.title
         

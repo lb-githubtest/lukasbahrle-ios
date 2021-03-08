@@ -9,16 +9,12 @@ import Foundation
 
 public class AlbumCellViewModel{
     public let id:String
-    public let date:String
     public let name:String
     public var image: ImageStateObservable
     
     internal init(album: Album, imageLoader: ImageDataLoader) {
         self.id = album.id
         self.name = album.name
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yyyy"
-        self.date = formatter.string(from: album.releaseDate)
         image = ImageStateObservable(imageURL: album.thumbnail, imageLoader: imageLoader)
     }
     

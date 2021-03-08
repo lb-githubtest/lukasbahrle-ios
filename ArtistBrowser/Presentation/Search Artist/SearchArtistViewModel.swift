@@ -156,6 +156,5 @@ public class SearchArtistViewModel{
     private func onArtistListLoadError(error: Error){
         searchLoadState.value = .failed
     }
-    
 
 }

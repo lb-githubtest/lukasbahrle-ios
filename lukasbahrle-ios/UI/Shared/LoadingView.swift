@@ -21,7 +21,10 @@ class LoadingView: UIView {
     
     override func didMoveToSuperview() {
         configure()
-        
+    }
+    
+    func start(){
+        indicatorView.startAnimating()
     }
     
     private func configure(){
@@ -44,10 +47,6 @@ class LoadingView: UIView {
             indicatorView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             indicatorView.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
-    }
-    
-    func start(){
-        indicatorView.startAnimating()
     }
 
 }

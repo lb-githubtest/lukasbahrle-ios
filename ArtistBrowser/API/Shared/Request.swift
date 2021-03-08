@@ -24,6 +24,14 @@ public extension Request {
     }
 }
 
+public struct BasicRequest: Request{
+    public var builder: RequestBuilder
+    
+    public init(builder: RequestBuilder){
+        self.builder = builder
+    }
+}
+
 
 
 public protocol RequestBuilder{
