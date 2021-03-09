@@ -26,6 +26,6 @@ The app is separated en two main frameworks:
 
 Caching:
 
-- The token is stores in the keychain
-- The artist, albums and image responses are cached using the build in URLCache
+- The token is stored in the keychain
+- The artist, albums and image responses are cached using the built in URLCache
 
