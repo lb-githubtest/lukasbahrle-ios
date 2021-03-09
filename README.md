@@ -1,5 +1,9 @@
 # Spotify artist browser
 
+
+![](https://github.com/lb-githubtest/lukasbahrle-ios/blob/main/overview.png)
+
+
 ### Search artists
 
 ```Given the user has connectivity.  
