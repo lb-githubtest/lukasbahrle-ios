@@ -7,30 +7,6 @@
 
 import Foundation
 
-public struct Artist: Equatable{
-    public let id: String
-    public let name:String
-    public let thumbnail: URL?
-    public let genres: [String]
-    
-    public init(id: String, name:String, thumbnail: URL?, genres: [String]){
-        self.id = id
-        self.name = name
-        self.thumbnail = thumbnail
-        self.genres = genres
-    }
-}
-
-public struct ArtistList: Equatable{
-    public let items:[Artist]
-    public let canLoadMore: Bool
-    
-    public init(items:[Artist], canLoadMore: Bool){
-        self.items = items
-        self.canLoadMore = canLoadMore
-    }
-}
-
 public class RemoteSearchArtistLoader: SearchArtistLoader {
     public enum Error: Swift.Error {
         case connectivity

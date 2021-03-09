@@ -8,30 +8,6 @@
 import Foundation
 
 
-public struct Album: Equatable{
-    let id: String
-    let name: String
-    let thumbnail: URL?
-    let releaseDate: Date
-    
-    public init(id: String, name: String, thumbnail: URL?, releaseDate: Date) {
-        self.id = id
-        self.name = name
-        self.thumbnail = thumbnail
-        self.releaseDate = releaseDate
-    }
-}
-
-public struct AlbumList: Equatable{
-    public let items:[Album]
-    public let canLoadMore: Bool
-    
-    public init(items: [Album], canLoadMore: Bool) {
-        self.items = items
-        self.canLoadMore = canLoadMore
-    }
-}
-
 class RemoteAlbumsMapper{
     
     private struct AlbumsListRemoteResponse: Codable{
