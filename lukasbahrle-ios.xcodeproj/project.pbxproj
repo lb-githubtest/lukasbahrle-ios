@@ -46,7 +46,7 @@
 		DA419ADE25E691E4002B1782 /* token.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADB25E691E4002B1782 /* token.json */; };
 		DA419ADF25E691E4002B1782 /* albums.json in Resources */ = {isa = PBXBuildFile; fileRef = DA419ADC25E691E4002B1782 /* albums.json */; };
 		DA43F15A25E9694100BC09DB /* ImageDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F15925E9694100BC09DB /* ImageDataLoader.swift */; };
-		DA43F16925E96C4200BC09DB /* ArtistBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16825E96C4200BC09DB /* ArtistBrowserViewController.swift */; };
+		DA43F16925E96C4200BC09DB /* SearchArtistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16825E96C4200BC09DB /* SearchArtistViewController.swift */; };
 		DA43F16F25E96DC900BC09DB /* ArtistSearchResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */; };
 		DA4536C525E2467A0051B93E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C425E2467A0051B93E /* AppDelegate.swift */; };
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
@@ -187,7 +187,7 @@
 		DA419ADB25E691E4002B1782 /* token.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = token.json; sourceTree = "<group>"; };
 		DA419ADC25E691E4002B1782 /* albums.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = albums.json; sourceTree = "<group>"; };
 		DA43F15925E9694100BC09DB /* ImageDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDataLoader.swift; sourceTree = "<group>"; };
-		DA43F16825E96C4200BC09DB /* ArtistBrowserViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistBrowserViewController.swift; sourceTree = "<group>"; };
+		DA43F16825E96C4200BC09DB /* SearchArtistViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistViewController.swift; sourceTree = "<group>"; };
 		DA43F16E25E96DC900BC09DB /* ArtistSearchResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistSearchResultCell.swift; sourceTree = "<group>"; };
 		DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "lukasbahrle-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536C425E2467A0051B93E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -479,7 +479,7 @@
 		DA43F16725E96C1200BC09DB /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DA43F16825E96C4200BC09DB /* ArtistBrowserViewController.swift */,
+				DA43F16825E96C4200BC09DB /* SearchArtistViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -987,7 +987,7 @@
 				DA7A9D8325F685C500B623CE /* AlbumsRequestBuilder.swift in Sources */,
 				DA18FB1C25EA235B000E9656 /* ErrorTableViewCell.swift in Sources */,
 				DA7A9D9525F6887400B623CE /* AppFactory.swift in Sources */,
-				DA43F16925E96C4200BC09DB /* ArtistBrowserViewController.swift in Sources */,
+				DA43F16925E96C4200BC09DB /* SearchArtistViewController.swift in Sources */,
 				DA7A9D7D25F685A000B623CE /* SearchArtistRequestBuilder.swift in Sources */,
 				DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */,
 				DA7A9D7725F6857800B623CE /* TokenRequestBuilder.swift in Sources */,

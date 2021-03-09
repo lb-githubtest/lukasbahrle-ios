@@ -78,5 +78,3 @@ extension AppCoordinator: SearchArtistNavigator{
         navigationController.pushViewController(vc, animated: true)
     }
 }
-
-

@@ -8,10 +8,10 @@
 import ArtistBrowser
 
 class AppFactory{
-    func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader, imageLoader: ImageDataLoader) -> ArtistBrowserViewController{
+    func makeArtistBrowserViewController(navigator: SearchArtistNavigator, searchArtistLoader: SearchArtistLoader, imageLoader: ImageDataLoader) -> SearchArtistViewController{
         
         let viewModel = SearchArtistViewModel(searchArtistLoader: searchArtistLoader, imageDataLoader: imageLoader, navigator: navigator)
-        let controller = ArtistBrowserViewController(viewModel: viewModel)
+        let controller = SearchArtistViewController(viewModel: viewModel)
         
         return controller
     }

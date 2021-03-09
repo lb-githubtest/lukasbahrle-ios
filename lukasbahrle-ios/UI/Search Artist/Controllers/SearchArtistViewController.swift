@@ -8,7 +8,7 @@
 import UIKit
 import ArtistBrowser
 
-class ArtistBrowserViewController: UIViewController {
+class SearchArtistViewController: UIViewController {
     private let tableView = UITableView(frame: .zero)
     private var searchController: UISearchController?
 
@@ -151,7 +151,7 @@ class ArtistBrowserViewController: UIViewController {
     
 // MARK: - Table view data source
 
-extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegate{
+extension SearchArtistViewController: UITableViewDataSource, UITableViewDelegate{
 
     func numberOfSections(in tableView: UITableView) -> Int {
         let loadingOrErrorSection = viewModel.searchLoadState.current.canLoadMore ? 1 : 0
@@ -221,7 +221,7 @@ extension ArtistBrowserViewController: UITableViewDataSource, UITableViewDelegat
 
 // MARK: - Search Controller
 
-extension ArtistBrowserViewController: UISearchResultsUpdating{
+extension SearchArtistViewController: UISearchResultsUpdating{
     func updateSearchResults(for searchController: UISearchController) {
         viewModel.inputTextChanged(input: searchController.searchBar.text ?? "")
     }
