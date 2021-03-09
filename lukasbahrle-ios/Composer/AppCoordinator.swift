@@ -12,17 +12,15 @@ import ArtistBrowser
 class AppCoordinator{
     private let navigationController: UINavigationController
 
+    private let credentials = Credentials(username: "80684ef2c87a4ce19f2e9f6b87edea97", password: "e0341c48219d481591187ff1dfdee64b")
+    
     private lazy var client: HTTPClient = {
         URLSessionHTTPClient(session: URLSession(configuration: .default))
     }()
     
     private lazy var remoteTokenLoader: TokenLoader = {
         let tokenCache = TokenCache(store: KeychainTokenStore())
-        
-        let tokenRequest = TokenRequest(builder: TokenRequestBuilder(), credentialsLoader: {
-            Credentials(username: "80684ef2c87a4ce19f2e9f6b87edea97", password: "e0341c48219d481591187ff1dfdee64b")
-        })
-        
+        let tokenRequest = TokenRequest(builder: TokenRequestBuilder(), credentialsLoader: {self.credentials})
         let remoteLoader = RemoteTokenLoader(request: {tokenRequest.get()}, client: client)
             
         return RemoteTokenLoaderWithCachingBehaviour(tokenLoader: remoteLoader, tokenCache: tokenCache)

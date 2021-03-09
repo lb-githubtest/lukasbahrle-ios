@@ -56,8 +56,6 @@
 		DA4536C725E2467A0051B93E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536C625E2467A0051B93E /* SceneDelegate.swift */; };
 		DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CD25E2467C0051B93E /* Assets.xcassets */; };
 		DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA4536CF25E2467C0051B93E /* LaunchScreen.storyboard */; };
-		DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */; };
-		DA4536E725E2467C0051B93E /* lukasbahrle_iosUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */; };
 		DA462C6C25F693DC00F23353 /* ArtistDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */; };
 		DA4717D125E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */; };
 		DA4717DB25E70DFC00A02AF5 /* SearchArtistLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */; };
@@ -118,20 +116,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = DA419A9925E685DA002B1782;
 			remoteInfo = ArtistBrowser;
-		};
-		DA4536D825E2467C0051B93E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA4536B925E2467A0051B93E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA4536C025E2467A0051B93E;
-			remoteInfo = "lukasbahrle-ios";
-		};
-		DA4536E325E2467C0051B93E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = DA4536B925E2467A0051B93E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = DA4536C025E2467A0051B93E;
-			remoteInfo = "lukasbahrle-ios";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -203,10 +187,8 @@
 		DA4536CD25E2467C0051B93E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4536D025E2467C0051B93E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4536D225E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA4536D725E2467C0051B93E /* lukasbahrle-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lukasbahrle-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosTests.swift; sourceTree = "<group>"; };
 		DA4536DD25E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "lukasbahrle-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosUITests.swift; sourceTree = "<group>"; };
 		DA4536E825E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewModelTests.swift; sourceTree = "<group>"; };
@@ -269,20 +251,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA419AAF25E685DA002B1782 /* ArtistBrowser.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA4536D425E2467C0051B93E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA4536DF25E2467C0051B93E /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -535,8 +503,6 @@
 			isa = PBXGroup;
 			children = (
 				DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */,
-				DA4536D725E2467C0051B93E /* lukasbahrle-iosTests.xctest */,
-				DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */,
 				DA419A9A25E685DA002B1782 /* ArtistBrowser.framework */,
 				DA419AA225E685DA002B1782 /* ArtistBrowserTests.xctest */,
 			);
@@ -797,42 +763,6 @@
 			productReference = DA4536C125E2467A0051B93E /* lukasbahrle-ios.app */;
 			productType = "com.apple.product-type.application";
 		};
-		DA4536D625E2467C0051B93E /* lukasbahrle-iosTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA4536EE25E2467C0051B93E /* Build configuration list for PBXNativeTarget "lukasbahrle-iosTests" */;
-			buildPhases = (
-				DA4536D325E2467C0051B93E /* Sources */,
-				DA4536D425E2467C0051B93E /* Frameworks */,
-				DA4536D525E2467C0051B93E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA4536D925E2467C0051B93E /* PBXTargetDependency */,
-			);
-			name = "lukasbahrle-iosTests";
-			productName = "lukasbahrle-iosTests";
-			productReference = DA4536D725E2467C0051B93E /* lukasbahrle-iosTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		DA4536E125E2467C0051B93E /* lukasbahrle-iosUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = DA4536F125E2467C0051B93E /* Build configuration list for PBXNativeTarget "lukasbahrle-iosUITests" */;
-			buildPhases = (
-				DA4536DE25E2467C0051B93E /* Sources */,
-				DA4536DF25E2467C0051B93E /* Frameworks */,
-				DA4536E025E2467C0051B93E /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				DA4536E425E2467C0051B93E /* PBXTargetDependency */,
-			);
-			name = "lukasbahrle-iosUITests";
-			productName = "lukasbahrle-iosUITests";
-			productReference = DA4536E225E2467C0051B93E /* lukasbahrle-iosUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -854,14 +784,6 @@
 					DA4536C025E2467A0051B93E = {
 						CreatedOnToolsVersion = 12.3;
 					};
-					DA4536D625E2467C0051B93E = {
-						CreatedOnToolsVersion = 12.3;
-						TestTargetID = DA4536C025E2467A0051B93E;
-					};
-					DA4536E125E2467C0051B93E = {
-						CreatedOnToolsVersion = 12.3;
-						TestTargetID = DA4536C025E2467A0051B93E;
-					};
 				};
 			};
 			buildConfigurationList = DA4536BC25E2467A0051B93E /* Build configuration list for PBXProject "lukasbahrle-ios" */;
@@ -878,8 +800,6 @@
 			projectRoot = "";
 			targets = (
 				DA4536C025E2467A0051B93E /* lukasbahrle-ios */,
-				DA4536D625E2467C0051B93E /* lukasbahrle-iosTests */,
-				DA4536E125E2467C0051B93E /* lukasbahrle-iosUITests */,
 				DA419A9925E685DA002B1782 /* ArtistBrowser */,
 				DA419AA125E685DA002B1782 /* ArtistBrowserTests */,
 			);
@@ -910,20 +830,6 @@
 			files = (
 				DA4536D125E2467C0051B93E /* LaunchScreen.storyboard in Resources */,
 				DA4536CE25E2467C0051B93E /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA4536D525E2467C0051B93E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA4536E025E2467C0051B93E /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,22 +934,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA4536D325E2467C0051B93E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DA4536DC25E2467C0051B93E /* lukasbahrle_iosTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DA4536DE25E2467C0051B93E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				DA4536E725E2467C0051B93E /* lukasbahrle_iosUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1061,16 +951,6 @@
 			isa = PBXTargetDependency;
 			target = DA419A9925E685DA002B1782 /* ArtistBrowser */;
 			targetProxy = DA419AAD25E685DA002B1782 /* PBXContainerItemProxy */;
-		};
-		DA4536D925E2467C0051B93E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA4536C025E2467A0051B93E /* lukasbahrle-ios */;
-			targetProxy = DA4536D825E2467C0051B93E /* PBXContainerItemProxy */;
-		};
-		DA4536E425E2467C0051B93E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = DA4536C025E2467A0051B93E /* lukasbahrle-ios */;
-			targetProxy = DA4536E325E2467C0051B93E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1344,90 +1224,6 @@
 			};
 			name = Release;
 		};
-		DA4536EF25E2467C0051B93E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKA5LU2QKN;
-				INFOPLIST_FILE = "lukasbahrle-iosTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lukasbahrle.lukasbahrle-iosTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lukasbahrle-ios.app/lukasbahrle-ios";
-			};
-			name = Debug;
-		};
-		DA4536F025E2467C0051B93E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKA5LU2QKN;
-				INFOPLIST_FILE = "lukasbahrle-iosTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lukasbahrle.lukasbahrle-iosTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/lukasbahrle-ios.app/lukasbahrle-ios";
-			};
-			name = Release;
-		};
-		DA4536F225E2467C0051B93E /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKA5LU2QKN;
-				INFOPLIST_FILE = "lukasbahrle-iosUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lukasbahrle.lukasbahrle-iosUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "lukasbahrle-ios";
-			};
-			name = Debug;
-		};
-		DA4536F325E2467C0051B93E /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = HKA5LU2QKN;
-				INFOPLIST_FILE = "lukasbahrle-iosUITests/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.lukasbahrle.lukasbahrle-iosUITests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = "lukasbahrle-ios";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1463,24 +1259,6 @@
 			buildConfigurations = (
 				DA4536EC25E2467C0051B93E /* Debug */,
 				DA4536ED25E2467C0051B93E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DA4536EE25E2467C0051B93E /* Build configuration list for PBXNativeTarget "lukasbahrle-iosTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA4536EF25E2467C0051B93E /* Debug */,
-				DA4536F025E2467C0051B93E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		DA4536F125E2467C0051B93E /* Build configuration list for PBXNativeTarget "lukasbahrle-iosUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DA4536F225E2467C0051B93E /* Debug */,
-				DA4536F325E2467C0051B93E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
