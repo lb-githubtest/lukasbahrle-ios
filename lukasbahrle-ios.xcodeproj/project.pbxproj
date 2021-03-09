@@ -187,10 +187,6 @@
 		DA4536CD25E2467C0051B93E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA4536D025E2467C0051B93E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DA4536D225E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosTests.swift; sourceTree = "<group>"; };
-		DA4536DD25E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lukasbahrle_iosUITests.swift; sourceTree = "<group>"; };
-		DA4536E825E2467C0051B93E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DA462C6B25F693DC00F23353 /* ArtistDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailViewModelTests.swift; sourceTree = "<group>"; };
 		DA4717D025E70DBE00A02AF5 /* RemoteSearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteSearchArtistLoader.swift; sourceTree = "<group>"; };
 		DA4717DA25E70DFC00A02AF5 /* SearchArtistLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchArtistLoader.swift; sourceTree = "<group>"; };
@@ -491,8 +487,6 @@
 			isa = PBXGroup;
 			children = (
 				DA4536C325E2467A0051B93E /* lukasbahrle-ios */,
-				DA4536DA25E2467C0051B93E /* lukasbahrle-iosTests */,
-				DA4536E525E2467C0051B93E /* lukasbahrle-iosUITests */,
 				DA419A9B25E685DA002B1782 /* ArtistBrowser */,
 				DA419AA825E685DA002B1782 /* ArtistBrowserTests */,
 				DA4536C225E2467A0051B93E /* Products */,
@@ -521,24 +515,6 @@
 				DA4536D225E2467C0051B93E /* Info.plist */,
 			);
 			path = "lukasbahrle-ios";
-			sourceTree = "<group>";
-		};
-		DA4536DA25E2467C0051B93E /* lukasbahrle-iosTests */ = {
-			isa = PBXGroup;
-			children = (
-				DA4536DB25E2467C0051B93E /* lukasbahrle_iosTests.swift */,
-				DA4536DD25E2467C0051B93E /* Info.plist */,
-			);
-			path = "lukasbahrle-iosTests";
-			sourceTree = "<group>";
-		};
-		DA4536E525E2467C0051B93E /* lukasbahrle-iosUITests */ = {
-			isa = PBXGroup;
-			children = (
-				DA4536E625E2467C0051B93E /* lukasbahrle_iosUITests.swift */,
-				DA4536E825E2467C0051B93E /* Info.plist */,
-			);
-			path = "lukasbahrle-iosUITests";
 			sourceTree = "<group>";
 		};
 		DA462C6625F6932600F23353 /* Assets */ = {
