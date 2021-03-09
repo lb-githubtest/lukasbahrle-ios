@@ -1,9 +1,5 @@
 # Spotify artist browser
 
-
-![](https://github.com/lb-githubtest/lukasbahrle-ios/blob/main/overview.png)
-
-
 ### Search artists
 
 ```Given the user has connectivity.  
@@ -19,56 +15,16 @@
   Then the app should display the artist infomation and a list of the artist's albums
 ```
 
-<br/>
+![](https://github.com/lb-githubtest/lukasbahrle-ios/blob/main/overview.png)
 
-## Use Cases
+### Details
 
-### Search Artist Use Case
+The app is separated en two main frameworks:
 
-#### Data
-- access token
-- search string
+- ArtistBrowser: contains all the platform agnostic code
+- lukasbahrle-ios: Composition of the app and UIKit specific code
 
-#### Primary course
-1. Execute "Search Artist" command with above data
-2. System loads data from remote service
-3. System validates response data
-4. System creates artists from valid data
-5. System delivers artists
+Caching:
 
-#### No connectivity – error course
-1. System delivers `noConnectivity` error
-
-#### Invalid token – error course
-1. System executes "New Token" command to retrieve a new token
-2. System validates response data
-3. System retries "Search Artist" load
-
-#### Invalid data – error course
-1. System delivers `invalidData` error
-   
-<br/>
-   
-### Load Artist Albums Use Case
-
-#### Data
-- access token
-- artist id
-
-#### Primary course
-1. Execute "Load Artist Albums" command with above data
-2. System loads data from remote service
-3. System validates response data
-4. System creates albums from valid data
-5. System delivers albums
-
-#### No connectivity – error course
-1. System delivers `noConnectivity` error
-
-#### Invalid token – error course
-1. System executes "New Token" command to retrieve a new token
-2. System validates response data
-3. System retries "Load Artist Albums"
-
-#### Invalid data – error course
-1. System delivers `invalidData` error
+- The token is stored in the keychain
+- The artist, albums and image responses are cached using the built in URLCache
