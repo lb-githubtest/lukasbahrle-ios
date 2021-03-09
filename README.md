@@ -15,6 +15,8 @@
   Then the app should display the artist infomation and a list of the artist's albums
 ```
 
+### Overview
+
 ![](https://github.com/lb-githubtest/lukasbahrle-ios/blob/main/overview.png)
 
 ### Details
